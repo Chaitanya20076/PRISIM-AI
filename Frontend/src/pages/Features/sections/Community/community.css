@@ -1,0 +1,9 @@
+.feature-visual--community { background:#3a3042; }
+.feature-visual--community img { filter:saturate(.8); }
+.community-photo-note { position:absolute; left:22px; top:22px; display:flex; align-items:center; gap:10px; padding:12px 15px; color:#fff; border:1px solid #ffffff80; border-radius:30px; background:#211b2eb8; backdrop-filter:blur(8px); font-size:9px; font-weight:800; letter-spacing:.16em; }
+.community-photo-note svg { color:#f1b69b; }
+.community-values { display:grid; gap:19px; }
+.community-values>div { display:flex; gap:14px; color:#ae6250; align-items:flex-start; }
+.community-values h3 { margin:0 0 5px; color:var(--feature-ink); font-size:14px; }
+.community-values p { margin:0; color:var(--feature-muted); font-size:13px; line-height:1.6; }
+@media(max-width:760px){.feature-row--community .feature-copy{justify-self:stretch;order:-1}.feature-row--community .feature-visual{order:1}}

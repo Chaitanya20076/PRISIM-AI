@@ -1,0 +1,649 @@
+/* =========================================
+   PRISM JOURNEY — THEME VARIABLES
+========================================= */
+
+.features-journey {
+  /* Light theme defaults */
+  --journey-bg: #f3ece5;
+  --journey-text: #292438;
+  --journey-heading: #292438;
+  --journey-muted: #777184;
+  --journey-secondary: #898294;
+
+  --journey-accent: #ae6250;
+  --journey-accent-light: #c47a63;
+  --journey-accent-bright: #e6a68c;
+
+  --journey-track: rgba(41, 36, 56, .18);
+  --journey-node-bg: #f3ece5;
+  --journey-node-border: rgba(41, 36, 56, .3);
+  --journey-node-muted: #9991a0;
+
+  --journey-glow: rgba(174, 98, 80, .35);
+  --journey-shadow: rgba(174, 98, 80, .2);
+
+  position: relative;
+  overflow: hidden;
+
+  padding: 110px max(6vw, 28px);
+
+  color: var(--journey-text);
+  background: var(--journey-bg);
+
+  transition:
+    background .45s ease,
+    color .45s ease;
+}
+
+/* Dark theme */
+
+html[data-theme="dark"] .features-journey {
+  --journey-bg: #292438;
+  --journey-text: #f8f1eb;
+  --journey-heading: #f8f1eb;
+  --journey-muted: #c3bdce;
+  --journey-secondary: #aaa3b7;
+
+  --journey-accent: #d49b85;
+  --journey-accent-light: #bd755f;
+  --journey-accent-bright: #e6a68c;
+
+  --journey-track: rgba(255, 255, 255, .17);
+  --journey-node-bg: #292438;
+  --journey-node-border: rgba(255, 255, 255, .25);
+  --journey-node-muted: #a59caf;
+
+  --journey-glow: rgba(240, 179, 151, .65);
+  --journey-shadow: rgba(230, 166, 140, .25);
+}
+
+/* Ambient background */
+
+.features-journey::before,
+.features-journey::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(90px);
+  transition: background .45s ease;
+}
+
+.features-journey::before {
+  width: 300px;
+  height: 300px;
+  top: -180px;
+  right: 10%;
+
+  background: rgba(174, 98, 80, .13);
+}
+
+.features-journey::after {
+  width: 260px;
+  height: 260px;
+  bottom: -180px;
+  left: 15%;
+
+  background: rgba(113, 91, 157, .13);
+}
+
+/* =========================================
+   HEADING
+========================================= */
+
+.features-journey__heading {
+  position: relative;
+  z-index: 2;
+
+  max-width: 1180px;
+  margin: 0 auto 90px;
+}
+
+.features-journey__heading .feature-kicker {
+  display: inline-block;
+  margin-bottom: 30px;
+
+  color: var(--journey-accent);
+}
+
+.features-journey__heading-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: end;
+  gap: 50px;
+}
+
+.features-journey__heading h2 {
+  margin: 0;
+
+  color: var(--journey-heading);
+
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(2.8rem, 5vw, 4.8rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -.07em;
+
+  transition: color .45s ease;
+}
+
+.features-journey__heading h2 em {
+  color: var(--journey-accent);
+  font-style: normal;
+}
+
+.features-journey__heading-content > p {
+  max-width: 420px;
+  margin: 0 0 7px;
+
+  color: var(--journey-muted);
+
+  font-size: 15px;
+  line-height: 1.9;
+
+  transition: color .45s ease;
+}
+
+/* =========================================
+   TIMELINE BASE
+========================================= */
+
+.features-timeline {
+  position: relative;
+  z-index: 2;
+
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+/* Permanent thin line */
+
+.features-timeline__track {
+  position: absolute;
+
+  top: 30px;
+  left: 0;
+  right: 0;
+
+  height: 2px;
+
+  background: var(--journey-track);
+  border-radius: 10px;
+
+  transition: background .45s ease;
+}
+
+/* Travelling light */
+
+.features-timeline__progress {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  border-radius: 10px;
+
+  background: linear-gradient(
+    90deg,
+    #bd755f,
+    #ffe0c9,
+    #f0a98d,
+    #fff0d9
+  );
+
+  box-shadow:
+    0 0 8px rgba(240, 179, 151, .9),
+    0 0 20px rgba(240, 179, 151, .65),
+    0 0 35px rgba(240, 179, 151, .35);
+
+  transform: scaleX(0);
+  transform-origin: left;
+
+  animation: timelineLightTravel 7.5s linear forwards;
+}
+
+/* =========================================
+   MILESTONES
+========================================= */
+
+.features-timeline__milestones {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+}
+
+.features-timeline__milestone {
+  position: relative;
+  min-width: 0;
+
+  opacity: 1;
+  transform: none;
+}
+
+/* =========================================
+   NODE
+========================================= */
+
+.features-timeline__node-wrap {
+  position: relative;
+
+  width: 62px;
+  height: 62px;
+
+  margin-bottom: 30px;
+}
+
+.features-timeline__node {
+  position: relative;
+  z-index: 2;
+
+  width: 62px;
+  height: 62px;
+
+  display: grid;
+  place-items: center;
+
+  color: var(--journey-node-muted);
+  background: var(--journey-node-bg);
+
+  border: 1px solid var(--journey-node-border);
+  border-radius: 50%;
+
+  box-shadow: 0 0 0 7px var(--journey-bg);
+
+  transition:
+    color .7s ease,
+    background .7s ease,
+    border-color .7s ease,
+    box-shadow .7s ease,
+    transform .7s ease;
+}
+
+/* Sequential node activation */
+
+.features-timeline__milestone:nth-child(1) .features-timeline__node {
+  animation: activateNode .9s ease .15s forwards;
+}
+
+.features-timeline__milestone:nth-child(2) .features-timeline__node {
+  animation: activateNode .9s ease 2.15s forwards;
+}
+
+.features-timeline__milestone:nth-child(3) .features-timeline__node {
+  animation: activateNode .9s ease 4.15s forwards;
+}
+
+.features-timeline__milestone:nth-child(4) .features-timeline__node {
+  animation: activateNode .9s ease 6.15s forwards;
+}
+
+/* Hover */
+
+.features-timeline__milestone:hover .features-timeline__node {
+  transform: scale(1.1);
+  border-color: var(--journey-accent-bright);
+}
+
+/* Numbers */
+
+.features-timeline__number {
+  position: absolute;
+
+  top: -17px;
+  right: -20px;
+
+  color: var(--journey-accent);
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .15em;
+}
+
+/* =========================================
+   CONTENT
+========================================= */
+
+.features-timeline__content {
+  max-width: 235px;
+}
+
+.features-timeline__label {
+  display: inline-block;
+  margin-bottom: 13px;
+
+  color: var(--journey-node-muted);
+
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .17em;
+
+  transition: color .7s ease;
+}
+
+.features-timeline__content h3 {
+  margin: 0 0 10px;
+
+  color: var(--journey-heading);
+
+  font-family: "Manrope", sans-serif;
+  font-size: 23px;
+  font-weight: 700;
+  letter-spacing: -.04em;
+
+  transition:
+    color .7s ease,
+    transform .7s ease;
+}
+
+.features-timeline__content p {
+  margin: 0;
+
+  color: var(--journey-muted);
+
+  font-size: 13px;
+  line-height: 1.8;
+
+  transition: color .7s ease;
+}
+
+/* Sequential heading and label activation */
+
+.features-timeline__milestone:nth-child(1)
+.features-timeline__content h3,
+.features-timeline__milestone:nth-child(1)
+.features-timeline__label {
+  animation: activateText .9s ease .15s forwards;
+}
+
+.features-timeline__milestone:nth-child(2)
+.features-timeline__content h3,
+.features-timeline__milestone:nth-child(2)
+.features-timeline__label {
+  animation: activateText .9s ease 2.15s forwards;
+}
+
+.features-timeline__milestone:nth-child(3)
+.features-timeline__content h3,
+.features-timeline__milestone:nth-child(3)
+.features-timeline__label {
+  animation: activateText .9s ease 4.15s forwards;
+}
+
+.features-timeline__milestone:nth-child(4)
+.features-timeline__content h3,
+.features-timeline__milestone:nth-child(4)
+.features-timeline__label {
+  animation: activateText .9s ease 6.15s forwards;
+}
+
+/* =========================================
+   CONNECTOR ARROWS
+========================================= */
+
+.features-timeline__connector {
+  position: absolute;
+
+  top: 19px;
+  right: 12px;
+
+  color: var(--journey-node-muted);
+
+  transition: color .7s ease;
+}
+
+.features-timeline__milestone:nth-child(1)
+.features-timeline__connector {
+  animation: activateArrow .8s ease 1.9s forwards;
+}
+
+.features-timeline__milestone:nth-child(2)
+.features-timeline__connector {
+  animation: activateArrow .8s ease 3.9s forwards;
+}
+
+.features-timeline__milestone:nth-child(3)
+.features-timeline__connector {
+  animation: activateArrow .8s ease 5.9s forwards;
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.features-journey__footer {
+  position: relative;
+  z-index: 2;
+
+  max-width: 1180px;
+  margin: 85px auto 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+}
+
+.features-journey__footer p {
+  margin: 0;
+
+  color: var(--journey-accent);
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-align: center;
+
+  transition: color .45s ease;
+}
+
+.features-journey__footer-line {
+  width: 55px;
+  height: 1px;
+
+  background: var(--journey-accent);
+
+  opacity: .4;
+  transition: background .45s ease;
+}
+
+/* =========================================
+   ANIMATIONS
+========================================= */
+
+@keyframes timelineLightTravel {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes activateNode {
+  0% {
+    color: var(--journey-node-muted);
+    background: var(--journey-node-bg);
+    border-color: var(--journey-node-border);
+
+    box-shadow: 0 0 0 7px var(--journey-bg);
+
+    transform: scale(1);
+  }
+
+  55% {
+    color: #292438;
+    background: #f0b397;
+    border-color: #ffe2ce;
+
+    box-shadow:
+      0 0 0 7px var(--journey-bg),
+      0 0 20px 5px rgba(240, 179, 151, .65);
+
+    transform: scale(1.13);
+  }
+
+  100% {
+    color: #292438;
+    background: #e6a68c;
+    border-color: #e6a68c;
+
+    box-shadow:
+      0 0 0 7px var(--journey-bg),
+      0 0 15px var(--journey-shadow);
+
+    transform: scale(1);
+  }
+}
+
+@keyframes activateText {
+  from {
+    color: var(--journey-node-muted);
+    transform: translateY(0);
+  }
+
+  to {
+    color: var(--journey-accent);
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes activateArrow {
+  from {
+    color: var(--journey-node-muted);
+    transform: translateX(0);
+  }
+
+  to {
+    color: var(--journey-accent);
+    transform: translateX(5px);
+  }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 760px) {
+  .features-journey {
+    padding: 75px 7vw;
+  }
+
+  .features-journey__heading {
+    margin-bottom: 55px;
+  }
+
+  .features-journey__heading-content {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .features-journey__heading h2 {
+    font-size: clamp(2.8rem, 11vw, 4rem);
+  }
+
+  /* Vertical permanent timeline */
+
+  .features-timeline__track {
+    top: 0;
+    bottom: 0;
+    left: 29px;
+    right: auto;
+
+    width: 2px;
+    height: auto;
+  }
+
+  .features-timeline__progress {
+    width: 100%;
+    height: 100%;
+
+    transform: scaleY(0);
+    transform-origin: top;
+
+    animation: timelineLightTravelVertical 7.5s linear forwards;
+  }
+
+  .features-timeline__milestones {
+    grid-template-columns: 1fr;
+    gap: 42px;
+  }
+
+  .features-timeline__milestone {
+    display: grid;
+    grid-template-columns: 62px 1fr;
+    gap: 22px;
+
+    align-items: start;
+  }
+
+  .features-timeline__node-wrap {
+    margin: 0;
+  }
+
+  .features-timeline__content {
+    padding-top: 4px;
+    max-width: 100%;
+  }
+
+  .features-timeline__content h3 {
+    font-size: 21px;
+  }
+
+  .features-timeline__connector {
+    display: none;
+  }
+
+  .features-journey__footer {
+    margin-top: 65px;
+    gap: 12px;
+  }
+
+  .features-journey__footer-line {
+    width: 25px;
+  }
+
+  .features-journey__footer p {
+    font-size: 9px;
+  }
+}
+
+@keyframes timelineLightTravelVertical {
+  from {
+    transform: scaleY(0);
+  }
+
+  to {
+    transform: scaleY(1);
+  }
+}
+
+/* =========================================
+   REDUCED MOTION
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .features-journey *,
+  .features-journey *::before,
+  .features-journey *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+
+  .features-timeline__progress {
+    transform: none;
+  }
+
+  .features-timeline__node {
+    color: var(--journey-accent);
+    background: var(--journey-node-bg);
+    border-color: var(--journey-accent);
+  }
+
+  .features-timeline__content h3,
+  .features-timeline__label {
+    color: var(--journey-accent);
+  }
+}

@@ -1,0 +1,25 @@
+.prism-support-page {
+  --support-bg: #f7f2eb;
+  --support-surface: #fffdf9;
+  --support-soft: #f1e9df;
+  --support-text: #292438;
+  --support-muted: #777184;
+  --support-accent: #ae6250;
+  --support-border: rgba(41, 36, 56, 0.12);
+  --support-shadow: rgba(41, 36, 56, 0.055);
+
+  min-height: 100vh;
+  background: var(--support-bg);
+  color: var(--support-text);
+}
+
+html[data-theme="dark"] .prism-support-page {
+  --support-bg: #171522;
+  --support-surface: #211d2d;
+  --support-soft: #292438;
+  --support-text: #f8f1eb;
+  --support-muted: #bdb5ca;
+  --support-accent: #e6a68c;
+  --support-border: rgba(248, 241, 235, 0.12);
+  --support-shadow: rgba(0, 0, 0, 0.18);
+}

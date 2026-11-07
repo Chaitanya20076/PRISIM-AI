@@ -1,0 +1,206 @@
+.support-resources {
+  padding: 95px 7.5% 105px;
+  background: var(--support-soft);
+  color: var(--support-text);
+}
+
+.support-resources__inner {
+  width: min(1200px, 100%);
+  margin: 0 auto;
+}
+
+.support-resources__heading {
+  max-width: 570px;
+  margin-bottom: 45px;
+}
+
+.support-resources__heading > span {
+  color: var(--support-accent);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+}
+
+.support-resources__heading h2 {
+  margin: 14px 0;
+  color: var(--support-text);
+  font-size: clamp(37px, 5vw, 55px);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -2px;
+}
+
+.support-resources__heading h2 em {
+  color: var(--support-accent);
+  font-family: Georgia, serif;
+  font-weight: 400;
+}
+
+.support-resources__heading p {
+  max-width: 440px;
+  color: var(--support-muted);
+  font-size: 12px;
+  line-height: 1.9;
+}
+
+.support-resources__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.support-resource {
+  display: flex;
+  flex-direction: column;
+  min-height: 245px;
+  padding: 25px;
+  border: 1px solid var(--support-border);
+  border-radius: 5px;
+  background: var(--support-surface);
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.3s ease, border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.support-resource:hover {
+  transform: translateY(-6px);
+  border-color: var(--support-accent);
+  box-shadow: 0 15px 35px var(--support-shadow);
+}
+
+.support-resource__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--support-muted);
+  font-family: Georgia, serif;
+  font-size: 12px;
+}
+
+.support-resource__icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--support-border);
+  border-radius: 50%;
+  color: var(--support-accent);
+}
+
+.support-resource h3 {
+  margin: 25px 0 9px;
+  color: var(--support-text);
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.support-resource > p {
+  margin: 0;
+  color: var(--support-muted);
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+.support-resource__link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 25px;
+  color: var(--support-accent);
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.support-resource__link svg {
+  transition: transform 0.25s ease;
+}
+
+.support-resource:hover .support-resource__link svg {
+  transform: translate(3px, -3px);
+}
+
+.support-resources__closing {
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  margin-top: 35px;
+  padding: 23px 25px;
+  border: 1px solid var(--support-border);
+  border-radius: 5px;
+  background: var(--support-bg);
+}
+
+.support-resources__closing-icon {
+  flex-shrink: 0;
+  width: 43px;
+  height: 43px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--support-soft);
+  color: var(--support-accent);
+}
+
+.support-resources__closing > div:nth-child(2) {
+  flex: 1;
+}
+
+.support-resources__closing h3 {
+  margin: 0;
+  color: var(--support-text);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.support-resources__closing p {
+  margin: 6px 0 0;
+  color: var(--support-muted);
+  font-size: 10px;
+}
+
+.support-resources__closing > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  color: var(--support-accent);
+  font-size: 10px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+@media (max-width: 850px) {
+  .support-resources__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .support-resources {
+    padding: 65px 6% 75px;
+  }
+
+  .support-resources__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .support-resource {
+    min-height: 220px;
+  }
+
+  .support-resources__closing {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding: 19px;
+  }
+
+  .support-resources__closing > div:nth-child(2) {
+    flex-basis: calc(100% - 65px);
+  }
+
+  .support-resources__closing > a {
+    margin-left: 60px;
+  }
+}

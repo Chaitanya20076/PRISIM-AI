@@ -1,0 +1,25 @@
+.prism-terms-page {
+  --terms-bg: #f7f2eb;
+  --terms-surface: #fffdf9;
+  --terms-soft: #f1e9df;
+  --terms-text: #292438;
+  --terms-muted: #777184;
+  --terms-accent: #ae6250;
+  --terms-border: rgba(41, 36, 56, 0.12);
+  --terms-shadow: rgba(41, 36, 56, 0.055);
+
+  min-height: 100vh;
+  background: var(--terms-bg);
+  color: var(--terms-text);
+}
+
+html[data-theme="dark"] .prism-terms-page {
+  --terms-bg: #171522;
+  --terms-surface: #211d2d;
+  --terms-soft: #292438;
+  --terms-text: #f8f1eb;
+  --terms-muted: #bdb5ca;
+  --terms-accent: #e6a68c;
+  --terms-border: rgba(248, 241, 235, 0.12);
+  --terms-shadow: rgba(0, 0, 0, 0.18);
+}

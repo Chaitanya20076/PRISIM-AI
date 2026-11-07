@@ -1,0 +1,2227 @@
+/* =========================================
+   PRISM AI MEMBER DASHBOARD
+========================================= */
+
+.prism-dashboard {
+  --dash-bg: #faf9ff;
+  --dash-surface: #ffffff;
+  --dash-text: #24183d;
+  --dash-muted: #81758f;
+  --dash-border: #eee8f7;
+  --dash-primary: #7c3aed;
+  --dash-primary-hover: #6d28d9;
+  --dash-hero: #f0eaff;
+  --dash-input: #ffffff;
+
+  min-height: 100vh;
+  background: var(--dash-bg);
+  color: var(--dash-text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.prism-dashboard.dark {
+  --dash-bg: #100c1b;
+  --dash-surface: #1b142a;
+  --dash-text: #f5efff;
+  --dash-muted: #b0a3c6;
+  --dash-border: #322543;
+  --dash-primary: #b69aff;
+  --dash-primary-hover: #c7b2ff;
+  --dash-hero: #241638;
+  --dash-input: #1b142a;
+}
+
+.prism-dashboard *,
+.prism-dashboard *::before,
+.prism-dashboard *::after {
+  box-sizing: border-box;
+}
+
+.prism-dashboard a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.prism-dash-header {
+  min-height: 78px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 14px max(5%, calc((100vw - 1400px) / 2));
+  background: var(--dash-surface);
+  border-bottom: 1px solid var(--dash-border);
+}
+
+.prism-dash-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.prism-brand-icon {
+  width: 45px;
+  height: 45px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  color: #ffffff;
+  background: linear-gradient(140deg, #8b5cf6, #5b21b6);
+  box-shadow: 0 5px 16px #7c3aed2c;
+}
+
+.prism-brand-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.prism-brand-copy strong {
+  font-size: 20px;
+  letter-spacing: -0.6px;
+  font-weight: 850;
+}
+
+.prism-brand-copy strong span {
+  color: var(--dash-primary);
+}
+
+.prism-brand-copy small {
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  color: var(--dash-muted);
+}
+
+.prism-dash-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.prism-member-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--dash-muted);
+  padding-right: 10px;
+}
+
+.prism-status-dot {
+  width: 8px;
+  height: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px #22c55e1c;
+}
+
+.prism-icon-button,
+.prism-logout-button {
+  min-height: 41px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--dash-border);
+  border-radius: 12px;
+  background: var(--dash-surface);
+  color: var(--dash-text);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.prism-icon-button {
+  width: 42px;
+}
+
+.prism-logout-button {
+  padding: 0 15px;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.prism-icon-button:hover,
+.prism-logout-button:hover {
+  border-color: var(--dash-primary);
+  transform: translateY(-1px);
+}
+
+.prism-logout-button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+/* =========================================
+   MAIN CONTENT
+========================================= */
+
+.prism-dash-main {
+  width: min(1280px, 90%);
+  margin: 0 auto;
+  padding: 27px 0 16px;
+}
+
+.prism-dash-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--dash-muted);
+  font-size: 12px;
+  margin-bottom: 23px;
+}
+
+.prism-dash-breadcrumb svg {
+  color: var(--dash-primary);
+}
+
+.prism-breadcrumb-separator {
+  opacity: 0.5;
+}
+
+/* =========================================
+   WELCOME PANEL
+========================================= */
+
+.prism-welcome-panel {
+  min-height: 235px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 38px 43px;
+  border: 1px solid #dcd0fa;
+  border-radius: 24px;
+  background:
+    radial-gradient(ellipse at 88% 20%, #c8b1ff78, transparent 40%),
+    linear-gradient(115deg, var(--dash-hero), var(--dash-surface));
+}
+
+.dark .prism-welcome-panel {
+  border-color: #47325f;
+  background:
+    radial-gradient(ellipse at 88% 20%, #7749b84a, transparent 45%),
+    linear-gradient(115deg, #241638, #1b142a);
+}
+
+.prism-welcome-copy {
+  position: relative;
+  z-index: 2;
+  max-width: 680px;
+}
+
+.prism-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  color: var(--dash-primary);
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 2px;
+}
+
+.prism-welcome-copy h1 {
+  margin: 0;
+  font-size: clamp(27px, 3.3vw, 39px);
+  font-weight: 850;
+  line-height: 1.2;
+  letter-spacing: -1.3px;
+}
+
+.prism-welcome-copy h1 span {
+  display: inline-block;
+  font-size: 0.8em;
+}
+
+.prism-welcome-copy > p {
+  max-width: 530px;
+  margin: 15px 0 0;
+  color: var(--dash-muted);
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.prism-welcome-decoration {
+  position: absolute;
+  right: 75px;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 120px;
+  height: 120px;
+  color: #8b5cf6;
+  transform: translateY(-50%);
+}
+
+.prism-orbit {
+  position: absolute;
+  border: 1px solid #a78bfa80;
+  border-radius: 50%;
+}
+
+.prism-orbit-one {
+  width: 75px;
+  height: 75px;
+}
+
+.prism-orbit-two {
+  width: 110px;
+  height: 110px;
+}
+
+.prism-orbit-three {
+  width: 145px;
+  height: 145px;
+}
+
+/* =========================================
+   DISCOVER SECTION
+========================================= */
+
+.prism-discover-section {
+  margin-top: 43px;
+}
+
+.prism-section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 16px;
+  margin-bottom: 21px;
+}
+
+.prism-section-kicker {
+  display: block;
+  margin-bottom: 9px;
+  color: var(--dash-primary);
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 1.8px;
+}
+
+.prism-section-heading h2 {
+  margin: 0;
+  font-size: 25px;
+  font-weight: 850;
+  letter-spacing: -0.7px;
+}
+
+.prism-section-heading p {
+  margin: 8px 0 0;
+  color: var(--dash-muted);
+  font-size: 13px;
+}
+
+.prism-section-count {
+  flex-shrink: 0;
+  padding: 8px 12px;
+  border: 1px solid var(--dash-border);
+  border-radius: 10px;
+  color: var(--dash-muted);
+  background: var(--dash-surface);
+  font-size: 11px;
+}
+
+/* =========================================
+   SEARCH BAR
+========================================= */
+
+.prism-search-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 55px;
+  margin-bottom: 24px;
+  padding: 0 16px;
+  border: 1px solid var(--dash-border);
+  border-radius: 14px;
+  background: var(--dash-input);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.prism-search-wrapper:focus-within {
+  border-color: var(--dash-primary);
+  box-shadow: 0 0 0 4px #8b5cf616;
+}
+
+.prism-search-icon {
+  flex-shrink: 0;
+  color: var(--dash-primary);
+}
+
+.prism-search-wrapper input {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--dash-text);
+  font: inherit;
+  font-size: 13px;
+}
+
+.prism-search-wrapper input::placeholder {
+  color: var(--dash-muted);
+  opacity: 0.8;
+}
+
+.prism-search-wrapper input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.prism-search-wrapper kbd {
+  flex-shrink: 0;
+  padding: 6px 8px;
+  border: 1px solid var(--dash-border);
+  border-radius: 6px;
+  color: var(--dash-muted);
+  font-size: 9px;
+  letter-spacing: 0.6px;
+}
+
+.prism-clear-search {
+  display: grid;
+  place-items: center;
+  border: none;
+  background: transparent;
+  color: var(--dash-muted);
+  cursor: pointer;
+}
+
+/* =========================================
+   FEATURE CARDS
+========================================= */
+
+.prism-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.prism-feature-card {
+  --accent: #7c3aed;
+  --accent-bg: #f0e8ff;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 222px;
+  padding: 23px;
+  overflow: hidden;
+  border: 1px solid var(--dash-border);
+  border-radius: 18px;
+  background: var(--dash-surface);
+  transition:
+    transform 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+.dark .prism-feature-card {
+  --accent-bg: #30233f;
+}
+
+.prism-feature-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: 0 13px 32px #30204a12;
+}
+
+.dark .prism-feature-card:hover {
+  box-shadow: 0 13px 32px #00000025;
+}
+
+.prism-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 21px;
+}
+
+.prism-feature-icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  color: var(--accent);
+  background: var(--accent-bg);
+  transition: transform 0.2s;
+}
+
+.prism-feature-card:hover .prism-feature-icon {
+  transform: scale(1.06);
+}
+
+.prism-card-arrow {
+  display: grid;
+  place-items: center;
+  width: 33px;
+  height: 33px;
+  border: 1px solid var(--dash-border);
+  border-radius: 10px;
+  color: var(--dash-muted);
+  transition: color 0.2s, background 0.2s;
+}
+
+.prism-feature-card:hover .prism-card-arrow {
+  color: #ffffff;
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+.prism-feature-card h3 {
+  margin: 0;
+  color: var(--dash-text);
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.2px;
+}
+
+.prism-feature-card > p {
+  margin: 9px 0 20px;
+  color: var(--dash-muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.prism-card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 13px;
+  border-top: 1px solid var(--dash-border);
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 750;
+}
+
+.prism-card-bottom-arrow {
+  font-size: 16px;
+}
+
+/* =========================================
+   CARD ACCENT COLORS
+========================================= */
+
+.accent-violet {
+  --accent: #7c3aed;
+  --accent-bg: #f0e8ff;
+}
+
+.accent-blue {
+  --accent: #2563eb;
+  --accent-bg: #e9f0ff;
+}
+
+.accent-green {
+  --accent: #0f9870;
+  --accent-bg: #e1f8ee;
+}
+
+.accent-orange {
+  --accent: #c56a13;
+  --accent-bg: #fff0df;
+}
+
+.accent-pink {
+  --accent: #c0266d;
+  --accent-bg: #ffe7f1;
+}
+
+.accent-cyan {
+  --accent: #087eac;
+  --accent-bg: #e3f7ff;
+}
+
+.accent-purple {
+  --accent: #8b5cf6;
+  --accent-bg: #eee7ff;
+}
+
+.accent-lime {
+  --accent: #43852d;
+  --accent-bg: #e9f7e5;
+}
+
+.accent-amber {
+  --accent: #f5f50c;
+  --accent-bg: #fff0e1;
+}
+
+.accent-teal {
+  --accent: #0f8b83;
+  --accent-bg: #e0f7f4;
+}
+
+.dark .accent-violet,
+.dark .accent-blue,
+.dark .accent-green,
+.dark .accent-orange,
+.dark .accent-pink,
+.dark .accent-cyan,
+.dark .accent-purple,
+.dark .accent-lime,
+.dark .accent-amber,
+.dark .accent-teal {
+  --accent-bg: #30243e;
+}
+
+/* =========================================
+   EMPTY SEARCH STATE
+========================================= */
+
+.prism-empty-search {
+  padding: 55px 20px;
+  text-align: center;
+  border: 1px dashed var(--dash-border);
+  border-radius: 18px;
+  color: var(--dash-muted);
+  background: var(--dash-surface);
+}
+
+.prism-empty-search > svg {
+  color: var(--dash-primary);
+}
+
+.prism-empty-search h3 {
+  color: var(--dash-text);
+  margin: 15px 0 8px;
+}
+
+.prism-empty-search p {
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.prism-empty-search button {
+  margin-top: 12px;
+  padding: 10px 17px;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  background: #7c3aed;
+  cursor: pointer;
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.prism-dash-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 44px;
+  padding: 20px 0;
+  border-top: 1px solid var(--dash-border);
+  color: var(--dash-muted);
+  font-size: 11px;
+}
+
+.prism-dash-footer span:first-child {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--dash-primary);
+  font-weight: 850;
+  letter-spacing: 1px;
+}
+
+/* =========================================
+   LOADING SCREEN
+========================================= */
+
+.prism-dashboard-loading {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  background: #faf9ff;
+  color: #81758f;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 13px;
+}
+
+.prism-dashboard-loading.dark {
+  background: #100c1b;
+  color: #b0a3c6;
+}
+
+.prism-loading-mark {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
+  color: white;
+  background: linear-gradient(140deg, #8b5cf6, #5b21b6);
+  animation: prism-loading-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes prism-loading-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 #8b5cf633;
+  }
+
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 12px #8b5cf600;
+  }
+}
+
+/* =========================================
+   PROFILE MENU AND POINTS
+========================================= */
+
+.prism-dash-header-actions {
+  gap: 12px;
+}
+
+.prism-points-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 5px 14px 5px 8px;
+  border: 1px solid var(--dash-border);
+  border-radius: 14px;
+  background: var(--dash-surface);
+}
+
+.prism-points-sparkle {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  color: #8b5cf6;
+  background: #8b5cf61a;
+}
+
+.prism-points-pill > span:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.prism-points-pill small {
+  color: var(--dash-muted);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.prism-points-pill strong {
+  color: var(--dash-text);
+  font-size: 16px;
+  line-height: 1.15;
+}
+
+.prism-theme-button {
+  width: auto;
+  padding: 0 13px;
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.prism-profile-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 43px;
+  padding: 4px 8px 4px 4px;
+  border: 1px solid var(--dash-border);
+  border-radius: 999px;
+  background: var(--dash-surface);
+  color: var(--dash-text);
+  cursor: pointer;
+  transition: border-color .2s, transform .2s;
+}
+
+.prism-profile-trigger:hover {
+  border-color: var(--dash-primary);
+  transform: translateY(-1px);
+}
+
+.prism-profile-trigger-avatar,
+.prism-profile-avatar {
+  display: grid;
+  place-items: center;
+  width: 33px;
+  height: 33px;
+  border-radius: 50%;
+  color: #fff;
+  background: linear-gradient(140deg, #9b78f8, #5b21b6);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.prism-profile-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  border: 0;
+  background: #10091d60;
+  backdrop-filter: blur(2px);
+}
+
+.prism-profile-sidebar {
+  position: fixed;
+  z-index: 1101;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  width: min(380px, 92vw);
+  height: 100dvh;
+  padding: 25px;
+  color: var(--dash-text);
+  background: var(--dash-surface);
+  border-left: 1px solid var(--dash-border);
+  box-shadow: -20px 0 60px #10091d1a;
+  transform: translateX(105%);
+  visibility: hidden;
+  transition:
+    transform .28s cubic-bezier(.2,.75,.2,1),
+    visibility .28s;
+}
+
+.prism-profile-sidebar.is-open {
+  transform: translateX(0);
+  visibility: visible;
+}
+
+.prism-profile-sidebar-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--dash-border);
+}
+
+.prism-profile-sidebar-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.prism-profile-avatar {
+  width: 45px;
+  height: 45px;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.prism-profile-sidebar-title > span:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.prism-profile-sidebar-title strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+.prism-profile-sidebar-title small {
+  color: var(--dash-muted);
+  font-size: 11px;
+}
+
+.prism-profile-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding-top: 23px;
+}
+
+.prism-profile-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  width: 100%;
+  min-height: 52px;
+  padding: 0 13px;
+  border: 1px solid transparent;
+  border-radius: 13px;
+  background: transparent;
+  color: var(--dash-text);
+  font: inherit;
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+  transition: background .18s, border-color .18s;
+}
+
+.prism-profile-menu-item > svg:first-child {
+  color: var(--dash-primary);
+}
+
+.prism-profile-menu-item > span {
+  flex: 1;
+}
+
+.prism-profile-menu-item > svg:last-child {
+  color: var(--dash-muted);
+}
+
+.prism-profile-menu-item:hover {
+  border-color: var(--dash-border);
+  background: var(--dash-bg);
+}
+
+.prism-profile-sidebar-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid var(--dash-border);
+}
+
+.prism-profile-logout {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-height: 47px;
+  padding: 0 13px;
+  border: 1px solid #ef444433;
+  border-radius: 12px;
+  background: #ef44440b;
+  color: #e05252;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.prism-profile-logout:disabled {
+  opacity: .6;
+  cursor: wait;
+}
+
+.prism-profile-sidebar-bottom small {
+  color: var(--dash-muted);
+  font-size: 10px;
+  text-align: center;
+}
+
+/* =========================================
+   PROMOTIONAL CAROUSEL
+========================================= */
+
+.prism-promo-hero {
+  position: relative;
+  isolation: isolate;
+  min-height: clamp(330px, 34vw, 455px);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: clamp(28px, 5vw, 62px);
+  border: 1px solid var(--dash-border);
+  border-radius: 25px;
+  background: #201431;
+  color: #fff;
+  box-shadow: 0 18px 50px #21103812;
+}
+
+.prism-promo-image {
+  position: absolute;
+  z-index: -3;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: prism-promo-image-in .7s ease both;
+}
+
+.prism-promo-overlay {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    #130d20ed 0%,
+    #20132ac9 48%,
+    #21142a30 100%
+  );
+}
+
+.prism-promo-hero.has-no-image {
+  background:
+    radial-gradient(ellipse at 78% 20%, #a78bfa80, transparent 35%),
+    radial-gradient(ellipse at 90% 100%, #6d28d9aa, transparent 45%),
+    linear-gradient(120deg, #171027, #35204d 60%, #5b3290);
+}
+
+.prism-promo-hero.has-no-image::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 310px;
+  height: 310px;
+  right: 9%;
+  top: 50%;
+  border: 1px solid #ffffff38;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  box-shadow:
+    0 0 0 35px #ffffff09,
+    0 0 0 70px #ffffff06;
+}
+
+.prism-promo-content {
+  position: relative;
+  z-index: 1;
+  max-width: 650px;
+  padding: 12px 0 25px;
+  animation: prism-promo-copy-in .5s ease both;
+}
+
+.prism-promo-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  color: #d9c8ff;
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 1.8px;
+}
+
+.prism-promo-content h1 {
+  max-width: 620px;
+  margin: 0;
+  font-size: clamp(32px, 4vw, 54px);
+  font-weight: 850;
+  line-height: 1.08;
+  letter-spacing: -1.8px;
+}
+
+.prism-promo-content p {
+  max-width: 510px;
+  margin: 18px 0 25px;
+  color: #e4dced;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.prism-promo-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 45px;
+  padding: 0 17px;
+  border: 1px solid #ffffff75;
+  border-radius: 12px;
+  background: #ffffffef;
+  color: #2b1748 !important;
+  font-size: 12px;
+  font-weight: 800;
+  transition: transform .2s, background .2s;
+}
+
+.prism-promo-cta:hover {
+  transform: translateY(-2px);
+  background: #fff;
+}
+
+.prism-promo-controls {
+  position: absolute;
+  z-index: 2;
+  right: 25px;
+  bottom: 22px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.prism-promo-controls > button {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid #ffffff5c;
+  border-radius: 50%;
+  background: #ffffff15;
+  color: #fff;
+  cursor: pointer;
+  transition: background .18s;
+}
+
+.prism-promo-controls > button:hover {
+  background: #ffffff35;
+}
+
+.prism-promo-dots {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.prism-promo-dots button {
+  width: 5px;
+  height: 5px;
+  padding: 0;
+  border: 0;
+  border-radius: 99px;
+  background: #ffffff70;
+  cursor: pointer;
+  transition: width .2s, background .2s;
+}
+
+.prism-promo-dots button.is-active {
+  width: 21px;
+  background: #fff;
+}
+
+.prism-promo-counter {
+  position: absolute;
+  right: 28px;
+  top: 25px;
+  color: #ffffffd9;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.prism-promo-counter i {
+  padding: 0 5px;
+  color: #ffffff75;
+  font-style: normal;
+}
+
+@keyframes prism-promo-copy-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes prism-promo-image-in {
+  from {
+    opacity: .5;
+    transform: scale(1.025);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* =========================================
+   RESPONSIVE DESIGN
+========================================= */
+
+@media (max-width: 1000px) {
+  .prism-feature-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .prism-welcome-decoration {
+    right: 45px;
+    opacity: 0.65;
+  }
+
+  .prism-welcome-copy {
+    max-width: 75%;
+  }
+}
+
+@media (max-width: 700px) {
+  .prism-dash-header {
+    align-items: center;
+  }
+
+  .prism-dash-header-actions {
+    gap: 7px;
+  }
+
+  .prism-points-pill {
+    min-height: 38px;
+    gap: 6px;
+    padding: 3px 8px 3px 4px;
+    border-radius: 12px;
+  }
+
+  .prism-points-sparkle {
+    width: 28px;
+    height: 28px;
+  }
+
+  .prism-points-pill small {
+    font-size: 7px;
+    letter-spacing: .5px;
+  }
+
+  .prism-points-pill strong {
+    font-size: 14px;
+  }
+
+  .prism-theme-button {
+    width: 38px;
+    min-height: 38px;
+    padding: 0;
+  }
+
+  .prism-theme-button span {
+    display: none;
+  }
+
+  .prism-profile-trigger {
+    min-height: 39px;
+    padding-right: 5px;
+    gap: 4px;
+  }
+
+  .prism-profile-trigger-avatar {
+    width: 29px;
+    height: 29px;
+  }
+
+  .prism-promo-hero {
+    min-height: 390px;
+    padding: 27px 22px 75px;
+    border-radius: 19px;
+  }
+
+  .prism-promo-overlay {
+    background: linear-gradient(
+      90deg,
+      #130d20e8 0%,
+      #20132ac2 68%,
+      #21142a77 100%
+    );
+  }
+
+  .prism-promo-content {
+    padding: 20px 0;
+  }
+
+  .prism-promo-content h1 {
+    font-size: clamp(29px, 8vw, 40px);
+    letter-spacing: -1px;
+  }
+
+  .prism-promo-content p {
+    font-size: 12px;
+    line-height: 1.75;
+  }
+
+  .prism-promo-eyebrow {
+    font-size: 8px;
+    letter-spacing: 1.1px;
+  }
+
+  .prism-promo-controls {
+    right: 16px;
+    bottom: 16px;
+    gap: 8px;
+  }
+
+  .prism-promo-controls > button {
+    width: 31px;
+    height: 31px;
+  }
+
+  .prism-promo-dots {
+    gap: 4px;
+  }
+
+  .prism-promo-dots button {
+    width: 4px;
+    height: 4px;
+  }
+
+  .prism-promo-dots button.is-active {
+    width: 15px;
+  }
+
+  .prism-promo-counter {
+    top: 17px;
+    right: 18px;
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 600px) {
+  .prism-dash-header {
+    min-height: 69px;
+    padding: 12px 5%;
+    gap: 10px;
+  }
+
+  .prism-brand-icon {
+    width: 39px;
+    height: 39px;
+  }
+
+  .prism-brand-copy strong {
+    font-size: 17px;
+  }
+
+  .prism-brand-copy small {
+    font-size: 8px;
+    letter-spacing: 0.6px;
+  }
+
+  .prism-member-label {
+    display: none;
+  }
+
+  .prism-icon-button {
+    width: 37px;
+    min-height: 37px;
+  }
+
+  .prism-logout-button {
+    width: 37px;
+    min-height: 37px;
+    padding: 0;
+  }
+
+  .prism-logout-button span {
+    display: none;
+  }
+
+  .prism-dash-main {
+    width: 90%;
+    padding-top: 20px;
+  }
+
+  .prism-dash-breadcrumb {
+    margin-bottom: 17px;
+  }
+
+  .prism-welcome-panel {
+    min-height: 205px;
+    padding: 27px 22px;
+    border-radius: 19px;
+  }
+
+  .prism-welcome-copy {
+    max-width: 100%;
+  }
+
+  .prism-welcome-copy h1 {
+    max-width: 100%;
+    font-size: 28px;
+    letter-spacing: -0.8px;
+    overflow-wrap: anywhere;
+  }
+
+  .prism-welcome-copy > p {
+    max-width: 100%;
+    font-size: 12px;
+    line-height: 1.8;
+  }
+
+  .prism-eyebrow {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+  }
+
+  .prism-welcome-decoration {
+    right: -35px;
+    opacity: 0.13;
+  }
+
+  .prism-discover-section {
+    margin-top: 32px;
+  }
+
+  .prism-section-heading {
+    align-items: start;
+  }
+
+  .prism-section-heading h2 {
+    font-size: 22px;
+  }
+
+  .prism-section-heading p {
+    font-size: 12px;
+    line-height: 1.7;
+  }
+
+  .prism-section-count {
+    font-size: 10px;
+    padding: 7px 8px;
+  }
+
+  .prism-search-wrapper {
+    min-height: 50px;
+    gap: 9px;
+    padding: 0 12px;
+  }
+
+  .prism-search-wrapper input {
+    font-size: 12px;
+  }
+
+  .prism-search-wrapper kbd {
+    display: none;
+  }
+
+  .prism-feature-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 11px;
+  }
+
+  .prism-feature-card {
+    min-height: 200px;
+    padding: 15px 13px;
+    border-radius: 15px;
+  }
+
+  .prism-card-top {
+    margin-bottom: 16px;
+  }
+
+  .prism-feature-icon {
+    width: 41px;
+    height: 41px;
+    border-radius: 12px;
+  }
+
+  .prism-feature-icon svg {
+    width: 21px;
+    height: 21px;
+  }
+
+  .prism-card-arrow {
+    width: 28px;
+    height: 28px;
+  }
+
+  .prism-card-arrow svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .prism-feature-card h3 {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .prism-feature-card > p {
+    font-size: 11px;
+    line-height: 1.7;
+    margin: 7px 0 15px;
+  }
+
+  .prism-card-bottom {
+    font-size: 10px;
+  }
+
+  .prism-dash-footer {
+    margin-top: 30px;
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  .prism-feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .prism-feature-card {
+    min-height: 185px;
+    padding: 20px;
+  }
+}
+
+/* =========================================
+   PARTICLE EFFECT - ALL DASHBOARD CARDS
+========================================= */
+
+.prism-particle-card {
+  isolation: isolate;
+  overflow: hidden;
+}
+
+/* Particle field sits behind the card content */
+.prism-particle-field {
+  position: absolute !important;
+  inset: 0;
+  z-index: 0 !important;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Individual particles */
+.prism-particle-field i {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+
+  display: block;
+  width: var(--particle-size);
+  height: var(--particle-size);
+
+  border-radius: 50%;
+  background: var(--accent);
+
+  opacity: 0;
+
+  transform: translate(
+    var(--particle-start-x),
+    var(--particle-start-y)
+  ) scale(.55);
+
+  filter: blur(0);
+
+  animation-name: prism-particle-flight;
+  animation-duration: var(--particle-duration);
+  animation-delay: var(--particle-delay);
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-play-state: paused;
+
+  will-change: transform, opacity;
+}
+
+/* Start particles only while hovering */
+.prism-particle-card:hover .prism-particle-field i {
+  animation-play-state: running;
+}
+
+/* Particle movement: corner to centre */
+@keyframes prism-particle-flight {
+  0% {
+    opacity: 0;
+
+    transform: translate(
+      var(--particle-start-x),
+      var(--particle-start-y)
+    ) scale(.55);
+
+    filter: blur(0);
+  }
+
+  12% {
+    opacity: .9;
+  }
+
+  55% {
+    opacity: .52;
+
+    transform: translate(
+      var(--particle-drift-x),
+      var(--particle-drift-y)
+    ) scale(1);
+
+    filter: blur(.25px);
+  }
+
+  100% {
+    opacity: 0;
+
+    transform: translate(
+      calc(var(--particle-drift-x) * 1.35),
+      calc(var(--particle-drift-y) * 1.35)
+    ) scale(.25);
+
+    filter: blur(1.6px);
+  }
+}
+
+/* =========================================
+   REDUCED MOTION ACCESSIBILITY
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .prism-dashboard *,
+  .prism-dashboard *::before,
+  .prism-dashboard *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .prism-promo-image,
+  .prism-promo-content {
+    animation: none !important;
+  }
+
+  .prism-particle-card:hover .prism-particle-field i {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+/* =========================================
+   MEMBER PROFILE COMPLETION + EDITOR
+========================================= */
+
+.prism-profile-sidebar-summary {
+  margin-top: 22px;
+  padding: 15px;
+  border: 1px solid var(--dash-border);
+  border-radius: 14px;
+  background: var(--dash-bg);
+}
+
+.prism-profile-sidebar-progress,
+.prism-profile-progress-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.prism-profile-sidebar-progress span,
+.prism-profile-progress-top span {
+  color: var(--dash-muted);
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 1px;
+}
+
+.prism-profile-sidebar-progress strong,
+.prism-profile-progress-top strong {
+  color: var(--dash-primary);
+  font-size: 14px;
+  font-weight: 850;
+}
+
+.prism-profile-progress-track {
+  height: 7px;
+  margin-top: 10px;
+  overflow: hidden;
+  border-radius: 99px;
+  background: var(--dash-border);
+}
+
+.prism-profile-progress-track > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #8b5cf6, #b69aff);
+  transition: width .35s ease;
+}
+
+.prism-profile-sidebar-summary > small {
+  display: block;
+  margin-top: 9px;
+  color: var(--dash-muted);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+/* Profile completion hero appears until every field is supplied */
+.prism-profile-completion-hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(260px, .65fr);
+  align-items: center;
+  gap: 34px;
+  min-height: 300px;
+  padding: clamp(28px, 4.5vw, 52px);
+  overflow: hidden;
+  border: 1px solid #d9cafa;
+  border-radius: 25px;
+  background:
+    radial-gradient(ellipse at 88% 12%, #c7b0ff85, transparent 38%),
+    linear-gradient(115deg, #f0eaff, #ffffff 75%);
+  color: #24183d;
+  box-shadow: 0 18px 50px #2110380c;
+}
+
+.dark .prism-profile-completion-hero {
+  border-color: #4b3565;
+  background:
+    radial-gradient(ellipse at 88% 12%, #7749b84d, transparent 42%),
+    linear-gradient(115deg, #241638, #1b142a 75%);
+  color: #f5efff;
+  box-shadow: 0 18px 50px #00000020;
+}
+
+.prism-profile-hero-glow {
+  position: absolute;
+  z-index: -1;
+  right: 8%;
+  top: 50%;
+  width: 330px;
+  height: 330px;
+  border: 1px solid #9b7ae54a;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  box-shadow: 0 0 0 28px #9b7ae510, 0 0 0 58px #9b7ae509;
+  pointer-events: none;
+}
+
+.prism-profile-hero-copy {
+  position: relative;
+  z-index: 1;
+  max-width: 680px;
+}
+
+.prism-profile-hero-eyebrow,
+.prism-profile-editor-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--dash-primary);
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 1.6px;
+}
+
+.prism-profile-hero-copy h1 {
+  max-width: 650px;
+  margin: 17px 0 0;
+  font-size: clamp(30px, 4vw, 48px);
+  font-weight: 900;
+  line-height: 1.08;
+  letter-spacing: -1.8px;
+}
+
+.prism-profile-hero-copy h1 em {
+  color: #8053df;
+  font-style: normal;
+}
+
+.dark .prism-profile-hero-copy h1 em {
+  color: #b69aff;
+}
+
+.prism-profile-hero-copy > p {
+  max-width: 560px;
+  margin: 17px 0 0;
+  color: var(--dash-muted);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.prism-profile-hero-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 17px;
+  margin-top: 26px;
+}
+
+.prism-profile-hero-actions > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 12px;
+  background: #7540d5;
+  color: #fff;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 9px 22px #7540d52b;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.prism-profile-hero-actions > button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 13px 28px #7540d53b;
+}
+
+.prism-profile-hero-actions > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--dash-muted);
+  font-size: 10px;
+  font-weight: 650;
+}
+
+.prism-profile-hero-actions > span svg {
+  color: #20a36a;
+}
+
+.prism-profile-hero-status {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 17px;
+  min-width: 0;
+  padding: 23px 20px;
+  border: 1px solid #ffffff80;
+  border-radius: 20px;
+  background: #ffffff7a;
+  backdrop-filter: blur(12px);
+}
+
+.dark .prism-profile-hero-status {
+  border-color: #ffffff17;
+  background: #100c1b66;
+}
+
+.prism-profile-ring {
+  display: grid;
+  place-items: center;
+  width: 132px;
+  height: 132px;
+  border-radius: 50%;
+  background: conic-gradient(#8053df var(--profile-progress), var(--dash-border) 0);
+  box-shadow: 0 10px 35px #8053df20;
+}
+
+.prism-profile-ring > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 108px;
+  height: 108px;
+  border-radius: 50%;
+  background: var(--dash-surface);
+}
+
+.prism-profile-ring strong {
+  color: var(--dash-text);
+  font-size: 29px;
+  font-weight: 900;
+  letter-spacing: -1px;
+}
+
+.prism-profile-ring small {
+  margin-top: 2px;
+  color: var(--dash-muted);
+  font-size: 8px;
+  font-weight: 850;
+  letter-spacing: 1.5px;
+}
+
+.prism-profile-remaining {
+  width: 100%;
+  max-width: 250px;
+}
+
+.prism-profile-remaining > strong {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--dash-text);
+  font-size: 11px;
+  text-align: center;
+}
+
+.prism-profile-remaining ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.prism-profile-remaining li {
+  padding: 5px 8px;
+  border: 1px solid var(--dash-border);
+  border-radius: 99px;
+  color: var(--dash-muted);
+  background: var(--dash-surface);
+  font-size: 9px;
+}
+
+/* Edit profile modal */
+.prism-profile-editor-backdrop {
+  position: fixed;
+  z-index: 1200;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 22px;
+  overflow-y: auto;
+  background: #10091d9c;
+  backdrop-filter: blur(7px);
+  animation: prism-profile-backdrop-in .18s ease both;
+}
+
+.prism-profile-editor {
+  width: min(760px, 100%);
+  max-height: min(90dvh, 900px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--dash-border);
+  border-radius: 22px;
+  background: var(--dash-surface);
+  color: var(--dash-text);
+  box-shadow: 0 28px 90px #08051055;
+  animation: prism-profile-editor-in .24s cubic-bezier(.2,.75,.2,1) both;
+}
+
+.prism-profile-editor-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 25px 28px 20px;
+  border-bottom: 1px solid var(--dash-border);
+}
+
+.prism-profile-editor-head h2 {
+  margin: 10px 0 0;
+  color: var(--dash-text);
+  font-size: 25px;
+  font-weight: 850;
+  letter-spacing: -.8px;
+}
+
+.prism-profile-editor-head p {
+  margin: 7px 0 0;
+  color: var(--dash-muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.prism-profile-editor-progress {
+  padding: 17px 28px 18px;
+  border-bottom: 1px solid var(--dash-border);
+  background: var(--dash-bg);
+}
+
+.prism-profile-editor-progress > small {
+  display: block;
+  margin-top: 7px;
+  color: var(--dash-muted);
+  font-size: 10px;
+}
+
+.prism-profile-form {
+  min-height: 0;
+  overflow-y: auto;
+  padding: 22px 28px 25px;
+}
+
+.prism-profile-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 17px 15px;
+}
+
+.prism-profile-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.prism-profile-field.is-wide {
+  grid-column: 1 / -1;
+}
+
+.prism-profile-field > span {
+  color: var(--dash-text);
+  font-size: 11px;
+  font-weight: 750;
+}
+
+.prism-profile-field > span i {
+  margin-left: 4px;
+  color: #e05252;
+  font-style: normal;
+}
+
+.prism-profile-field input,
+.prism-profile-field select {
+  width: 100%;
+  min-height: 45px;
+  padding: 0 12px;
+  border: 1px solid var(--dash-border);
+  border-radius: 10px;
+  outline: none;
+  background: var(--dash-input);
+  color: var(--dash-text);
+  font: inherit;
+  font-size: 12px;
+  transition: border-color .18s, box-shadow .18s;
+}
+
+.prism-profile-field input::placeholder {
+  color: var(--dash-muted);
+  opacity: .75;
+}
+
+.prism-profile-field input:focus,
+.prism-profile-field select:focus {
+  border-color: var(--dash-primary);
+  box-shadow: 0 0 0 3px #8b5cf61a;
+}
+
+.prism-profile-field input[readonly] {
+  color: var(--dash-muted);
+  background: var(--dash-bg);
+  cursor: not-allowed;
+}
+
+.prism-profile-form-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 18px 0 0;
+  color: var(--dash-muted);
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.prism-profile-form-note svg {
+  flex-shrink: 0;
+  color: #20a36a;
+}
+
+.prism-profile-form-message {
+  margin-top: 15px;
+  padding: 11px 13px;
+  border: 1px solid var(--dash-border);
+  border-radius: 10px;
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.prism-profile-form-message.is-success {
+  border-color: #22a06b55;
+  background: #22a06b12;
+  color: #168253;
+}
+
+.prism-profile-form-message.is-warning {
+  border-color: #d49a3155;
+  background: #d49a3112;
+  color: #b47717;
+}
+
+.prism-profile-form-message.is-error {
+  border-color: #e0525255;
+  background: #e0525212;
+  color: #d04444;
+}
+
+.prism-profile-editor-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--dash-border);
+}
+
+.prism-profile-cancel,
+.prism-profile-save {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 43px;
+  padding: 0 16px;
+  border-radius: 10px;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: transform .18s, opacity .18s;
+}
+
+.prism-profile-cancel {
+  border: 1px solid var(--dash-border);
+  background: var(--dash-surface);
+  color: var(--dash-text);
+}
+
+.prism-profile-save {
+  border: 1px solid #7540d5;
+  background: #7540d5;
+  color: #fff;
+}
+
+.prism-profile-cancel:hover,
+.prism-profile-save:hover {
+  transform: translateY(-1px);
+}
+
+.prism-profile-cancel:disabled,
+.prism-profile-save:disabled {
+  opacity: .55;
+  cursor: wait;
+}
+
+@keyframes prism-profile-backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes prism-profile-editor-in {
+  from { opacity: 0; transform: translateY(12px) scale(.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 700px) {
+  .prism-profile-completion-hero {
+    grid-template-columns: 1fr;
+    gap: 23px;
+    padding: 27px 22px;
+    border-radius: 19px;
+  }
+
+  .prism-profile-hero-copy h1 {
+    font-size: clamp(29px, 8vw, 39px);
+    letter-spacing: -1px;
+  }
+
+  .prism-profile-hero-copy > p {
+    font-size: 12px;
+  }
+
+  .prism-profile-hero-status {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 18px;
+    padding: 15px;
+  }
+
+  .prism-profile-ring {
+    width: 96px;
+    height: 96px;
+    flex-shrink: 0;
+  }
+
+  .prism-profile-ring > div {
+    width: 78px;
+    height: 78px;
+  }
+
+  .prism-profile-ring strong {
+    font-size: 22px;
+  }
+
+  .prism-profile-remaining > strong {
+    text-align: left;
+  }
+
+  .prism-profile-remaining ul {
+    justify-content: flex-start;
+  }
+
+  .prism-profile-editor-backdrop {
+    align-items: start;
+    padding: 12px;
+  }
+
+  .prism-profile-editor {
+    max-height: calc(100dvh - 24px);
+    border-radius: 17px;
+  }
+
+  .prism-profile-editor-head {
+    padding: 20px 18px 16px;
+  }
+
+  .prism-profile-editor-head h2 {
+    font-size: 21px;
+  }
+
+  .prism-profile-editor-progress {
+    padding: 14px 18px;
+  }
+
+  .prism-profile-form {
+    padding: 18px;
+  }
+
+  .prism-profile-form-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .prism-profile-field.is-wide {
+    grid-column: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prism-profile-editor-backdrop,
+  .prism-profile-editor {
+    animation: none !important;
+  }
+
+  .prism-profile-progress-track > span,
+  .prism-profile-hero-actions > button {
+    transition: none !important;
+  }
+}
+
+/* Optional profile fields, dashboard settings and help experience */
+.prism-profile-field input:read-only {
+  opacity: .78;
+  cursor: not-allowed;
+  background: var(--dash-bg);
+}
+.prism-settings-panel {
+  width: min(560px, 94vw);
+  max-height: min(88vh, 760px);
+  overflow: auto;
+  padding: 27px;
+  border: 1px solid var(--dash-border);
+  border-radius: 22px;
+  color: var(--dash-text);
+  background: var(--dash-surface);
+  box-shadow: 0 24px 80px #10091d35;
+  animation: prism-profile-editor-in .24s cubic-bezier(.2,.75,.2,1) both;
+}
+.prism-settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 19px 0;
+  border-bottom: 1px solid var(--dash-border);
+}
+.prism-settings-row > span { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.prism-settings-row b { font-size: 13px; }
+.prism-settings-row small { color: var(--dash-muted); font-size: 11px; line-height: 1.6; overflow-wrap: anywhere; }
+.prism-settings-row > svg { color: #16a36a; flex-shrink: 0; }
+.prism-settings-action {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 39px; padding: 0 13px;
+  border: 1px solid var(--dash-border); border-radius: 10px; background: var(--dash-bg);
+  color: var(--dash-text); font: inherit; font-size: 11px; font-weight: 700; cursor: pointer; white-space: nowrap;
+}
+.prism-settings-switch { width: 44px; height: 25px; padding: 3px; border: 0; border-radius: 99px; background: #aaa; cursor: pointer; transition: background .2s; flex-shrink: 0; }
+.prism-settings-switch i { display: block; width: 19px; height: 19px; border-radius: 50%; background: white; transition: transform .2s; }
+.prism-settings-switch.is-on { background: var(--dash-primary); }
+.prism-settings-switch.is-on i { transform: translateX(19px); }
+.prism-settings-footer { display: flex; justify-content: flex-end; padding-top: 22px; }
+@media (max-width: 520px) {
+  .prism-settings-panel { padding: 20px; }
+  .prism-settings-row { align-items: flex-start; }
+  .prism-settings-action { font-size: 10px; padding: 0 9px; }
+}

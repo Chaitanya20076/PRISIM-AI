@@ -1,0 +1,64 @@
+
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap");
+
+.prism-privacy-page {
+  --privacy-bg: #f7f2eb;
+  --privacy-surface: #fffdf9;
+  --privacy-surface-soft: #f1e9df;
+  --privacy-text: #292438;
+  --privacy-muted: #777184;
+  --privacy-accent: #ae6250;
+  --privacy-accent-light: #c47a63;
+  --privacy-border: rgba(41, 36, 56, 0.12);
+  --privacy-shadow: rgba(41, 36, 56, 0.055);
+
+  min-height: 100vh;
+  overflow: clip;
+  background: var(--privacy-bg);
+  color: var(--privacy-text);
+  font-family: "DM Sans", sans-serif;
+  transition:
+    background 0.35s ease,
+    color 0.35s ease;
+}
+
+html[data-theme="dark"] .prism-privacy-page {
+  --privacy-bg: #171522;
+  --privacy-surface: #211d2d;
+  --privacy-surface-soft: #292438;
+  --privacy-text: #f8f1eb;
+  --privacy-muted: #bdb5ca;
+  --privacy-accent: #e6a68c;
+  --privacy-accent-light: #f0b99f;
+  --privacy-border: rgba(248, 241, 235, 0.12);
+  --privacy-shadow: rgba(0, 0, 0, 0.18);
+}
+
+.prism-privacy-page *,
+.prism-privacy-page *::before,
+.prism-privacy-page *::after {
+  box-sizing: border-box;
+}
+
+.prism-privacy-page a {
+  color: inherit;
+}
+
+.prism-privacy-page button {
+  font: inherit;
+}
+
+.prism-privacy-page ::selection {
+  background: rgba(174, 98, 80, 0.2);
+  color: var(--privacy-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prism-privacy-page *,
+  .prism-privacy-page *::before,
+  .prism-privacy-page *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,11 @@
+.feature-visual--projects { background:#d9e1d8; }
+.feature-visual--projects img { object-position:center; }
+.project-side-note { position:absolute; right:0; top:0; bottom:0; width:92px; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:12px; background:#262239e8; color:white; writing-mode:vertical-rl; transform:none; }
+.project-side-note span { color:#e3ad91; font-size:9px; letter-spacing:.2em; }
+.project-side-note b { font:700 13px "Manrope"; letter-spacing:.14em; }
+.project-side-note i { width:1px; height:45px; background:#e3ad91; }
+.project-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:13px; margin-top:30px; }
+.project-stats div { display:flex; flex-direction:column; gap:9px; padding:17px 13px; border:1px solid var(--feature-line); border-radius:15px; color:#ae6250; }
+.project-stats strong { color:var(--feature-ink); font-size:13px; }
+.project-stats span { color:var(--feature-muted); font-size:11px; line-height:1.5; }
+@media(max-width:760px){.project-stats{grid-template-columns:1fr 1fr}.project-side-note{width:65px}}

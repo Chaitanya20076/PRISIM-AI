@@ -1,0 +1,428 @@
+/* =========================================
+   PRISM AI — ABOUT MISSION
+   Lavender / periwinkle / soft blue section
+   ========================================= */
+
+.about-mission {
+  --mission-bg: #eeecfa;
+  --mission-text: #292746;
+  --mission-muted: #716f8d;
+  --mission-accent: #7770bd;
+  --mission-accent-deep: #514b91;
+  --mission-glass: rgba(255, 255, 255, 0.57);
+  --mission-border: rgba(100, 93, 165, 0.17);
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(88px, 10vw, 145px) clamp(22px, 7vw, 110px);
+  color: var(--mission-text);
+  background:
+    radial-gradient(ellipse at 8% 16%, rgba(181, 169, 231, 0.25), transparent 34%),
+    radial-gradient(ellipse at 92% 76%, rgba(150, 185, 231, 0.23), transparent 34%),
+    linear-gradient(135deg, #f2effb 0%, var(--mission-bg) 54%, #e7effa 100%);
+}
+
+html[data-theme="dark"] .about-mission {
+  --mission-bg: #201f32;
+  --mission-text: #f0edff;
+  --mission-muted: #b2afca;
+  --mission-accent: #aaa2ed;
+  --mission-accent-deep: #c2bcff;
+  --mission-glass: rgba(46, 44, 69, 0.62);
+  --mission-border: rgba(190, 181, 255, 0.17);
+
+  background:
+    radial-gradient(ellipse at 8% 16%, rgba(104, 88, 164, 0.23), transparent 35%),
+    radial-gradient(ellipse at 92% 76%, rgba(79, 117, 166, 0.2), transparent 36%),
+    linear-gradient(135deg, #201f32 0%, #25243a 54%, #202d3d 100%);
+}
+
+.about-mission * {
+  box-sizing: border-box;
+}
+
+.about-mission-noise {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.2;
+  background-image: radial-gradient(rgba(91, 82, 148, 0.24) 0.7px, transparent 0.7px);
+  background-size: 17px 17px;
+  mask-image: linear-gradient(135deg, transparent, black 45%, transparent);
+}
+
+.about-mission-glow {
+  position: absolute;
+  z-index: -1;
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  filter: blur(95px);
+  pointer-events: none;
+}
+
+.mission-glow-one {
+  top: -230px;
+  right: 20%;
+  background: rgba(153, 135, 216, 0.22);
+}
+
+.mission-glow-two {
+  bottom: -240px;
+  left: 12%;
+  background: rgba(112, 165, 211, 0.2);
+}
+
+.about-mission-container {
+  width: min(1240px, 100%);
+  margin: 0 auto;
+}
+
+.about-mission-heading {
+  max-width: 790px;
+  margin-bottom: 48px;
+}
+
+.about-mission-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 25px;
+  color: var(--mission-accent-deep);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+}
+
+.about-mission-eyebrow-icon {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--mission-border);
+  border-radius: 50%;
+  background: var(--mission-glass);
+}
+
+.about-mission-title {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  font-size: clamp(43px, 5.7vw, 76px);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.06em;
+}
+
+.about-mission-title span {
+  color: var(--mission-accent);
+  font-style: italic;
+}
+
+.about-mission-intro {
+  max-width: 620px;
+  margin: 25px 0 0;
+  color: var(--mission-muted);
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+/* Mission statement glass panel */
+.about-mission-statement {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 4vw, 48px);
+  min-height: 190px;
+  margin-bottom: 66px;
+  padding: 35px clamp(25px, 5vw, 64px);
+  overflow: hidden;
+  border: 1px solid var(--mission-border);
+  border-radius: 27px;
+  background:
+    linear-gradient(110deg, rgba(255, 255, 255, 0.48), transparent 65%),
+    var(--mission-glass);
+  box-shadow:
+    0 22px 65px rgba(66, 61, 113, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+}
+
+html[data-theme="dark"] .about-mission-statement {
+  background:
+    linear-gradient(110deg, rgba(255, 255, 255, 0.045), transparent 65%),
+    var(--mission-glass);
+  box-shadow:
+    0 22px 65px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.about-mission-statement-mark {
+  position: relative;
+  z-index: 1;
+  align-self: flex-start;
+  color: var(--mission-accent);
+  font-family: Georgia, serif;
+  font-size: 100px;
+  line-height: 0.9;
+  opacity: 0.65;
+}
+
+.about-mission-statement-content {
+  position: relative;
+  z-index: 1;
+  max-width: 820px;
+}
+
+.about-mission-statement-label {
+  color: var(--mission-accent-deep);
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+}
+
+.about-mission-statement-content p {
+  margin: 12px 0 0;
+  color: var(--mission-text);
+  font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  font-size: clamp(22px, 3vw, 34px);
+  line-height: 1.35;
+  letter-spacing: -0.025em;
+}
+
+.about-mission-statement-orbit {
+  position: absolute;
+  right: -62px;
+  bottom: -155px;
+  width: 310px;
+  height: 310px;
+  border: 1px solid rgba(119, 112, 189, 0.2);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 24px rgba(119, 112, 189, 0.035),
+    0 0 0 49px rgba(119, 112, 189, 0.025);
+}
+
+/* Pillars */
+.about-mission-pillars-heading {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 19px;
+  color: var(--mission-muted);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.19em;
+}
+
+.about-mission-heading-rule {
+  height: 1px;
+  flex: 1;
+  background: var(--mission-border);
+}
+
+.about-mission-pillars {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 17px;
+}
+
+.about-mission-pillar {
+  position: relative;
+  min-height: 275px;
+  display: flex;
+  flex-direction: column;
+  padding: 25px 25px 21px;
+  overflow: hidden;
+  border: 1px solid var(--mission-border);
+  border-radius: 22px;
+  background: var(--mission-glass);
+  box-shadow:
+    0 15px 42px rgba(66, 61, 113, 0.055),
+    inset 0 1px 0 rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+html[data-theme="dark"] .about-mission-pillar {
+  box-shadow:
+    0 15px 42px rgba(0, 0, 0, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.055);
+}
+
+.about-mission-pillar::after {
+  position: absolute;
+  top: -70px;
+  right: -70px;
+  width: 170px;
+  height: 170px;
+  border: 1px solid rgba(119, 112, 189, 0.15);
+  border-radius: 50%;
+  content: "";
+  transition: transform 0.45s ease;
+}
+
+.about-mission-pillar:hover {
+  transform: translateY(-7px);
+  border-color: rgba(119, 112, 189, 0.34);
+  box-shadow: 0 22px 48px rgba(66, 61, 113, 0.11);
+}
+
+.about-mission-pillar:hover::after {
+  transform: scale(1.2);
+}
+
+.about-mission-pillar-top {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.about-mission-pillar-icon {
+  width: 45px;
+  height: 45px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--mission-border);
+  border-radius: 14px;
+  color: var(--mission-accent-deep);
+  background: rgba(142, 133, 207, 0.12);
+}
+
+.mission-pillar-innovate .about-mission-pillar-icon {
+  color: #6389b7;
+  background: rgba(119, 163, 213, 0.14);
+}
+
+.mission-pillar-impact .about-mission-pillar-icon {
+  color: #648d91;
+  background: rgba(111, 174, 174, 0.14);
+}
+
+.about-mission-pillar-number {
+  color: var(--mission-muted);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.about-mission-pillar h3 {
+  position: relative;
+  z-index: 1;
+  margin: 28px 0 0;
+  color: var(--mission-text);
+  font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  font-size: 29px;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+}
+
+.about-mission-pillar p {
+  position: relative;
+  z-index: 1;
+  max-width: 330px;
+  margin: 10px 0 25px;
+  color: var(--mission-muted);
+  font-size: 12px;
+  line-height: 1.85;
+}
+
+.about-mission-pillar-bottom {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--mission-border);
+  color: var(--mission-accent-deep);
+}
+
+.about-mission-pillar-bottom span {
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .about-mission-pillars {
+    grid-template-columns: 1fr;
+    gap: 13px;
+  }
+
+  .about-mission-pillar {
+    min-height: 0;
+  }
+
+  .about-mission-pillar p {
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 560px) {
+  .about-mission {
+    padding: 82px 20px;
+  }
+
+  .about-mission-title {
+    font-size: clamp(42px, 11vw, 58px);
+  }
+
+  .about-mission-intro {
+    font-size: 13px;
+  }
+
+  .about-mission-statement {
+    align-items: flex-start;
+    gap: 12px;
+    min-height: 0;
+    margin-bottom: 48px;
+    padding: 25px 20px;
+    border-radius: 21px;
+  }
+
+  .about-mission-statement-mark {
+    font-size: 65px;
+  }
+
+  .about-mission-statement-content p {
+    font-size: 22px;
+  }
+
+  .about-mission-statement-orbit {
+    right: -170px;
+    bottom: -190px;
+  }
+
+  .about-mission-pillar {
+    padding: 21px;
+    border-radius: 19px;
+  }
+
+  .about-mission-pillar h3 {
+    margin-top: 21px;
+    font-size: 26px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-mission *,
+  .about-mission *::before,
+  .about-mission *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

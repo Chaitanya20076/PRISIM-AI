@@ -1,0 +1,19 @@
+.research-feature { padding:110px 0 100px; border-bottom:1px solid var(--feature-line); }
+.research-feature__header { display:grid; grid-template-columns:1fr 1fr; gap:70px; align-items:end; }
+.research-feature h2,.mentorship-feature h2 { margin:18px 0 0; color:var(--feature-ink); font:800 clamp(2.7rem,4.5vw,4.4rem)/1.03 "Manrope"; letter-spacing:-.065em; }
+.research-feature h2 em,.mentorship-feature h2 em { color:#ae6250; font-style:normal; }
+.research-feature__header>p { max-width:490px; margin:0 0 7px; color:var(--feature-muted); line-height:1.9; font-size:15px; }
+.research-feature__body { display:grid; grid-template-columns:.9fr 1.1fr; align-items:center; gap:70px; margin:65px 0 10px; }
+.research-orbit { position:relative; width:min(100%,390px); aspect-ratio:1; margin:auto; display:grid; place-items:center; border-radius:50%; background:radial-gradient(circle,#f1dfd3 0,#ead9d2 35%,transparent 70%); }
+html[data-theme="dark"] .research-orbit { background:radial-gradient(circle,#473044 0,#29243a 42%,transparent 72%); }
+.orbit-ring { position:absolute; border:1px solid rgba(174,98,80,.35); border-radius:50%; }
+.orbit-ring--one { width:75%; height:75%; }
+.orbit-ring--two { width:98%; height:98%; border-style:dashed; }
+.orbit-core { width:112px; height:112px; display:grid; place-items:center; border-radius:35px; color:#fff; background:#a85d4b; box-shadow:0 18px 45px #a85d4b55; }
+.orbit-node { position:absolute; width:48px; height:48px; display:grid; place-items:center; border-radius:16px; color:#a85d4b; background:var(--feature-paper); border:1px solid var(--feature-line); box-shadow:0 10px 25px #1c152012; }
+.orbit-node--one { top:8%; left:47%; }.orbit-node--two { right:4%; bottom:24%; }.orbit-node--three { left:5%; bottom:23%; }
+.research-topics { display:grid; gap:0; }
+.research-topics article { display:grid; grid-template-columns:32px 28px 1fr; align-items:start; gap:15px; padding:23px 0; border-bottom:1px solid var(--feature-line); color:#ae6250; }
+.research-topic-number { color:var(--feature-muted); font-size:10px; letter-spacing:.12em; padding-top:4px; }
+.research-topics h3 { margin:0 0 6px; color:var(--feature-ink); font-size:15px; }.research-topics p { margin:0; color:var(--feature-muted); font-size:13px; line-height:1.6; }
+@media(max-width:760px){.research-feature{padding:75px 0}.research-feature__header,.research-feature__body{grid-template-columns:1fr;gap:30px}.research-feature__body{margin-top:35px}.research-orbit{max-width:300px}}

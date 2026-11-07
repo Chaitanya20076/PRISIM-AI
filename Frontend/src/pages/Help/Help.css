@@ -1,0 +1,40 @@
+.prism-help-page {
+  --help-bg: #faf9ff; --help-surface: #fff; --help-text: #24183d; --help-muted: #81758f;
+  --help-border: #eee8f7; --help-primary: #7c3aed; --help-tint: #f0eaff;
+  min-height: 100vh; color: var(--help-text); background: var(--help-bg);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  padding-bottom: 30px;
+}
+html[data-theme="dark"] .prism-help-page { --help-bg:#100c1b; --help-surface:#1b142a; --help-text:#f5efff; --help-muted:#b0a3c6; --help-border:#322543; --help-primary:#b69aff; --help-tint:#241638; }
+.prism-help-page *, .prism-help-page *::before, .prism-help-page *::after { box-sizing:border-box; }
+.prism-help-nav { min-height:76px; padding:14px max(5%,calc((100vw - 1200px)/2)); display:flex; align-items:center; justify-content:space-between; gap:20px; border-bottom:1px solid var(--help-border); background:var(--help-surface); }
+.prism-help-brand,.prism-help-back { display:inline-flex; align-items:center; gap:10px; color:var(--help-text); text-decoration:none; font-size:13px; font-weight:800; }
+.prism-help-brand > span { width:39px; height:39px; display:grid; place-items:center; border-radius:12px; color:white; background:linear-gradient(140deg,#8b5cf6,#5b21b6); }
+.prism-help-back { min-height:40px; padding:0 13px; border:1px solid var(--help-border); border-radius:11px; font-size:11px; }
+.prism-help-hero { width:min(1200px,90%); margin:42px auto 0; padding:clamp(32px,6vw,66px); border:1px solid #dcd0fa; border-radius:25px; background:radial-gradient(ellipse at 88% 18%,#c8b1ff78,transparent 42%),linear-gradient(115deg,var(--help-tint),var(--help-surface)); }
+html[data-theme="dark"] .prism-help-hero { border-color:#47325f; background:radial-gradient(ellipse at 88% 18%,#7749b84a,transparent 45%),linear-gradient(115deg,#241638,#1b142a); }
+.prism-help-eyebrow { display:inline-flex; align-items:center; gap:8px; color:var(--help-primary); font-size:10px; font-weight:850; letter-spacing:1.8px; }
+.prism-help-hero h1 { margin:18px 0 12px; font-size:clamp(34px,5vw,58px); line-height:1.08; letter-spacing:-2px; }
+.prism-help-hero h1 em { color:var(--help-primary); font-style:normal; }
+.prism-help-hero p { max-width:650px; margin:0; color:var(--help-muted); font-size:14px; line-height:1.9; }
+.prism-help-content { width:min(1100px,90%); margin:48px auto; }
+.prism-help-heading > span { color:var(--help-primary); font-size:10px; font-weight:850; letter-spacing:1.7px; }
+.prism-help-heading h2 { margin:9px 0 7px; font-size:25px; letter-spacing:-.6px; }
+.prism-help-heading p { margin:0; color:var(--help-muted); font-size:13px; }
+.prism-help-contact-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; margin-top:24px; }
+.prism-help-contact-card { display:flex; flex-direction:column; align-items:flex-start; min-height:270px; padding:25px; border:1px solid var(--help-border); border-radius:19px; background:var(--help-surface); color:var(--help-text); text-decoration:none; transition:transform .2s,border-color .2s,box-shadow .2s; }
+.prism-help-contact-card:hover { transform:translateY(-4px); border-color:var(--help-primary); box-shadow:0 15px 35px #6d28d912; }
+.prism-help-contact-icon { width:48px; height:48px; display:grid; place-items:center; margin-bottom:20px; border-radius:14px; color:var(--help-primary); background:var(--help-tint); }
+.prism-help-contact-card > small { color:var(--help-primary); font-size:9px; font-weight:850; letter-spacing:1.5px; }
+.prism-help-contact-card h3 { margin:8px 0; font-size:18px; }
+.prism-help-contact-card p { margin:0 0 17px; color:var(--help-muted); font-size:12px; line-height:1.8; }
+.prism-help-contact-card > strong { font-size:14px; overflow-wrap:anywhere; }
+.prism-help-open { display:inline-flex; align-items:center; gap:7px; margin-top:17px; color:var(--help-primary); font-size:11px; font-weight:800; }
+.prism-help-open svg { transform:rotate(135deg); }
+.prism-help-note { display:flex; align-items:flex-start; gap:12px; margin-top:20px; padding:17px; border:1px solid var(--help-border); border-radius:14px; background:var(--help-surface); color:var(--help-primary); }
+.prism-help-note span { display:flex; flex-direction:column; gap:5px; }
+.prism-help-note b { color:var(--help-text); font-size:12px; }
+.prism-help-note small { color:var(--help-muted); font-size:11px; line-height:1.7; }
+.prism-help-footer { width:min(1100px,90%); margin:50px auto 0; padding-top:18px; border-top:1px solid var(--help-border); display:flex; justify-content:space-between; color:var(--help-muted); font-size:11px; }
+.prism-help-footer span:first-child { display:flex; align-items:center; gap:7px; color:var(--help-primary); font-weight:850; letter-spacing:1px; }
+@media(max-width:650px) { .prism-help-nav { min-height:66px; padding:11px 5%; } .prism-help-hero { margin-top:24px; border-radius:19px; } .prism-help-contact-grid { grid-template-columns:1fr; } .prism-help-contact-card { min-height:240px; } .prism-help-footer { gap:12px; font-size:9px; } }

@@ -1,0 +1,25 @@
+.prism-faq-page {
+  --faq-bg: #f7f2eb;
+  --faq-surface: #fffdf9;
+  --faq-soft: #f1e9df;
+  --faq-text: #292438;
+  --faq-muted: #777184;
+  --faq-accent: #ae6250;
+  --faq-border: rgba(41, 36, 56, 0.12);
+  --faq-shadow: rgba(41, 36, 56, 0.055);
+
+  min-height: 100vh;
+  background: var(--faq-bg);
+  color: var(--faq-text);
+}
+
+html[data-theme="dark"] .prism-faq-page {
+  --faq-bg: #171522;
+  --faq-surface: #211d2d;
+  --faq-soft: #292438;
+  --faq-text: #f8f1eb;
+  --faq-muted: #bdb5ca;
+  --faq-accent: #e6a68c;
+  --faq-border: rgba(248, 241, 235, 0.12);
+  --faq-shadow: rgba(0, 0, 0, 0.18);
+}

@@ -1,0 +1,878 @@
+.recruitment-portal {
+  --rp-accent: #dc9750;
+  --rp-accent-dark: #b97531;
+  --rp-navy: #1e2640;
+  --rp-bg: #f5f3ee;
+  --rp-surface: #ffffff;
+  --rp-text: #252a38;
+  --rp-muted: #777b85;
+  --rp-border: #e6e3dc;
+  --rp-soft: #f0eee8;
+  min-height: 100vh;
+  padding: 0 0 34px;
+  background: var(--rp-bg);
+  color: var(--rp-text);
+  font-family: inherit;
+  transition: background .25s ease, color .25s ease;
+}
+.recruitment-portal *, .recruitment-portal *::before, .recruitment-portal *::after { box-sizing: border-box; }
+.recruitment-portal button, .recruitment-portal input, .recruitment-portal textarea, .recruitment-portal select { font: inherit; }
+.recruitment-portal button { -webkit-tap-highlight-color: transparent; }
+.recruitment-portal button:focus-visible, .recruitment-portal input:focus-visible, .recruitment-portal textarea:focus-visible, .recruitment-portal select:focus-visible { outline: 3px solid rgba(220,151,80,.4); outline-offset: 3px; }
+.rp-shell { width: min(1180px, calc(100% - 64px)); margin: 0 auto; }
+.rp-header { min-height: 76px; display:flex; align-items:center; justify-content:space-between; gap:20px; border-bottom:1px solid var(--rp-border); }
+.rp-brand { display:flex; align-items:center; gap:12px; color:var(--rp-navy); font-size:14px; letter-spacing:.09em; }
+.rp-brand-mark { display:grid; place-items:center; width:39px; height:39px; background:var(--rp-navy); color:#fff; font-weight:800; font-size:20px; border-radius:3px; letter-spacing:-.08em; }
+.rp-brand strong,.rp-brand small { display:block; }
+.rp-brand small { margin-top:4px; color:var(--rp-muted); font-size:8px; letter-spacing:.17em; font-weight:800; }
+.rp-header-actions { display:flex; align-items:center; gap:10px; }
+.rp-quiet-button,.rp-theme-button { display:inline-flex; align-items:center; justify-content:center; gap:8px; border:1px solid var(--rp-border); border-radius:999px; background:var(--rp-surface); color:var(--rp-text); padding:10px 14px; cursor:pointer; font-size:12px; font-weight:700; }
+.rp-theme-button { padding:10px 13px; }
+.rp-hero { min-height:435px; padding:68px 7.5% 62px; display:grid; grid-template-columns:1.05fr .95fr; align-items:center; gap:30px; position:relative; overflow:hidden; background:var(--rp-surface); border:1px solid var(--rp-border); border-top:0; }
+.rp-hero::before { content:""; position:absolute; width:380px; height:380px; border-radius:50%; right:-140px; top:-200px; background:rgba(220,151,80,.10); }
+.rp-hero-copy { position:relative; z-index:1; }
+.rp-eyebrow { display:inline-flex; align-items:center; gap:9px; color:var(--rp-accent-dark); font-size:9px; letter-spacing:.17em; font-weight:850; }
+.rp-eyebrow > span { display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--rp-accent); box-shadow:0 0 0 4px rgba(220,151,80,.12); }
+.rp-hero h1,.rp-form-hero h1 { margin:23px 0 17px; color:var(--rp-navy); font-size:clamp(42px,5.4vw,68px); line-height:.99; letter-spacing:-.065em; font-weight:750; }
+.rp-hero h1 em { color:var(--rp-accent-dark); font-style:normal; }
+.rp-hero-copy > p { max-width:480px; margin:0; color:var(--rp-muted); font-size:15px; line-height:1.8; }
+.rp-hero-points { display:flex; flex-wrap:wrap; gap:18px; margin-top:26px; }
+.rp-hero-points span { display:flex; align-items:center; gap:7px; color:var(--rp-text); font-size:11px; font-weight:700; }
+.rp-hero-points svg { color:var(--rp-accent-dark); }
+.rp-hero-art { min-height:280px; position:relative; display:grid; place-items:center; isolation:isolate; }
+.rp-orbit { position:absolute; border:1px solid rgba(220,151,80,.45); border-radius:50%; transform:rotate(-25deg); }
+.rp-orbit-one { width:245px; height:245px; }
+.rp-orbit-two { width:315px; height:175px; transform:rotate(35deg); border-color:rgba(30,38,64,.2); }
+.rp-orbit-three { width:180px; height:310px; transform:rotate(48deg); border-style:dashed; border-color:rgba(220,151,80,.35); }
+.rp-art-core { display:grid; place-items:center; width:115px; height:115px; background:var(--rp-navy); color:white; border:7px solid var(--rp-surface); outline:1px solid rgba(30,38,64,.16); border-radius:50%; box-shadow:0 22px 50px rgba(30,38,64,.17); font-size:43px; font-weight:800; letter-spacing:-.1em; }
+.rp-art-core span { color:var(--rp-accent); font-size:14px; letter-spacing:.12em; margin-left:4px; }
+.rp-art-dot { position:absolute; display:block; width:13px; height:13px; border:3px solid var(--rp-surface); border-radius:50%; background:var(--rp-accent); box-shadow:0 0 0 1px rgba(220,151,80,.3); }
+.rp-dot-one { top:23%; right:23%; }.rp-dot-two { left:18%; top:49%; width:10px;height:10px;background:var(--rp-navy); }.rp-dot-three { right:25%; bottom:15%; width:8px;height:8px; }
+.rp-art-note { position:absolute; right:0; bottom:0; padding:11px 14px; border:1px solid var(--rp-border); background:var(--rp-surface); color:var(--rp-muted); font-size:8px; letter-spacing:.14em; font-weight:850; }
+.rp-opportunities { padding:68px 0 52px; }
+.rp-section-heading { display:flex; align-items:end; justify-content:space-between; gap:24px; margin-bottom:27px; }
+.rp-kicker { display:block; color:var(--rp-accent-dark); font-size:9px; font-weight:850; letter-spacing:.17em; }
+.rp-section-heading h2 { margin:10px 0 8px; color:var(--rp-navy); font-size:clamp(28px,3.5vw,39px); line-height:1.12; letter-spacing:-.05em; }
+.rp-section-heading h2 span,.rp-form-intro h2 span { color:var(--rp-accent-dark); }
+.rp-section-heading p { margin:0; color:var(--rp-muted); font-size:13px; line-height:1.7; }
+.rp-count { display:flex; flex-direction:column; align-items:flex-end; gap:5px; padding:0 0 5px 20px; border-left:1px solid var(--rp-border); flex-shrink:0; }
+.rp-count strong { font-size:31px; color:var(--rp-navy); letter-spacing:-.06em; }.rp-count span { color:var(--rp-muted); font-size:8px; letter-spacing:.14em; font-weight:850; }
+.rp-search { display:flex; align-items:center; gap:12px; min-height:54px; padding:0 17px; background:var(--rp-surface); border:1px solid var(--rp-border); margin-bottom:22px; color:var(--rp-muted); }
+.rp-search input { flex:1; min-width:0; border:0; outline:0!important; background:transparent; color:var(--rp-text); font-size:13px; }
+.rp-search span { font-size:8px; font-weight:850; letter-spacing:.13em; }
+.rp-drive-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
+.rp-drive-card { display:flex; flex-direction:column; min-width:0; padding:22px 23px 19px; background:var(--rp-surface); border:1px solid var(--rp-border); border-top:3px solid var(--rp-drive-accent); transition:transform .2s ease, box-shadow .2s ease; }
+.rp-drive-card:hover { transform:translateY(-3px); box-shadow:0 15px 36px rgba(30,38,64,.07); }
+.rp-drive-topline { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.rp-open-pill { display:inline-flex; align-items:center; gap:7px; color:#477d58; font-size:8px; font-weight:850; letter-spacing:.1em; }
+.rp-open-pill i { width:6px;height:6px;border-radius:50%;background:#5b9b6c; }
+.rp-drive-icon { display:grid; place-items:center; width:39px;height:39px;background:color-mix(in srgb,var(--rp-drive-accent) 16%,transparent);color:var(--rp-drive-accent);border-radius:50%; }
+.rp-drive-content { flex:1; }
+.rp-role-kicker { display:block; margin-top:22px; color:var(--rp-muted); font-size:8px; letter-spacing:.14em; font-weight:850; }
+.rp-drive-card h3 { margin:8px 0 7px; color:var(--rp-navy); font-size:25px; letter-spacing:-.045em; overflow-wrap:anywhere; }
+.rp-drive-title { margin:0; color:var(--rp-text); font-size:13px; font-weight:700; line-height:1.6; }
+.rp-drive-subtitle { margin:7px 0 0; color:var(--rp-muted); font-size:12px; line-height:1.65; }
+.rp-drive-meta { display:grid; gap:10px; margin-top:21px; padding:16px 0; border-top:1px solid var(--rp-border); border-bottom:1px solid var(--rp-border); }
+.rp-drive-meta span { display:flex; align-items:flex-start; gap:9px; color:var(--rp-muted); font-size:11px; line-height:1.6; }
+.rp-drive-meta svg { flex-shrink:0; color:var(--rp-drive-accent); margin-top:1px; }
+.rp-eligibility { margin:14px 0 0; color:var(--rp-muted); font-size:11px; line-height:1.7; }
+.rp-apply-button,.rp-submit-button { display:inline-flex; align-items:center; justify-content:center; gap:11px; border:1px solid var(--rp-navy); background:var(--rp-navy); color:#fff; padding:13px 16px; margin-top:19px; cursor:pointer; font-size:11px; font-weight:800; transition:background .2s ease, transform .2s ease; }
+.rp-apply-button { width:100%; }.rp-apply-button:hover,.rp-submit-button:hover { background:#2c3657; transform:translateY(-1px); }
+.rp-empty { display:flex; flex-direction:column; align-items:center; text-align:center; padding:58px 20px; background:var(--rp-surface); border:1px dashed var(--rp-border); }
+.rp-empty-icon { display:grid;place-items:center;width:54px;height:54px;border-radius:50%;background:var(--rp-soft);color:var(--rp-accent-dark); }
+.rp-empty h3 { margin:18px 0 8px; color:var(--rp-navy); font-size:21px; letter-spacing:-.035em; }.rp-empty p { max-width:410px; margin:0; color:var(--rp-muted); font-size:12px; line-height:1.8; }
+.rp-outline-button { margin-top:17px; padding:10px 14px; border:1px solid var(--rp-border); background:transparent; color:var(--rp-text); cursor:pointer; font-size:11px; }
+.rp-bottom-banner { display:flex; align-items:center; gap:21px; padding:28px 30px; background:var(--rp-navy); color:white; }
+.rp-banner-mark { display:grid;place-items:center;width:48px;height:48px;flex-shrink:0;border:1px solid rgba(255,255,255,.25);color:var(--rp-accent);font-size:23px;font-weight:850;letter-spacing:-.1em; }
+.rp-bottom-banner .rp-kicker { color:var(--rp-accent); }.rp-bottom-banner h2 { margin:7px 0 5px; font-size:21px; letter-spacing:-.04em; }.rp-bottom-banner p { margin:0; color:#c4c8d3; font-size:11px; line-height:1.7; }
+.rp-bottom-banner a { display:flex; align-items:center; gap:9px; margin-left:auto; flex-shrink:0; color:white; text-decoration:none; font-size:11px; font-weight:800; }.rp-bottom-banner a:hover { color:var(--rp-accent); }
+.rp-footer { display:flex; justify-content:space-between; gap:15px; padding-top:23px; color:var(--rp-muted); font-size:8px; font-weight:850; letter-spacing:.1em; }.rp-footer i { color:var(--rp-accent); font-style:normal; }.rp-footer b { margin-left:5px; color:var(--rp-accent-dark); font-size:12px; }
+.rp-back-link { display:inline-flex; align-items:center; gap:8px; margin:25px 0 17px; padding:0; border:0; background:transparent; color:var(--rp-muted); font-size:12px; font-weight:750; cursor:pointer; }.rp-back-link:hover { color:var(--rp-accent-dark); }
+.rp-form-hero { padding:36px 42px; background:var(--rp-navy); color:#fff; border-top:3px solid var(--rp-drive-accent); }.rp-form-hero .rp-eyebrow { color:var(--rp-drive-accent); }.rp-form-hero h1 { margin:15px 0 8px; color:#fff; font-size:clamp(34px,4vw,48px); }.rp-form-hero > p { margin:0; color:#d1d4de; font-size:14px; line-height:1.7; }.rp-form-meta { display:flex; flex-wrap:wrap; gap:18px; margin-top:21px; }.rp-form-meta span { display:flex; align-items:center; gap:8px; color:#e1e3e9; font-size:11px; }.rp-form-meta svg { color:var(--rp-drive-accent); }
+.rp-form-layout { display:grid; grid-template-columns:minmax(230px,.72fr) minmax(0,1.6fr); gap:22px; align-items:start; margin-top:22px; }.rp-role-sidebar,.rp-application-form { min-width:0; background:var(--rp-surface); border:1px solid var(--rp-border); }.rp-role-sidebar { padding:24px 22px; }.rp-role-sidebar > div:not(.rp-sidebar-note) { margin-top:23px; }.rp-role-sidebar h3 { margin:0 0 8px; color:var(--rp-navy); font-size:13px; }.rp-role-sidebar p { margin:0; white-space:pre-line; color:var(--rp-muted); font-size:11px; line-height:1.8; }.rp-sidebar-note { display:flex; gap:10px; align-items:flex-start; margin-top:26px; padding:13px; background:var(--rp-soft); color:var(--rp-muted); font-size:10px; line-height:1.7; }.rp-sidebar-note svg { flex-shrink:0; color:var(--rp-accent-dark); }
+.rp-application-form { padding:30px; }.rp-form-intro { padding-bottom:24px; border-bottom:1px solid var(--rp-border); }.rp-form-intro h2 { margin:9px 0 6px; color:var(--rp-navy); font-size:29px; letter-spacing:-.05em; }.rp-form-intro p { margin:0; color:var(--rp-muted); font-size:11px; }.rp-form-intro b,.rp-field label b { color:#c36e46; }
+.rp-question-section { display:grid; grid-template-columns:36px minmax(0,1fr); gap:15px; padding:25px 0; border-bottom:1px solid var(--rp-border); }.rp-section-number { display:grid;place-items:center;width:31px;height:31px;background:var(--rp-soft);color:var(--rp-accent-dark);font-size:10px;font-weight:850; }.rp-question-section-content { min-width:0; }.rp-question-section h3 { margin:3px 0 7px; color:var(--rp-navy); font-size:16px; letter-spacing:-.025em; }.rp-section-description { margin:0 0 19px; color:var(--rp-muted); font-size:11px; line-height:1.7; }.rp-field { margin-top:18px; }.rp-field label { display:block; margin-bottom:8px; color:var(--rp-text); font-size:11px; font-weight:750; line-height:1.6; }.rp-field input:not([type=checkbox]):not([type=radio]),.rp-field textarea,.rp-field select { width:100%; min-width:0; padding:12px 13px; border:1px solid var(--rp-border); border-radius:0; background:var(--rp-bg); color:var(--rp-text); font-size:12px; outline-offset:2px; }.rp-field textarea { resize:vertical; line-height:1.6; }.rp-field input::placeholder,.rp-field textarea::placeholder { color:var(--rp-muted); opacity:.8; }.rp-choice-list { display:grid; gap:9px; }.rp-choice { display:flex!important; align-items:center; gap:9px; margin:0!important; padding:10px 12px; border:1px solid var(--rp-border); background:var(--rp-bg); font-weight:500!important; cursor:pointer; }.rp-choice input { accent-color:var(--rp-accent-dark); }
+.rp-submit-row { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; padding-top:23px; }.rp-submit-row p { display:flex; align-items:center; gap:7px; margin:0; color:var(--rp-muted); font-size:10px; line-height:1.6; }.rp-submit-row p svg { flex-shrink:0; }.rp-submit-button { margin:0; padding:14px 17px; }.rp-submit-button:disabled { opacity:.65; cursor:wait; }.rp-notice { display:flex; gap:13px; margin-top:22px; padding:17px; border:1px solid var(--rp-border); }.rp-notice > span { flex-shrink:0; }.rp-notice-success { background:rgba(71,125,88,.08); border-color:rgba(71,125,88,.3); }.rp-notice-success > span { color:#477d58; }.rp-notice-error { background:rgba(190,91,66,.07); border-color:rgba(190,91,66,.3); }.rp-notice-error > span { color:#bd5b42; }.rp-notice strong { color:var(--rp-text); font-size:12px; }.rp-notice p { margin:5px 0 0; color:var(--rp-muted); font-size:11px; line-height:1.7; }.rp-notice button { display:inline-flex; align-items:center; gap:4px; margin-top:9px; padding:0; border:0; background:transparent; color:var(--rp-accent-dark); font-size:10px; font-weight:800; cursor:pointer; }
+
+html[data-theme="dark"] .recruitment-portal { --rp-bg:#151820; --rp-surface:#1d222d; --rp-text:#e8eaf0; --rp-muted:#a4a9b5; --rp-border:#343a48; --rp-soft:#272d39; --rp-navy:#e8eaf0; --rp-accent-dark:#e5a866; color-scheme:dark; }
+html[data-theme="dark"] .recruitment-portal .rp-brand { color:#f1eee8; }
+html[data-theme="dark"] .recruitment-portal .rp-brand-mark, html[data-theme="dark"] .recruitment-portal .rp-art-core { background:#272d39; color:#f1eee8; }
+html[data-theme="dark"] .recruitment-portal .rp-hero h1, html[data-theme="dark"] .recruitment-portal .rp-section-heading h2, html[data-theme="dark"] .recruitment-portal .rp-count strong, html[data-theme="dark"] .recruitment-portal .rp-drive-card h3, html[data-theme="dark"] .recruitment-portal .rp-empty h3, html[data-theme="dark"] .recruitment-portal .rp-role-sidebar h3, html[data-theme="dark"] .recruitment-portal .rp-form-intro h2, html[data-theme="dark"] .recruitment-portal .rp-question-section h3 { color:#f1eee8; }
+html[data-theme="dark"] .recruitment-portal .rp-bottom-banner { background:#0f1219; }
+html[data-theme="dark"] .recruitment-portal .rp-form-hero { --rp-navy:#1d222d; background:#1d222d; }
+html[data-theme="dark"] .recruitment-portal .rp-form-hero h1 { color:#f1eee8; }
+
+@media (max-width: 800px) {
+  .rp-shell { width:calc(100% - 36px); }
+  .rp-hero { min-height:0; padding:47px 28px 35px; grid-template-columns:1fr; gap:12px; }
+  .rp-hero h1 { font-size:clamp(39px,9vw,58px); }
+  .rp-hero-art { min-height:245px; margin-top:5px; }
+  .rp-orbit-one { width:210px;height:210px; }.rp-orbit-two { width:265px;height:150px; }.rp-orbit-three { width:155px;height:260px; }
+  .rp-drive-grid { grid-template-columns:1fr; }
+  .rp-form-layout { grid-template-columns:1fr; }
+  .rp-role-sidebar { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:17px; }
+  .rp-role-sidebar > .rp-kicker { grid-column:1/-1; }.rp-role-sidebar > div:not(.rp-sidebar-note) { margin-top:0; }.rp-sidebar-note { grid-column:1/-1; margin-top:0; }
+  .rp-bottom-banner { align-items:flex-start; flex-wrap:wrap; padding:24px; }.rp-bottom-banner > div { flex:1; min-width:190px; }.rp-bottom-banner a { margin-left:69px; }
+}
+@media (max-width: 520px) {
+  .rp-shell { width:calc(100% - 24px); }
+  .rp-header { min-height:66px; gap:10px; }.rp-brand { gap:8px; font-size:12px; }.rp-brand-mark { width:34px;height:34px;font-size:18px; }.rp-brand small { font-size:7px; }.rp-header-actions { gap:6px; }.rp-quiet-button { padding:9px 10px; font-size:10px; }.rp-quiet-button svg { display:none; }.rp-theme-button { padding:9px 10px; gap:5px; font-size:10px; }
+  .rp-hero { padding:37px 20px 25px; }.rp-hero h1 { font-size:40px; }.rp-hero-copy > p { font-size:13px; }.rp-hero-points { gap:12px; }.rp-hero-points span { font-size:10px; }.rp-hero-art { min-height:210px; }.rp-orbit-one { width:180px;height:180px; }.rp-orbit-two { width:220px;height:130px; }.rp-orbit-three { width:130px;height:230px; }.rp-art-core { width:95px;height:95px;font-size:35px; }.rp-art-note { right:-2px; bottom:-2px; font-size:7px; }
+  .rp-opportunities { padding:44px 0 35px; }.rp-section-heading { align-items:flex-start; }.rp-section-heading h2 { font-size:29px; }.rp-section-heading p { max-width:270px; font-size:12px; }.rp-count { padding-left:11px; }.rp-count strong { font-size:25px; }.rp-count span { font-size:7px; }.rp-search { padding:0 12px; }.rp-search span { display:none; }
+  .rp-drive-card { padding:18px; }.rp-drive-card h3 { font-size:23px; }.rp-bottom-banner { gap:14px; padding:19px; }.rp-banner-mark { width:42px;height:42px; }.rp-bottom-banner h2 { font-size:18px; }.rp-bottom-banner p { font-size:10px; }.rp-bottom-banner a { margin-left:56px; }
+  .rp-footer { flex-direction:column; gap:8px; line-height:1.6; }.rp-footer span:nth-child(2) { display:none; }
+  .rp-form-hero { padding:28px 20px; }.rp-form-hero h1 { font-size:35px; }.rp-form-meta { gap:11px; flex-direction:column; }.rp-role-sidebar { grid-template-columns:1fr; padding:20px; }.rp-role-sidebar > .rp-kicker,.rp-sidebar-note { grid-column:auto; }.rp-application-form { padding:20px 15px; }.rp-form-intro h2 { font-size:25px; }.rp-question-section { grid-template-columns:27px minmax(0,1fr); gap:10px; padding:21px 0; }.rp-section-number { width:26px;height:26px; }.rp-submit-row { align-items:stretch; flex-direction:column; }.rp-submit-button { width:100%; }.rp-submit-row p { align-items:flex-start; }
+}
+@media (prefers-reduced-motion: reduce) { .recruitment-portal *, .recruitment-portal *::before, .recruitment-portal *::after { scroll-behavior:auto!important; transition:none!important; animation:none!important; } }
+
+/* Public portal navigation, landing choices, and contrast fixes */
+.rp-home-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 9px 13px;
+  border: 1px solid var(--rp-border);
+  border-radius: 999px;
+  background: var(--rp-surface);
+  color: var(--rp-text);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 750;
+  transition: border-color .2s ease, color .2s ease, background .2s ease;
+}
+.rp-home-button:hover { border-color: var(--rp-accent); color: var(--rp-accent-dark); }
+.rp-portal-choice {
+  padding: clamp(42px, 7vw, 82px) 0 70px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.rp-portal-choice > h1 {
+  margin: 17px 0 12px;
+  color: var(--rp-navy);
+  font-size: clamp(40px, 6vw, 68px);
+  line-height: .99;
+  letter-spacing: -.065em;
+}
+.rp-portal-choice > h1 em { color: var(--rp-accent-dark); font-style: normal; }
+.rp-portal-choice > p { max-width: 600px; margin: 0; color: var(--rp-muted); font-size: 14px; line-height: 1.8; }
+.rp-choice-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; margin-top: 38px; }
+.rp-choice-card {
+  position: relative;
+  display: flex;
+  min-height: 290px;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 27px;
+  border: 1px solid var(--rp-border);
+  border-top: 3px solid var(--rp-accent);
+  background: var(--rp-surface);
+  color: var(--rp-text);
+  text-align: left;
+  cursor: pointer;
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.rp-choice-card:hover { transform: translateY(-4px); border-color: var(--rp-accent); box-shadow: 0 16px 38px rgba(30,38,64,.09); }
+.rp-choice-icon { display: grid; place-items: center; width: 48px; height: 48px; margin-bottom: 25px; border-radius: 50%; background: rgba(220,151,80,.14); color: var(--rp-accent-dark); }
+.rp-choice-label { color: var(--rp-muted); font-size: 9px; font-weight: 850; letter-spacing: .15em; }
+.rp-choice-card > strong { margin-top: 9px; color: var(--rp-navy); font-size: clamp(25px, 3vw, 34px); letter-spacing: -.05em; }
+.rp-choice-card > strong span, .rp-results-placeholder h1 span { color: var(--rp-accent-dark); }
+.rp-choice-description { max-width: 390px; margin-top: 10px; color: var(--rp-muted); font-size: 12px; line-height: 1.8; }
+.rp-choice-action { display: inline-flex; align-items: center; gap: 9px; margin-top: auto; padding-top: 24px; color: var(--rp-accent-dark); font-size: 11px; font-weight: 850; }
+.rp-coming-soon { position: absolute; top: 28px; right: 24px; padding: 7px 9px; border: 1px solid var(--rp-border); color: var(--rp-muted); font-size: 8px; font-weight: 850; letter-spacing: .1em; }
+.rp-results-placeholder { min-height: 430px; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 55px 0; }
+.rp-results-icon { display: grid; place-items: center; width: 54px; height: 54px; margin-bottom: 24px; border-radius: 50%; background: rgba(220,151,80,.14); color: var(--rp-accent-dark); }
+.rp-results-placeholder h1 { margin: 12px 0; color: var(--rp-navy); font-size: clamp(42px, 6vw, 62px); letter-spacing: -.06em; }
+.rp-results-placeholder p { max-width: 480px; color: var(--rp-muted); font-size: 13px; line-height: 1.8; }
+.rp-primary-button { display: inline-flex; align-items: center; gap: 9px; margin-top: 16px; padding: 13px 17px; border: 1px solid var(--rp-navy); background: var(--rp-navy); color: #fff; cursor: pointer; font-size: 11px; font-weight: 800; }
+.rp-section-back { margin-top: 26px; }
+
+/* In dark mode, keep primary buttons high contrast instead of white-on-white. */
+html[data-theme="dark"] .recruitment-portal .rp-apply-button,
+html[data-theme="dark"] .recruitment-portal .rp-submit-button,
+html[data-theme="dark"] .recruitment-portal .rp-primary-button {
+  border-color: #dc9750;
+  background: #dc9750;
+  color: #171a21;
+}
+html[data-theme="dark"] .recruitment-portal .rp-apply-button:hover,
+html[data-theme="dark"] .recruitment-portal .rp-submit-button:hover,
+html[data-theme="dark"] .recruitment-portal .rp-primary-button:hover {
+  border-color: #edb16f;
+  background: #edb16f;
+  color: #171a21;
+}
+html[data-theme="dark"] .recruitment-portal .rp-choice-card > strong { color: #f1eee8; }
+html[data-theme="dark"] .recruitment-portal .rp-home-button { background: #1d222d; color: #e8eaf0; }
+
+@media (max-width: 700px) {
+  .rp-choice-grid { grid-template-columns: 1fr; gap: 14px; margin-top: 28px; }
+  .rp-choice-card { min-height: 255px; padding: 22px; }
+  .rp-portal-choice { padding-top: 42px; }
+  .rp-home-button { padding: 9px 10px; font-size: 10px; }
+  .rp-home-button svg { width: 14px; }
+}
+@media (max-width: 420px) {
+  .rp-home-button span { max-width: 82px; white-space: normal; line-height: 1.2; }
+  .rp-header-actions { align-items: center; }
+}
+
+
+/* Published recruitment results */
+.rp-results-page { padding: 8px 0 38px; }
+.rp-results-heading { padding: 26px 0 30px; }
+.rp-results-heading h1 { margin: 12px 0 8px; color: var(--rp-navy); font-size: clamp(38px, 5vw, 58px); letter-spacing: -.06em; }
+.rp-results-heading h1 span { color: var(--rp-accent-dark); }
+.rp-results-heading p { margin: 0; color: var(--rp-muted); font-size: 13px; line-height: 1.8; }
+.rp-results-empty { margin: 8px 0 26px; padding: 34px; border: 1px solid var(--rp-border); background: var(--rp-surface); }
+.rp-results-empty h2 { margin: 15px 0 8px; color: var(--rp-navy); font-size: 22px; }
+.rp-results-empty p { max-width: 560px; margin: 0; color: var(--rp-muted); font-size: 12px; line-height: 1.8; }
+.rp-results-list { display: grid; gap: 18px; margin: 6px 0 28px; }
+.rp-result-card { padding: 24px; border: 1px solid var(--rp-border); border-left: 3px solid var(--rp-accent); background: var(--rp-surface); }
+.rp-result-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; }
+.rp-result-card-top h2 { margin: 9px 0 5px; color: var(--rp-navy); font-size: 25px; letter-spacing: -.04em; }
+.rp-result-card-top p { margin: 0; color: var(--rp-muted); font-size: 12px; }
+.rp-result-published { display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; padding: 8px 10px; background: rgba(71,125,88,.12); color: #4b9964; font-size: 9px; font-weight: 850; letter-spacing: .08em; }
+.rp-result-meta { display: flex; flex-wrap: wrap; gap: 12px 22px; margin-top: 20px; padding: 13px 0; border-top: 1px solid var(--rp-border); border-bottom: 1px solid var(--rp-border); color: var(--rp-muted); font-size: 11px; }
+.rp-selected-list { padding-top: 18px; }
+.rp-selected-list h3 { margin: 0 0 10px; color: var(--rp-text); font-size: 12px; }
+.rp-selected-candidate { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid var(--rp-border); }
+.rp-candidate-number { color: var(--rp-accent-dark); font-size: 10px; font-weight: 850; }
+.rp-candidate-name { flex: 1; color: var(--rp-text); font-size: 12px; font-weight: 700; }
+.rp-selected-candidate > svg { color: #4b9964; }
+html[data-theme="dark"] .recruitment-portal .rp-results-empty h2, html[data-theme="dark"] .recruitment-portal .rp-result-card-top h2 { color: #f1eee8; }
+@media (max-width: 520px) { .rp-result-card { padding: 18px; } .rp-result-card-top { flex-direction: column; } .rp-result-card-top h2 { font-size: 22px; } .rp-results-empty { padding: 23px; } }
+
+/* Published announcement detail pages and card-level themes */
+.rp-result-card{display:block;width:100%;text-align:left;cursor:pointer;color:inherit;font:inherit;transition:transform .18s ease,box-shadow .18s ease}
+.rp-result-card:hover{transform:translateY(-2px);box-shadow:0 14px 30px #000012}
+.rp-result-card.rp-theme-prism,.rp-result-detail.rp-theme-prism{--rp-result-accent:#dc9750;--rp-result-bg:#f5f3ee;--rp-result-card:#fff;--rp-result-text:#252a38}
+.rp-result-card.rp-theme-botanical,.rp-result-detail.rp-theme-botanical{--rp-result-accent:#648a72;--rp-result-bg:#edf3ed;--rp-result-card:#fff;--rp-result-text:#20372a}
+.rp-result-card.rp-theme-rose,.rp-result-detail.rp-theme-rose{--rp-result-accent:#c4778c;--rp-result-bg:#fbf0f3;--rp-result-card:#fff;--rp-result-text:#4c2935}
+.rp-result-card{background:var(--rp-result-bg,#fff);color:var(--rp-result-text,inherit);border-left:4px solid var(--rp-result-accent,#dc9750)}
+.rp-result-detail{background:var(--rp-result-bg);color:var(--rp-result-text);border:1px solid #8883;border-radius:3px;padding:clamp(18px,4vw,38px);margin:22px 0}
+.rp-result-detail-banner{background:var(--rp-result-card);border-left:4px solid var(--rp-result-accent);padding:clamp(20px,4vw,34px);margin-top:18px}
+.rp-result-detail-banner h2{font-size:clamp(28px,4vw,44px);margin:12px 0}.rp-result-detail-banner p{white-space:pre-wrap;line-height:1.75}
+.rp-result-detail-date{margin:18px 0;opacity:.75}.rp-result-detail-list{background:var(--rp-result-card);padding:clamp(16px,3vw,28px);border:1px solid #8883}
+.rp-result-detail-list h3{margin-top:0}.rp-result-detail-person{border-top:1px solid #8884;padding:18px 0}.rp-result-person-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.rp-status-pill{display:inline-flex;padding:6px 10px;border-radius:100px;font-size:12px;font-weight:750;background:#648a7220;color:#39754c}.rp-status-shortlisted{background:#dc975026;color:#8a5b12}.rp-status-selected{background:#648a7220;color:#39754c}.rp-result-answer{display:block;margin-top:12px;padding:13px 15px;background:#8881;border:1px solid #8883;border-radius:8px}.rp-result-answer span{display:block;font-size:11px;font-weight:800;letter-spacing:.04em;opacity:.82;text-transform:uppercase}.rp-result-answer p{margin:6px 0 0;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.6;color:var(--rp-result-text,inherit)}.rp-result-detail-person>p{margin:9px 0;color:var(--rp-result-text,inherit);overflow-wrap:anywhere}.rp-result-person-top strong{font-size:16px}
+
+
+/* Dark-mode support for result theme cards: keep the theme accent, adapt surfaces and text. */
+html[data-theme="dark"] .rp-result-card.rp-theme-prism,
+html[data-theme="dark"] .rp-result-detail.rp-theme-prism { --rp-result-bg:#1d2330; --rp-result-card:#252d3b; --rp-result-text:#f2f0eb; }
+html[data-theme="dark"] .rp-result-card.rp-theme-botanical,
+html[data-theme="dark"] .rp-result-detail.rp-theme-botanical { --rp-result-bg:#1c2926; --rp-result-card:#263832; --rp-result-text:#eef5ef; }
+html[data-theme="dark"] .rp-result-card.rp-theme-rose,
+html[data-theme="dark"] .rp-result-detail.rp-theme-rose { --rp-result-bg:#2a2028; --rp-result-card:#392a35; --rp-result-text:#fff0f5; }
+html[data-theme="dark"] .rp-result-card .rp-result-card-top h2,
+html[data-theme="dark"] .rp-result-detail .rp-result-detail-banner h2,
+html[data-theme="dark"] .rp-result-detail .rp-result-detail-list h3,
+html[data-theme="dark"] .rp-result-detail .rp-result-person-top strong { color:var(--rp-result-text); }
+html[data-theme="dark"] .rp-result-card .rp-result-card-top p,
+html[data-theme="dark"] .rp-result-detail .rp-result-detail-banner p,
+html[data-theme="dark"] .rp-result-detail .rp-result-detail-date,
+html[data-theme="dark"] .rp-result-detail .rp-result-answer p { color:var(--rp-result-text); opacity:.82; }
+html[data-theme="dark"] .rp-result-detail .rp-result-answer { background:#ffffff0d; }
+html[data-theme="dark"] .rp-result-detail .rp-status-shortlisted { color:#ffd18b; }
+html[data-theme="dark"] .rp-result-detail .rp-status-selected { color:#a8e2b6; }
+
+
+/* PRISM AI Recruitment Portal — violet identity, shared navigation and motion */
+.recruitment-portal {
+  --rp-accent: #8B5CF6;
+  --rp-accent-dark: #8B5CF6;
+  --rp-navy: #211735;
+  --rp-bg: #100C16;
+  --rp-surface: #1B1429;
+  --rp-text: #F7F2FF;
+  --rp-muted: #B9AECF;
+  --rp-border: rgba(139, 92, 246, .34);
+  --rp-soft: #2B203B;
+  min-height: 100vh;
+  padding: 0 0 34px;
+  background:
+    radial-gradient(circle at 88% 18%, rgba(139,92,246,.12), transparent 27rem),
+    var(--rp-bg);
+  color: var(--rp-text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+.recruitment-portal button:focus-visible,
+.recruitment-portal input:focus-visible,
+.recruitment-portal textarea:focus-visible,
+.recruitment-portal select:focus-visible { outline: 3px solid rgba(139,92,246,.42); outline-offset: 3px; }
+.recruitment-portal .rp-shell { width: min(1180px, calc(100% - 64px)); margin: 0 auto; }
+.recruitment-portal .rp-header {
+  width: 100%; max-width: none; min-height: 88px; margin: 0; padding: 12px clamp(22px, 5vw, 76px);
+  display: grid; grid-template-columns: minmax(190px,1fr) auto minmax(300px,1fr); align-items: center; gap: 20px;
+  border-bottom: 1px solid rgba(139,92,246,.24); background: rgba(16,12,22,.88); backdrop-filter: blur(16px);
+}
+.recruitment-portal .rp-brand { display: inline-flex; align-items: center; justify-self: start; width: fit-content; min-width: 0; color: inherit; text-decoration: none; }
+.recruitment-portal .rp-brand-logo {
+  display: block; width: clamp(180px,17vw,238px); height: 64px; max-width: 100%; object-fit: contain; object-position: left center;
+  transform: scale(1.7); transform-origin: left center; transition: transform 350ms cubic-bezier(.2,.8,.2,1), filter 350ms ease;
+}
+.recruitment-portal .rp-brand:hover .rp-brand-logo { transform: translateY(-1px) scale(1.74); filter: drop-shadow(0 5px 10px rgba(139,92,246,.2)); }
+.recruitment-portal .rp-nav { display:flex; align-items:center; justify-content:center; gap:clamp(22px,3vw,42px); }
+.recruitment-portal .rp-nav a { color:var(--rp-muted); text-decoration:none; font-size:13px; font-weight:750; white-space:nowrap; transition:color .2s ease; }
+.recruitment-portal .rp-nav a:hover { color:#A78BFA; }
+.recruitment-portal .rp-header-actions { justify-self:end; display:flex; align-items:center; gap:10px; }
+.recruitment-portal .rp-dashboard-button,
+.recruitment-portal .rp-theme-button {
+  min-height:42px; display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:10px 14px;
+  border:1px solid rgba(139,92,246,.34); border-radius:999px; background:#1B1429; color:#F7F2FF;
+  text-decoration:none; font-size:12px; font-weight:750; white-space:nowrap; cursor:pointer; transition:transform .2s,border-color .2s,background .2s;
+}
+.recruitment-portal .rp-dashboard-button:hover,
+.recruitment-portal .rp-theme-button:hover { border-color:#8B5CF6; background:#261B3B; transform:translateY(-1px); }
+.recruitment-portal .rp-theme-button svg { color:#A78BFA; }
+/* Core surfaces follow the purple reference card in both theme states. */
+.recruitment-portal .rp-hero,
+.recruitment-portal .rp-choice-card,
+.recruitment-portal .rp-drive-card,
+.recruitment-portal .rp-search,
+.recruitment-portal .rp-empty,
+.recruitment-portal .rp-results-empty,
+.recruitment-portal .rp-result-card,
+.recruitment-portal .rp-role-sidebar,
+.recruitment-portal .rp-application-form { background:#1B1429; border-color:rgba(139,92,246,.34); color:#F7F2FF; }
+.recruitment-portal .rp-hero { border:1px solid rgba(139,92,246,.55); border-radius:28px; margin-top:24px; }
+.recruitment-portal .rp-hero::before { background:rgba(139,92,246,.13); }
+.recruitment-portal .rp-hero h1,
+.recruitment-portal .rp-section-heading h2,
+.recruitment-portal .rp-count strong,
+.recruitment-portal .rp-drive-card h3,
+.recruitment-portal .rp-empty h3,
+.recruitment-portal .rp-role-sidebar h3,
+.recruitment-portal .rp-form-intro h2,
+.recruitment-portal .rp-question-section h3,
+.recruitment-portal .rp-portal-choice > h1,
+.recruitment-portal .rp-choice-card > strong,
+.recruitment-portal .rp-results-heading h1,
+.recruitment-portal .rp-results-empty h2 { color:#F7F2FF; }
+.recruitment-portal .rp-hero h1 em,
+.recruitment-portal .rp-portal-choice > h1 em,
+.recruitment-portal .rp-section-heading h2 span,
+.recruitment-portal .rp-choice-card > strong span,
+.recruitment-portal .rp-results-heading h1 span { color:#A78BFA; }
+.recruitment-portal .rp-eyebrow,
+.recruitment-portal .rp-kicker,
+.recruitment-portal .rp-role-kicker,
+.recruitment-portal .rp-choice-action,
+.recruitment-portal .rp-home-button:hover,
+.recruitment-portal .rp-back-link:hover { color:#A78BFA; }
+.recruitment-portal .rp-eyebrow > span { background:#8B5CF6; box-shadow:0 0 0 4px rgba(139,92,246,.18); }
+.recruitment-portal .rp-hero-copy > p,
+.recruitment-portal .rp-portal-choice > p,
+.recruitment-portal .rp-section-heading p,
+.recruitment-portal .rp-drive-subtitle,
+.recruitment-portal .rp-eligibility,
+.recruitment-portal .rp-drive-meta span,
+.recruitment-portal .rp-choice-description,
+.recruitment-portal .rp-role-sidebar p { color:#B9AECF; }
+.recruitment-portal .rp-hero-points span { color:#E9E1F8; }
+.recruitment-portal .rp-hero-points svg,
+.recruitment-portal .rp-drive-meta svg { color:#A78BFA; }
+.recruitment-portal .rp-choice-card { border:1px solid rgba(139,92,246,.55); border-radius:24px; min-height:290px; }
+.recruitment-portal .rp-choice-card:hover { border-color:#A78BFA; box-shadow:0 18px 48px rgba(92,54,166,.2); }
+.recruitment-portal .rp-choice-icon { background:#302342; color:#A78BFA; border-radius:20px; }
+.recruitment-portal .rp-drive-card { border-top:3px solid var(--rp-drive-accent,#8B5CF6); border-radius:16px; }
+.recruitment-portal .rp-drive-card h3 { color:#F7F2FF; }
+.recruitment-portal .rp-drive-meta,
+.recruitment-portal .rp-form-intro,
+.recruitment-portal .rp-question-section { border-color:rgba(139,92,246,.22); }
+.recruitment-portal .rp-search input { color:#F7F2FF; }
+.recruitment-portal .rp-search input::placeholder { color:#9385AA; }
+.recruitment-portal .rp-apply-button,
+.recruitment-portal .rp-submit-button,
+.recruitment-portal .rp-primary-button { background:#8B5CF6; border-color:#8B5CF6; color:#fff; border-radius:12px; }
+.recruitment-portal .rp-apply-button:hover,
+.recruitment-portal .rp-submit-button:hover,
+.recruitment-portal .rp-primary-button:hover { background:#7C3AED; border-color:#7C3AED; color:#fff; }
+.recruitment-portal .rp-bottom-banner { background:#1B1429; border:1px solid rgba(139,92,246,.45); border-radius:20px; }
+.recruitment-portal .rp-bottom-banner .rp-kicker,
+.recruitment-portal .rp-banner-mark { color:#A78BFA; }
+.recruitment-portal .rp-footer { color:#9588AA; }
+.recruitment-portal .rp-footer i,
+.recruitment-portal .rp-footer b { color:#A78BFA; }
+.recruitment-portal .rp-form-hero { background:#1B1429; border-color:#8B5CF6; border-radius:18px; }
+.recruitment-portal .rp-field input:not([type=checkbox]):not([type=radio]),
+.recruitment-portal .rp-field textarea,
+.recruitment-portal .rp-field select { background:#130E1C; color:#F7F2FF; border-color:rgba(139,92,246,.34); }
+.recruitment-portal .rp-choice { background:#171020; color:#EDE6FA; border-color:rgba(139,92,246,.25); }
+.recruitment-portal .rp-section-number,
+.recruitment-portal .rp-sidebar-note,
+.recruitment-portal .rp-empty-icon,
+.recruitment-portal .rp-results-icon { background:#302342; color:#A78BFA; }
+.recruitment-portal .rp-home-button { background:#1B1429; color:#F7F2FF; border-color:rgba(139,92,246,.34); }
+.recruitment-portal .rp-result-card.rp-theme-prism,
+.recruitment-portal .rp-result-detail.rp-theme-prism { --rp-result-accent:#8B5CF6; --rp-result-bg:#1B1429; --rp-result-card:#211735; --rp-result-text:#F7F2FF; }
+.recruitment-portal .rp-result-card.rp-theme-prism { border-color:rgba(139,92,246,.45); border-left:4px solid #8B5CF6; }
+.recruitment-portal .rp-result-detail.rp-theme-prism { border-color:rgba(139,92,246,.4); border-radius:18px; }
+.recruitment-portal .rp-result-detail.rp-theme-prism .rp-result-detail-banner,
+.recruitment-portal .rp-result-detail.rp-theme-prism .rp-result-detail-list { background:#211735; border-color:rgba(139,92,246,.28); color:#F7F2FF; }
+.recruitment-portal .rp-result-detail.rp-theme-prism .rp-result-detail-banner h2,
+.recruitment-portal .rp-result-detail.rp-theme-prism .rp-result-detail-list h3 { color:#F7F2FF; }
+/* Animated recruitment illustration */
+.recruitment-portal .rp-hero-art { perspective:900px; }
+.recruitment-portal .rp-orbit { will-change:transform; }
+.recruitment-portal .rp-orbit-one { border-color:rgba(139,92,246,.62); animation:rpOrbitOne 18s linear infinite; }
+.recruitment-portal .rp-orbit-two { border-color:rgba(167,139,250,.35); animation:rpOrbitTwo 23s linear infinite; }
+.recruitment-portal .rp-orbit-three { border-color:rgba(139,92,246,.32); animation:rpOrbitThree 28s linear infinite; }
+.recruitment-portal .rp-art-core { position:relative; z-index:2; background:linear-gradient(145deg,#8B5CF6,#5B21B6); color:#fff; border:7px solid #1B1429; outline:1px solid rgba(167,139,250,.45); box-shadow:0 22px 55px rgba(124,58,237,.32),0 0 45px rgba(139,92,246,.18); animation:rpCoreFloat 5s ease-in-out infinite; }
+.recruitment-portal .rp-art-core span { color:#E9D5FF; }
+.recruitment-portal .rp-art-dot { border-color:#1B1429; background:#A78BFA; box-shadow:0 0 0 1px rgba(167,139,250,.4),0 0 16px rgba(139,92,246,.55); animation:rpDotPulse 3.5s ease-in-out infinite; }
+.recruitment-portal .rp-dot-two { background:#C4B5FD; animation-delay:-1.2s; }
+.recruitment-portal .rp-dot-three { animation-delay:-2.1s; }
+.recruitment-portal .rp-art-note { border-color:rgba(139,92,246,.34); border-radius:10px; background:#1B1429; color:#C4B5FD; box-shadow:0 10px 30px rgba(0,0,0,.18); animation:rpNoteFloat 6s ease-in-out infinite; }
+@keyframes rpOrbitOne { from{transform:rotate(-25deg)} to{transform:rotate(335deg)} }
+@keyframes rpOrbitTwo { from{transform:rotate(35deg)} to{transform:rotate(-325deg)} }
+@keyframes rpOrbitThree { from{transform:rotate(48deg)} to{transform:rotate(408deg)} }
+@keyframes rpCoreFloat { 0%,100%{transform:translateY(0) rotate(-3deg)} 50%{transform:translateY(-12px) rotate(3deg)} }
+@keyframes rpDotPulse { 0%,100%{opacity:.55;transform:scale(.85)} 50%{opacity:1;transform:scale(1.2)} }
+@keyframes rpNoteFloat { 0%,100%{transform:translateY(0) rotate(0)} 50%{transform:translateY(-7px) rotate(2deg)} }
+.recruitment-portal .rp-hero-art:hover .rp-art-core { box-shadow:0 25px 65px rgba(124,58,237,.42),0 0 60px rgba(139,92,246,.28); }
+@media (max-width: 900px) {
+  .recruitment-portal .rp-header { grid-template-columns:1fr auto; row-gap:8px; }
+  .recruitment-portal .rp-nav { grid-column:1/-1; grid-row:2; padding:4px 0 9px; }
+  .recruitment-portal .rp-header-actions { grid-column:2; grid-row:1; }
+}
+@media (max-width: 600px) {
+  .recruitment-portal .rp-header { min-height:unset; padding:10px 14px 8px; gap:7px; }
+  .recruitment-portal .rp-brand-logo { width:clamp(150px,48vw,205px); height:54px; transform:scale(1.55); }
+  .recruitment-portal .rp-brand:hover .rp-brand-logo { transform:translateY(-1px) scale(1.58); }
+  .recruitment-portal .rp-header-actions { gap:5px; }
+  .recruitment-portal .rp-dashboard-button,.recruitment-portal .rp-theme-button { min-height:36px; padding:8px 9px; gap:5px; font-size:9px; }
+  .recruitment-portal .rp-dashboard-button svg { width:13px; }
+  .recruitment-portal .rp-theme-button svg { width:14px; }
+  .recruitment-portal .rp-nav { gap:22px; }
+  .recruitment-portal .rp-nav a { font-size:11px; }
+  .recruitment-portal .rp-shell { width:calc(100% - 24px); }
+}
+/* Shared global theme: dark and light are intentionally different. */
+html[data-theme="dark"] .recruitment-portal {
+  --rp-accent:#8B5CF6;
+  --rp-accent-dark:#A78BFA;
+  --rp-navy:#F7F2FF;
+  --rp-bg:#100C16;
+  --rp-surface:#1B1429;
+  --rp-text:#F7F2FF;
+  --rp-muted:#B9AECF;
+  --rp-border:rgba(139,92,246,.34);
+  --rp-soft:#302342;
+  color-scheme:dark;
+}
+
+html[data-theme="light"] .recruitment-portal {
+  --rp-accent:#7C3AED;
+  --rp-accent-dark:#6D28D9;
+  --rp-navy:#251B35;
+  --rp-bg:#F7F5FB;
+  --rp-surface:#FFFFFF;
+  --rp-text:#30283B;
+  --rp-muted:#756C82;
+  --rp-border:#E6DDF0;
+  --rp-soft:#F0EAF7;
+  color-scheme:light;
+}
+
+/* Light theme surfaces and typography */
+html[data-theme="light"] .recruitment-portal {
+  background:var(--rp-bg);
+  color:var(--rp-text);
+}
+html[data-theme="light"] .recruitment-portal .rp-header {
+  background:rgba(255,255,255,.92);
+  border-bottom-color:#E6DDF0;
+}
+html[data-theme="light"] .recruitment-portal .rp-nav a { color:#665B75; }
+html[data-theme="light"] .recruitment-portal .rp-nav a:hover { color:#6D28D9; }
+html[data-theme="light"] .recruitment-portal .rp-dashboard-button,
+html[data-theme="light"] .recruitment-portal .rp-theme-button,
+html[data-theme="light"] .recruitment-portal .rp-home-button {
+  background:#FFFFFF;
+  color:#30283B;
+  border-color:#DED3EA;
+}
+html[data-theme="light"] .recruitment-portal .rp-dashboard-button:hover,
+html[data-theme="light"] .recruitment-portal .rp-theme-button:hover {
+  background:#F2ECFA;
+  border-color:#8B5CF6;
+}
+html[data-theme="light"] .recruitment-portal .rp-theme-button svg { color:#7C3AED; }
+
+/* The hero and application surfaces switch to light, while the violet recruitment cards retain their identity. */
+html[data-theme="light"] .recruitment-portal .rp-hero,
+html[data-theme="light"] .recruitment-portal .rp-drive-card,
+html[data-theme="light"] .recruitment-portal .rp-search,
+html[data-theme="light"] .recruitment-portal .rp-empty,
+html[data-theme="light"] .recruitment-portal .rp-results-empty,
+html[data-theme="light"] .recruitment-portal .rp-role-sidebar,
+html[data-theme="light"] .recruitment-portal .rp-application-form {
+  background:#FFFFFF;
+  border-color:#E6DDF0;
+  color:#30283B;
+}
+html[data-theme="light"] .recruitment-portal .rp-hero { border-color:#D8C8EE; }
+html[data-theme="light"] .recruitment-portal .rp-hero h1,
+html[data-theme="light"] .recruitment-portal .rp-section-heading h2,
+html[data-theme="light"] .recruitment-portal .rp-count strong,
+html[data-theme="light"] .recruitment-portal .rp-drive-card h3,
+html[data-theme="light"] .recruitment-portal .rp-empty h3,
+html[data-theme="light"] .recruitment-portal .rp-role-sidebar h3,
+html[data-theme="light"] .recruitment-portal .rp-form-intro h2,
+html[data-theme="light"] .recruitment-portal .rp-question-section h3,
+html[data-theme="light"] .recruitment-portal .rp-results-heading h1,
+html[data-theme="light"] .recruitment-portal .rp-results-empty h2 {
+  color:#2D2439;
+}
+html[data-theme="light"] .recruitment-portal .rp-hero h1 em,
+html[data-theme="light"] .recruitment-portal .rp-section-heading h2 span,
+html[data-theme="light"] .recruitment-portal .rp-results-heading h1 span,
+html[data-theme="light"] .recruitment-portal .rp-portal-choice > h1 em { color:#7C3AED; }
+html[data-theme="light"] .recruitment-portal .rp-hero-copy > p,
+html[data-theme="light"] .recruitment-portal .rp-section-heading p,
+html[data-theme="light"] .recruitment-portal .rp-drive-subtitle,
+html[data-theme="light"] .recruitment-portal .rp-drive-meta span,
+html[data-theme="light"] .recruitment-portal .rp-role-sidebar p,
+html[data-theme="light"] .recruitment-portal .rp-portal-choice > p { color:#756C82; }
+html[data-theme="light"] .recruitment-portal .rp-hero-points span { color:#463A55; }
+html[data-theme="light"] .recruitment-portal .rp-hero-points svg,
+html[data-theme="light"] .recruitment-portal .rp-drive-meta svg { color:#7C3AED; }
+html[data-theme="light"] .recruitment-portal .rp-hero::before { background:rgba(139,92,246,.09); }
+html[data-theme="light"] .recruitment-portal .rp-art-core {
+  border-color:#FFFFFF;
+  outline-color:rgba(124,58,237,.25);
+}
+html[data-theme="light"] .recruitment-portal .rp-art-dot { border-color:#FFFFFF; }
+html[data-theme="light"] .recruitment-portal .rp-art-note {
+  background:#FFFFFF;
+  color:#6D28D9;
+  border-color:#E3D7F1;
+}
+html[data-theme="light"] .recruitment-portal .rp-bottom-banner {
+  background:#F0EAF8;
+  border-color:#DCCCEC;
+  color:#30283B;
+}
+html[data-theme="light"] .recruitment-portal .rp-bottom-banner p { color:#756C82; }
+html[data-theme="light"] .recruitment-portal .rp-bottom-banner .rp-kicker,
+html[data-theme="light"] .recruitment-portal .rp-banner-mark { color:#7C3AED; }
+html[data-theme="light"] .recruitment-portal .rp-footer { color:#756C82; }
+html[data-theme="light"] .recruitment-portal .rp-form-hero {
+  background:#F0EAF8;
+  color:#30283B;
+  border-color:#8B5CF6;
+}
+html[data-theme="light"] .recruitment-portal .rp-form-hero h1,
+html[data-theme="light"] .recruitment-portal .rp-form-hero > p,
+html[data-theme="light"] .recruitment-portal .rp-form-meta span { color:#30283B; }
+html[data-theme="light"] .recruitment-portal .rp-field input:not([type=checkbox]):not([type=radio]),
+html[data-theme="light"] .recruitment-portal .rp-field textarea,
+html[data-theme="light"] .recruitment-portal .rp-field select {
+  background:#FFFFFF;
+  color:#30283B;
+  border-color:#DED3EA;
+}
+html[data-theme="light"] .recruitment-portal .rp-choice {
+  background:#FAF8FD;
+  color:#463A55;
+  border-color:#E6DDF0;
+}
+html[data-theme="light"] .recruitment-portal .rp-section-number,
+html[data-theme="light"] .recruitment-portal .rp-sidebar-note,
+html[data-theme="light"] .recruitment-portal .rp-empty-icon,
+html[data-theme="light"] .recruitment-portal .rp-results-icon { background:#F0EAF8; color:#7C3AED; }
+html[data-theme="light"] .recruitment-portal .rp-back-link { color:#756C82; }
+html[data-theme="light"] .recruitment-portal .rp-back-link:hover { color:#6D28D9; }
+html[data-theme="light"] .recruitment-portal .rp-apply-button,
+html[data-theme="light"] .recruitment-portal .rp-submit-button,
+html[data-theme="light"] .recruitment-portal .rp-primary-button {
+  background:#7C3AED;
+  border-color:#7C3AED;
+  color:#FFFFFF;
+}
+html[data-theme="light"] .recruitment-portal .rp-apply-button:hover,
+html[data-theme="light"] .recruitment-portal .rp-submit-button:hover,
+html[data-theme="light"] .recruitment-portal .rp-primary-button:hover {
+  background:#6D28D9;
+  border-color:#6D28D9;
+}
+html[data-theme="light"] .recruitment-portal .rp-result-card.rp-theme-prism,
+html[data-theme="light"] .recruitment-portal .rp-result-detail.rp-theme-prism {
+  --rp-result-bg:#F7F3FC;
+  --rp-result-card:#FFFFFF;
+  --rp-result-text:#30283B;
+}
+html[data-theme="light"] .recruitment-portal .rp-result-card .rp-result-card-top h2,
+html[data-theme="light"] .recruitment-portal .rp-result-detail .rp-result-detail-banner h2,
+html[data-theme="light"] .recruitment-portal .rp-result-detail .rp-result-detail-list h3,
+html[data-theme="light"] .recruitment-portal .rp-result-detail .rp-result-person-top strong { color:#30283B; }
+html[data-theme="light"] .recruitment-portal .rp-result-card .rp-result-card-top p,
+html[data-theme="light"] .recruitment-portal .rp-result-detail .rp-result-detail-banner p,
+html[data-theme="light"] .recruitment-portal .rp-result-detail .rp-result-detail-date { color:#756C82; }
+html[data-theme="light"] .recruitment-portal .rp-result-detail .rp-result-detail-banner,
+html[data-theme="light"] .recruitment-portal .rp-result-detail .rp-result-detail-list { background:#FFFFFF; color:#30283B; }
+@media (prefers-reduced-motion: reduce) {
+  .recruitment-portal .rp-orbit-one,.recruitment-portal .rp-orbit-two,.recruitment-portal .rp-orbit-three,
+  .recruitment-portal .rp-art-core,.recruitment-portal .rp-art-dot,.recruitment-portal .rp-art-note { animation:none!important; }
+}
+
+
+/* =========================================================
+   Recruitment landing-page contrast + ambient motion polish
+   ========================================================= */
+
+/* Keep the recruitment landing content crisp above the animated backdrop. */
+.recruitment-portal .rp-portal-choice {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 28px;
+  padding: clamp(42px, 5vw, 66px) clamp(18px, 3vw, 28px) 64px;
+}
+
+.recruitment-portal .rp-portal-choice > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Ambient violet light pools and subtle particle field. */
+.recruitment-portal .rp-portal-choice::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  inset: -18% -8%;
+  background:
+    radial-gradient(circle at 83% 22%, rgba(139, 92, 246, .16), transparent 22%),
+    radial-gradient(circle at 12% 78%, rgba(124, 58, 237, .10), transparent 24%),
+    radial-gradient(circle at 62% 88%, rgba(167, 139, 250, .09), transparent 20%);
+  animation: rp-landing-glow-drift 16s ease-in-out infinite alternate;
+}
+
+.recruitment-portal .rp-portal-choice::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  inset: 0;
+  opacity: .48;
+  background-image:
+    radial-gradient(circle, rgba(139, 92, 246, .72) 1.4px, transparent 2px),
+    radial-gradient(circle, rgba(167, 139, 250, .58) 1px, transparent 1.8px),
+    radial-gradient(circle, rgba(124, 58, 237, .52) 1.2px, transparent 2px);
+  background-size: 137px 137px, 191px 191px, 233px 233px;
+  background-position: 12px 18px, 74px 91px, 130px 35px;
+  mask-image: linear-gradient(115deg, transparent 8%, #000 48%, transparent 96%);
+  animation: rp-landing-particles 24s linear infinite;
+}
+
+/* The heading's first line was inheriting a pale/dark token in light mode.
+   Set an explicit high-contrast colour for both global themes. */
+html[data-theme="light"] .recruitment-portal .rp-portal-choice > h1 {
+  color: #2D2439 !important;
+  text-shadow: none;
+}
+html[data-theme="light"] .recruitment-portal .rp-portal-choice > h1 em {
+  color: #7C3AED !important;
+}
+html[data-theme="dark"] .recruitment-portal .rp-portal-choice > h1 {
+  color: #F7F2FF !important;
+}
+html[data-theme="dark"] .recruitment-portal .rp-portal-choice > h1 em {
+  color: #A78BFA !important;
+}
+
+/* Supporting copy and kicker stay readable in either mode. */
+html[data-theme="light"] .recruitment-portal .rp-portal-choice > p {
+  color: #756C82 !important;
+}
+html[data-theme="dark"] .recruitment-portal .rp-portal-choice > p {
+  color: #B9ADC9 !important;
+}
+
+/* Make the cards feel tactile without changing their established violet identity. */
+.recruitment-portal .rp-choice-card {
+  overflow: hidden;
+  border-radius: 25px;
+  box-shadow: 0 14px 36px rgba(38, 20, 64, .08);
+  transform: translateY(0);
+  transition:
+    transform .35s cubic-bezier(.2,.75,.25,1),
+    box-shadow .35s ease,
+    border-color .35s ease;
+}
+.recruitment-portal .rp-choice-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(circle at 85% 12%, rgba(167, 139, 250, .18), transparent 34%);
+  transition: opacity .35s ease;
+}
+.recruitment-portal .rp-choice-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 24px 55px rgba(75, 35, 130, .18);
+  border-color: rgba(167, 139, 250, .78);
+}
+.recruitment-portal .rp-choice-card:hover::before { opacity: 1; }
+.recruitment-portal .rp-choice-icon {
+  transition: transform .35s ease, box-shadow .35s ease;
+}
+.recruitment-portal .rp-choice-card:hover .rp-choice-icon {
+  transform: translateY(-3px) rotate(-5deg);
+  box-shadow: 0 0 28px rgba(139, 92, 246, .22);
+}
+
+/* Gentle entrance motion, not a distracting looping movement. */
+.recruitment-portal .rp-portal-choice > .rp-kicker {
+  animation: rp-landing-rise .65s both;
+}
+.recruitment-portal .rp-portal-choice > h1 {
+  animation: rp-landing-rise .8s .06s both;
+}
+.recruitment-portal .rp-portal-choice > p {
+  animation: rp-landing-rise .8s .14s both;
+}
+.recruitment-portal .rp-choice-grid {
+  animation: rp-landing-rise .9s .2s both;
+}
+
+@keyframes rp-landing-rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes rp-landing-glow-drift {
+  0% { transform: translate3d(-1.5%, -1%, 0) scale(.98); }
+  100% { transform: translate3d(1.5%, 1.5%, 0) scale(1.04); }
+}
+@keyframes rp-landing-particles {
+  0% { background-position: 12px 18px, 74px 91px, 130px 35px; transform: translateY(0); }
+  50% { background-position: 38px -16px, 45px 125px, 166px 5px; transform: translateY(-8px); }
+  100% { background-position: 12px 18px, 74px 91px, 130px 35px; transform: translateY(0); }
+}
+
+@media (max-width: 700px) {
+  .recruitment-portal .rp-portal-choice {
+    padding: 38px 4px 42px;
+    border-radius: 20px;
+  }
+  .recruitment-portal .rp-portal-choice::after { opacity: .3; }
+  .recruitment-portal .rp-choice-card:hover { transform: translateY(-3px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .recruitment-portal .rp-portal-choice::before,
+  .recruitment-portal .rp-portal-choice::after,
+  .recruitment-portal .rp-portal-choice > .rp-kicker,
+  .recruitment-portal .rp-portal-choice > h1,
+  .recruitment-portal .rp-portal-choice > p,
+  .recruitment-portal .rp-choice-grid {
+    animation: none !important;
+  }
+  .recruitment-portal .rp-choice-card,
+  .recruitment-portal .rp-choice-icon {
+    transition: none !important;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   LIGHT MODE — published selection result cards
+   Keep the purple identity, but restore clear contrast.
+   This intentionally overrides the shared dark card surface
+   above only when the global PRISM theme is light.
+---------------------------------------------------------- */
+html[data-theme="light"] .recruitment-portal .rp-result-card,
+html[data-theme="light"] .recruitment-portal .rp-result-card.rp-theme-prism,
+html[data-theme="light"] .recruitment-portal .rp-result-card.rp-theme-botanical,
+html[data-theme="light"] .recruitment-portal .rp-result-card.rp-theme-rose {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f4ff 100%) !important;
+  color: #30243d !important;
+  border: 1px solid #ded0f5 !important;
+  border-left: 4px solid #8b5cf6 !important;
+  box-shadow: 0 10px 28px rgba(73, 48, 110, 0.07);
+}
+
+html[data-theme="light"] .recruitment-portal .rp-result-card:hover {
+  background: linear-gradient(135deg, #ffffff 0%, #f3ebff 100%) !important;
+  border-color: #bda2ee !important;
+  box-shadow: 0 16px 34px rgba(91, 57, 145, 0.13);
+}
+
+html[data-theme="light"] .recruitment-portal .rp-result-card .rp-role-kicker {
+  color: #7950c8 !important;
+  opacity: 1;
+}
+
+html[data-theme="light"] .recruitment-portal .rp-result-card .rp-result-card-top h2,
+html[data-theme="light"] .recruitment-portal .rp-result-card .rp-result-card-top h2 span {
+  color: #2f2340 !important;
+  opacity: 1 !important;
+}
+
+html[data-theme="light"] .recruitment-portal .rp-result-card .rp-result-card-top p {
+  color: #71667e !important;
+  opacity: 1 !important;
+}
+
+html[data-theme="light"] .recruitment-portal .rp-result-card .rp-result-meta {
+  color: #6f647d !important;
+  border-top-color: #e7def2 !important;
+  border-bottom-color: #e7def2 !important;
+}
+
+html[data-theme="light"] .recruitment-portal .rp-result-card .rp-result-meta span:last-child {
+  color: #7042bd !important;
+  font-weight: 750;
+}
+
+html[data-theme="light"] .recruitment-portal .rp-result-card .rp-result-published {
+  background: #eaf7ee !important;
+  color: #27834b !important;
+  border: 1px solid #ccebd5;
+}
+
+html[data-theme="light"] .recruitment-portal .rp-result-card:focus-visible {
+  outline: 3px solid rgba(139, 92, 246, 0.45);
+  outline-offset: 4px;
+}
+
+/* Match the selected-result detail view to the same light palette. */
+html[data-theme="light"] .recruitment-portal .rp-result-detail.rp-theme-prism {
+  --rp-result-bg: #f8f5fc;
+  --rp-result-card: #ffffff;
+  --rp-result-text: #30243d;
+  --rp-result-accent: #8b5cf6;
+  color: #30243d !important;
+  background: #f8f5fc !important;
+  border-color: #ded0f5 !important;
+}
+
+html[data-theme="light"] .recruitment-portal .rp-result-detail.rp-theme-prism .rp-result-detail-banner,
+html[data-theme="light"] .recruitment-portal .rp-result-detail.rp-theme-prism .rp-result-detail-list {
+  background: #ffffff !important;
+  color: #30243d !important;
+  border-color: #e7def2 !important;
+}
+
+html[data-theme="light"] .recruitment-portal .rp-result-detail.rp-theme-prism .rp-result-detail-banner h2,
+html[data-theme="light"] .recruitment-portal .rp-result-detail.rp-theme-prism .rp-result-detail-list h3,
+html[data-theme="light"] .recruitment-portal .rp-result-detail.rp-theme-prism .rp-result-person-top strong {
+  color: #30243d !important;
+}
+
+html[data-theme="light"] .recruitment-portal .rp-result-detail.rp-theme-prism .rp-result-detail-banner p,
+html[data-theme="light"] .recruitment-portal .rp-result-detail.rp-theme-prism .rp-result-detail-date,
+html[data-theme="light"] .recruitment-portal .rp-result-detail.rp-theme-prism .rp-result-detail-person > p,
+html[data-theme="light"] .recruitment-portal .rp-result-detail.rp-theme-prism .rp-result-answer p {
+  color: #71667e !important;
+  opacity: 1;
+}
+
+html[data-theme="light"] .recruitment-portal .rp-result-detail.rp-theme-prism .rp-result-answer {
+  background: #f5f0fb !important;
+  border-color: #e5daf2 !important;
+}

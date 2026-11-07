@@ -1,0 +1,242 @@
+
+.prism-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: #000;
+  color: #fff;
+  isolation: isolate;
+  opacity: 0;
+  transform: scale(1.015);
+  transition:
+    opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.prism-intro.is-ready {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.prism-intro.is-exiting {
+  opacity: 0;
+  transform: scale(1.025);
+  pointer-events: none;
+}
+
+.prism-intro-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  object-position: center;
+  background: #000;
+  transition: transform 1.2s ease, filter 1.2s ease;
+}
+
+.prism-intro.is-exiting .prism-intro-video {
+  transform: scale(1.025);
+  filter: brightness(0.7);
+}
+
+.prism-intro-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 45%,
+    rgba(0, 0, 0, 0.12) 100%
+  );
+  opacity: 0.5;
+  transition: opacity 0.7s ease;
+}
+
+.prism-intro.is-exiting .prism-intro-vignette {
+  opacity: 0;
+}
+
+.prism-intro-controls {
+  position: absolute;
+  z-index: 3;
+  right: clamp(16px, 3vw, 42px);
+  bottom: clamp(26px, 4vh, 44px);
+  left: clamp(16px, 3vw, 42px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  transition:
+    opacity 0.35s ease,
+    transform 0.45s ease;
+}
+
+.prism-intro-control {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 42px;
+  padding: 0 15px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  background: rgba(12, 10, 18, 0.58);
+  color: #fff;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  cursor: pointer;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.prism-intro-control:hover:not(:disabled) {
+  background: rgba(100, 45, 220, 0.68);
+  border-color: rgba(190, 160, 255, 0.75);
+  transform: translateY(-2px);
+}
+
+.prism-intro-control:focus-visible {
+  outline: 2px solid #b99aff;
+  outline-offset: 4px;
+}
+
+.prism-intro-control:disabled {
+  cursor: default;
+  opacity: 0.65;
+}
+
+.prism-intro-control.sound-attention {
+  border-color: rgba(190, 160, 255, 0.8);
+  box-shadow: 0 0 22px rgba(124, 58, 237, 0.22);
+}
+
+.prism-intro.is-exiting .prism-intro-controls {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.prism-intro-progress {
+  position: absolute;
+  z-index: 4;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+  transition: opacity 0.4s ease;
+}
+
+.prism-intro-progress span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform: scaleX(0);
+  transform-origin: left center;
+  background: linear-gradient(
+    90deg,
+    #fff 0%,
+    #8b5cf6 50%,
+    #5b21b6 100%
+  );
+  animation: prism-intro-progress 10s linear forwards;
+}
+
+.prism-intro.is-exiting .prism-intro-progress {
+  opacity: 0;
+}
+
+.prism-intro-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  background: #000;
+}
+
+.prism-intro-fallback h1 {
+  margin: 0;
+  font-size: clamp(42px, 8vw, 84px);
+  font-weight: 800;
+  letter-spacing: -0.06em;
+}
+
+.prism-intro-fallback h1 span {
+  color: #7024ef;
+}
+
+.prism-intro-fallback p {
+  color: #c9c1d5;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+}
+
+.prism-intro-fallback button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  padding: 12px 22px;
+  border: 0;
+  border-radius: 999px;
+  background: #7024ef;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@keyframes prism-intro-progress {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (max-width: 600px) {
+  .prism-intro-video {
+    object-fit: contain;
+  }
+
+  .prism-intro-controls {
+    right: 14px;
+    bottom: 24px;
+    left: 14px;
+  }
+
+  .prism-intro-control {
+    min-height: 40px;
+    padding: 0 12px;
+    font-size: 11px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prism-intro,
+  .prism-intro-video,
+  .prism-intro-controls,
+  .prism-intro-progress span {
+    transition-duration: 0.01ms;
+    animation-duration: 0.01ms;
+  }
+}

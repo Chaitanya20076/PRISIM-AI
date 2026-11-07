@@ -1,0 +1,414 @@
+
+.privacy-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 610px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 7% 85px;
+  background: #f7f2eb;
+  color: #292438;
+  text-align: center;
+}
+
+/* Background constellation */
+
+.privacy-hero__network {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+
+  -webkit-mask-image: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0.13) 0%,
+    rgba(0, 0, 0, 0.45) 45%,
+    black 90%
+  );
+
+  mask-image: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0.13) 0%,
+    rgba(0, 0, 0, 0.45) 45%,
+    black 90%
+  );
+}
+
+.privacy-hero__network-svg {
+  width: 100%;
+  height: 100%;
+  color: #ae6250;
+  animation: privacyNetworkDrift 22s ease-in-out infinite alternate;
+}
+
+.privacy-hero__network-line {
+  stroke: currentColor;
+  stroke-width: 0.85;
+  opacity: 0.3;
+}
+
+.privacy-hero__network-node {
+  fill: currentColor;
+  opacity: 0.65;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: privacyNodeGlow 5s ease-in-out infinite;
+}
+
+.privacy-hero__network-pulse {
+  stroke: url(#privacyPulseGradient);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  fill: none;
+  opacity: 0;
+
+  stroke-dasharray: 12 88;
+  stroke-dashoffset: 100;
+
+  animation: privacyConnectionPulse 9s linear infinite;
+}
+
+@keyframes privacyNetworkDrift {
+  0% {
+    transform: scale(1.02) translate(0, 0);
+  }
+
+  50% {
+    transform: scale(1.06) translate(-7px, 5px);
+  }
+
+  100% {
+    transform: scale(1.03) translate(7px, -5px);
+  }
+}
+
+@keyframes privacyNodeGlow {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(0.8);
+  }
+
+  50% {
+    opacity: 0.95;
+    transform: scale(1.5);
+  }
+}
+
+@keyframes privacyConnectionPulse {
+  0%, 12% {
+    opacity: 0;
+    stroke-dashoffset: 100;
+  }
+
+  18% {
+    opacity: 0.9;
+  }
+
+  45% {
+    opacity: 0.9;
+    stroke-dashoffset: 0;
+  }
+
+  55%, 100% {
+    opacity: 0;
+    stroke-dashoffset: -100;
+  }
+}
+
+/* Atmospheric glows */
+
+.privacy-hero__orb {
+  position: absolute;
+  z-index: 0;
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.17;
+  pointer-events: none;
+}
+
+.privacy-hero__orb--one {
+  top: -170px;
+  right: -80px;
+  background: #c47a63;
+}
+
+.privacy-hero__orb--two {
+  bottom: -190px;
+  left: -100px;
+  background: #b9a6c9;
+}
+
+/* Main hero */
+
+.privacy-hero__inner {
+  position: relative;
+  z-index: 2;
+  width: min(780px, 100%);
+  margin: 0 auto;
+  animation: privacyHeroReveal 0.9s ease both;
+}
+
+.privacy-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 15px;
+  border: 1px solid rgba(174, 98, 80, 0.25);
+  border-radius: 50px;
+  background: rgba(247, 242, 235, 0.75);
+  color: #ae6250;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.privacy-hero__visual {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 140px;
+  height: 140px;
+  margin: 28px auto 14px;
+}
+
+.privacy-hero__icon {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 70px;
+  height: 70px;
+  border: 1px solid rgba(174, 98, 80, 0.3);
+  border-radius: 22px;
+  background: #fffdf9;
+  color: #ae6250;
+  box-shadow: 0 12px 35px rgba(41, 36, 56, 0.08);
+  transform: rotate(-5deg);
+}
+
+.privacy-hero__halo {
+  position: absolute;
+  border: 1px solid rgba(174, 98, 80, 0.28);
+  border-radius: 50%;
+  animation: privacyHalo 7s ease-in-out infinite;
+}
+
+.privacy-hero__halo--outer {
+  inset: 1px;
+}
+
+.privacy-hero__halo--inner {
+  inset: 17px;
+  animation-delay: -3.5s;
+}
+
+.privacy-hero__lock {
+  position: absolute;
+  z-index: 3;
+  right: 21px;
+  bottom: 24px;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgba(174, 98, 80, 0.25);
+  border-radius: 50%;
+  background: #fffdf9;
+  color: #ae6250;
+  box-shadow: 0 5px 15px rgba(41, 36, 56, 0.07);
+}
+
+@keyframes privacyHalo {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(0.92);
+  }
+
+  50% {
+    opacity: 0.85;
+    transform: scale(1.08);
+  }
+}
+
+/* Typography */
+
+.privacy-hero h1 {
+  margin: 0;
+  color: #292438;
+  font-size: clamp(45px, 6.8vw, 79px);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -3.5px;
+}
+
+.privacy-hero h1 span {
+  color: #ae6250;
+  font-family: Georgia, serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.privacy-hero__inner > p {
+  max-width: 590px;
+  margin: 24px auto 0;
+  color: #777184;
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+.privacy-hero__meta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 26px;
+  color: #898294;
+  font-size: 11px;
+}
+
+.privacy-hero__dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #ae6250;
+}
+
+/* Button */
+
+.privacy-hero__scroll {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 38px;
+  padding: 12px 19px;
+  border: 1px solid rgba(174, 98, 80, 0.35);
+  border-radius: 50px;
+  background: rgba(247, 242, 235, 0.85);
+  color: #ae6250;
+  font-family: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.privacy-hero__scroll:hover {
+  background: #ae6250;
+  color: #fff;
+  transform: translateY(3px);
+}
+
+@keyframes privacyHeroReveal {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Dark mode */
+
+html[data-theme="dark"] .privacy-hero {
+  background: #171522;
+  color: #f8f1eb;
+}
+
+html[data-theme="dark"] .privacy-hero__network-svg {
+  color: #e6a68c;
+}
+
+html[data-theme="dark"] .privacy-hero__network-line {
+  opacity: 0.36;
+}
+
+html[data-theme="dark"] .privacy-hero__network-node {
+  filter: drop-shadow(0 0 4px rgba(230, 166, 140, 0.7));
+}
+
+html[data-theme="dark"] .privacy-hero__eyebrow {
+  background: rgba(23, 21, 34, 0.8);
+  color: #e6a68c;
+}
+
+html[data-theme="dark"] .privacy-hero__icon,
+html[data-theme="dark"] .privacy-hero__lock {
+  background: #211d2d;
+  color: #e6a68c;
+  border-color: rgba(248, 241, 235, 0.15);
+}
+
+html[data-theme="dark"] .privacy-hero__halo {
+  border-color: rgba(230, 166, 140, 0.35);
+}
+
+html[data-theme="dark"] .privacy-hero h1 {
+  color: #f8f1eb;
+}
+
+html[data-theme="dark"] .privacy-hero h1 span {
+  color: #e6a68c;
+}
+
+html[data-theme="dark"] .privacy-hero__inner > p,
+html[data-theme="dark"] .privacy-hero__meta {
+  color: #bdb5ca;
+}
+
+html[data-theme="dark"] .privacy-hero__scroll {
+  background: rgba(23, 21, 34, 0.85);
+  color: #e6a68c;
+  border-color: rgba(230, 166, 140, 0.35);
+}
+
+html[data-theme="dark"] .privacy-hero__scroll:hover {
+  background: #e6a68c;
+  color: #211d2d;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+  .privacy-hero {
+    min-height: 550px;
+    padding: 110px 6% 70px;
+  }
+
+  .privacy-hero h1 {
+    font-size: clamp(42px, 11vw, 60px);
+    letter-spacing: -2px;
+  }
+
+  .privacy-hero__inner > p {
+    font-size: 13px;
+  }
+
+  .privacy-hero__network-svg {
+    width: 150%;
+    margin-left: -25%;
+  }
+}
+
+/* Reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .privacy-hero__network-svg,
+  .privacy-hero__network-node,
+  .privacy-hero__network-pulse,
+  .privacy-hero__halo,
+  .privacy-hero__inner {
+    animation: none;
+  }
+
+  .privacy-hero__network-pulse {
+    display: none;
+  }
+}

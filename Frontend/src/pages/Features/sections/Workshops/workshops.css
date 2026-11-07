@@ -1,0 +1,19 @@
+.feature-row { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: clamp(45px, 7vw, 100px); padding: 105px 0; border-bottom: 1px solid var(--feature-line); }
+.feature-copy { max-width: 510px; }
+.feature-kicker { color: #ad624f; font-size: 11px; font-weight: 800; letter-spacing: .2em; }
+.feature-copy h2 { margin: 20px 0; color: var(--feature-ink); font: 800 clamp(2.6rem, 4.6vw, 4.5rem)/1.02 "Manrope",sans-serif; letter-spacing: -.065em; }
+.feature-copy h2 em { color: #ae6250; font-style: normal; }
+.feature-lead { color: var(--feature-muted); font-size: 16px; line-height: 1.85; margin: 0 0 30px; }
+.feature-points { display: grid; gap: 20px; }
+.feature-point { display: flex; align-items: flex-start; gap: 14px; }
+.feature-point-icon { width: 38px; height: 38px; display: grid; place-items: center; flex: 0 0 38px; color: #a85845; background: rgba(174,98,80,.11); border-radius: 12px; }
+.feature-point h3 { margin: 1px 0 4px; color: var(--feature-ink); font-size: 14px; }
+.feature-point p { margin: 0; color: var(--feature-muted); font-size: 13px; line-height: 1.6; }
+.feature-inline-link { display: inline-flex; align-items: center; gap: 9px; margin-top: 28px; color: var(--feature-ink); font-size: 13px; font-weight: 700; text-decoration: none; border-bottom: 1px solid #ae6250; padding-bottom: 8px; }
+.feature-visual { min-height: 420px; position: relative; overflow: hidden; border-radius: 26px; background: #ded0c3; box-shadow: 0 25px 70px rgba(42,31,25,.12); }
+.feature-visual img { width: 100%; height: 100%; min-height: 420px; display: block; object-fit: cover; }
+.feature-image-caption { position: absolute; left: 24px; bottom: 24px; display: flex; flex-direction: column; gap: 7px; color: white; text-shadow: 0 2px 12px #0008; }
+.feature-image-caption span { font-size: 10px; font-weight: 800; letter-spacing: .2em; }
+.feature-image-caption strong { font: 700 24px "Manrope",sans-serif; letter-spacing: -.04em; }
+.feature-visual-index { position: absolute; top: 20px; right: 22px; color: white; font: 700 13px "Manrope"; }
+@media(max-width:760px){.feature-row{grid-template-columns:1fr;gap:32px;padding:70px 0}.feature-row--reverse .feature-copy{order:0}.feature-visual,.feature-visual img{min-height:300px}.feature-copy h2{font-size:3rem}}

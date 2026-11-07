@@ -1,0 +1,224 @@
+/* Event-type cards styled to match PRISM AI's Admin Management Modules. */
+.host-event-page {
+  min-height: calc(100vh - 72px);
+  padding: clamp(26px, 4vw, 48px) clamp(16px, 4vw, 44px);
+  color: var(--text-primary, #edf5f3);
+  background:
+    radial-gradient(circle at 15% 10%, rgba(242, 184, 75, 0.055), transparent 27%),
+    radial-gradient(circle at 88% 82%, rgba(45, 212, 191, 0.05), transparent 30%),
+    var(--bg-primary, #0d1717);
+  box-sizing: border-box;
+}
+
+.host-event-page *,
+.host-event-page *::before,
+.host-event-page *::after { box-sizing: border-box; }
+
+.host-event-shell { width: min(100%, 1260px); margin: 0 auto; }
+
+.host-back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 30px;
+  padding: 9px 13px;
+  border: 1px solid var(--border-color, #30403f);
+  border-radius: 11px;
+  background: var(--surface, #172323);
+  color: var(--text-primary, #edf5f3);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 650;
+  cursor: pointer;
+  transition: transform 180ms ease, border-color 180ms ease;
+}
+.host-back-button:hover { transform: translateY(-2px); border-color: #6e8a85; }
+
+.host-event-header { max-width: 780px; margin-bottom: 30px; }
+.host-event-eyebrow {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: #f1bd5d;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+}
+.host-event-header h1 {
+  margin: 0;
+  color: var(--text-primary, #edf5f3);
+  font-size: clamp(30px, 3.8vw, 43px);
+  line-height: 1.12;
+  letter-spacing: -0.045em;
+  font-weight: 800;
+}
+.host-event-header p {
+  margin: 13px 0 0;
+  color: var(--text-secondary, #9aadaa);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.host-event-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.host-event-card {
+  --accent: #f1bd5d;
+  --tint: rgba(241, 189, 93, 0.10);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  min-height: 258px;
+  padding: 25px 24px 64px;
+  overflow: hidden;
+  border: 1px solid var(--card-border, #30403f);
+  border-radius: 18px;
+  background:
+    radial-gradient(ellipse at 100% 0%, var(--tint), transparent 58%),
+    var(--surface, #172323);
+  color: var(--text-primary, #edf5f3);
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  box-shadow: none;
+  transition: transform 190ms ease, border-color 190ms ease, box-shadow 190ms ease;
+}
+.host-event-card:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--accent) 75%, #30403f);
+}
+.host-event-card:focus-visible,
+.host-back-button:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent, #f1bd5d) 55%, transparent);
+  outline-offset: 3px;
+}
+
+.host-event-card-icon {
+  display: grid;
+  flex: 0 0 53px;
+  width: 53px;
+  height: 53px;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--accent) 32%, transparent);
+  border-radius: 15px;
+  background: var(--tint);
+  color: var(--accent);
+}
+.host-event-card-open {
+  position: absolute;
+  top: 25px;
+  right: 24px;
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid var(--card-border, #30403f);
+  border-radius: 50%;
+  color: var(--accent);
+  transition: transform 180ms ease, border-color 180ms ease;
+}
+.host-event-card:hover .host-event-card-open {
+  transform: translate(2px, -2px);
+  border-color: var(--accent);
+}
+.host-event-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  margin-top: 26px;
+}
+.host-event-card-eyebrow {
+  color: var(--accent);
+  font-size: 10px;
+  line-height: 1.4;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+}
+.host-event-card-title {
+  color: var(--text-primary, #edf5f3);
+  font-size: 20px;
+  line-height: 1.3;
+  font-weight: 780;
+  letter-spacing: -0.035em;
+}
+.host-event-card-description {
+  color: var(--text-secondary, #9aadaa);
+  font-size: 13px;
+  line-height: 1.7;
+}
+.host-event-card-footer {
+  position: absolute;
+  right: 24px;
+  bottom: 0;
+  left: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 45px;
+  border-top: 1px solid var(--card-border, #30403f);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.host-event-card--amber { --accent: #f1bd5d; --tint: rgba(241, 189, 93, 0.10); }
+.host-event-card--blue { --accent: #78aaff; --tint: rgba(93, 151, 255, 0.10); }
+.host-event-card--violet { --accent: #bd9aff; --tint: rgba(173, 132, 255, 0.10); }
+.host-event-card--teal { --accent: #51d7cb; --tint: rgba(45, 212, 191, 0.10); }
+.host-event-card--green { --accent: #5ce0a5; --tint: rgba(68, 211, 145, 0.10); }
+.host-event-card--pink { --accent: #ff8db5; --tint: rgba(255, 112, 169, 0.10); }
+
+/* Light theme: retain the same card structure with a pale background. */
+[data-theme="light"] .host-event-page,
+.light .host-event-page {
+  --bg-primary: #fff8fb;
+  --surface: #ffffff;
+  --text-primary: #202b30;
+  --text-secondary: #728087;
+  --border-color: #e8e1e5;
+  --card-border: #e8e1e5;
+  background:
+    radial-gradient(circle at 15% 10%, rgba(242, 184, 75, 0.07), transparent 27%),
+    radial-gradient(circle at 88% 82%, rgba(45, 212, 191, 0.06), transparent 30%),
+    #fff8fb;
+}
+[data-theme="light"] .host-event-card,
+.light .host-event-card { box-shadow: 0 8px 25px rgba(33, 37, 41, 0.035); }
+[data-theme="light"] .host-event-card:hover,
+.light .host-event-card:hover { box-shadow: 0 13px 28px rgba(33, 37, 41, 0.075); }
+[data-theme="light"] .host-back-button,
+.light .host-back-button {
+  background: #fff;
+  color: #202b30;
+  border-color: #e8e1e5;
+}
+
+@media (max-width: 950px) {
+  .host-event-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .host-event-card { min-height: 245px; padding: 22px 20px 62px; }
+  .host-event-card-open { top: 22px; right: 20px; }
+  .host-event-card-footer { right: 20px; left: 20px; }
+}
+@media (max-width: 580px) {
+  .host-event-page { padding: 22px 15px 36px; }
+  .host-back-button { margin-bottom: 25px; }
+  .host-event-header { margin-bottom: 23px; }
+  .host-event-grid { grid-template-columns: 1fr; gap: 13px; }
+  .host-event-card { min-height: 225px; padding: 20px 18px 60px; border-radius: 16px; }
+  .host-event-card-open { top: 20px; right: 18px; }
+  .host-event-card-title { font-size: 18px; }
+  .host-event-card-footer { right: 18px; left: 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .host-event-card, .host-event-card-open, .host-back-button { transition: none; }
+}
+
+/* Hackathon card accent matching the dashboard purple treatment. */
+.host-event-card--indigo { --accent: #a78bfa; --tint: rgba(139, 92, 246, 0.11); }
+
+.host-event-card--violet { --accent: #bd9aff; --tint: rgba(173, 132, 255, 0.10); }
