@@ -1,4 +1,3 @@
-
 require("dotenv").config();
 
 const express = require("express");
@@ -10,6 +9,7 @@ const adminEventsRoutes = require("./routes/adminEventsRoutes");
 const eventsRoutes = require("./routes/eventsRoutes");
 const adminAuthRoutes = require("./routes/adminAuthRoutes");
 const announcementRoutes = require("./routes/announcementRoutes");
+const pointsRoutes = require("./routes/pointsRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -138,22 +138,23 @@ app.use(
 );
 
 // --------------------------------------------------
-// ANNOUNCEMENT ROUTES - FIRESTORE
+// MEMBER PRISM POINTS WALLET
 // --------------------------------------------------
 
-// Public announcements:
-// GET /api/announcements/public
+app.use("/api/points", pointsRoutes);
+
+// --------------------------------------------------
+// ANNOUNCEMENT ROUTES - FIRESTORE
+// --------------------------------------------------
 
 app.use(
   "/api/announcements",
   announcementRoutes
 );
 
-// Admin announcement operations:
-// GET    /api/admin/announcements
-// POST   /api/admin/announcements
-// PUT    /api/admin/announcements/:id
-// DELETE /api/admin/announcements/:id
+// --------------------------------------------------
+// ADMIN ANNOUNCEMENT OPERATIONS
+// --------------------------------------------------
 
 app.use(
   "/api/admin/announcements",
@@ -210,6 +211,7 @@ app.listen(PORT, () => {
   console.log("Admin Authentication: Enabled");
   console.log("Admin Events: Enabled");
   console.log("Public Events: Enabled");
+  console.log("PRISM Points: Enabled");
   console.log("Firestore Announcements: Enabled");
 
   console.log("-----------------------------------");

@@ -153,3 +153,724 @@
     padding-inline: 17px;
   }
 }
+
+
+/* Seminar public page: distinct midnight-indigo, violet and cyan identity. */
+.workshop-public-page{--sp-bg:#101b19;--sp-surface:#172522;--sp-surface-soft:#1d302b;--sp-border:rgba(220,222,255,.14);--sp-text:#f1f4e9;--sp-muted:#aaaec8;--sp-accent:#c8f169;--sp-accent-dark:#1b2c22;background:var(--sp-bg)}
+.workshop-public-page .sp-glow-one{background:radial-gradient(circle,rgba(155,211,94,.19),transparent 70%)}
+.workshop-public-page .sp-glow-two{background:radial-gradient(circle,rgba(155,211,94,.12),transparent 70%)}
+.workshop-public-page .sp-register-card{border-color:rgba(200,241,105,.25);background:radial-gradient(circle at 100% 0%,rgba(200,241,105,.12),transparent 38%),var(--sp-surface)}
+.workshop-public-page .sp-form-field input:not([type=checkbox]):not([type=radio]),.workshop-public-page .sp-form-field textarea,.workshop-public-page .sp-form-field select{border-color:#34483d;background:#101b19}
+.workshop-public-page .sp-form-alert{border-color:rgba(200,241,105,.25);background:rgba(200,241,105,.08);color:#eaf7d9}
+.workshop-public-page .sp-art-placeholder{background:linear-gradient(145deg,#1b2c22,#111827 65%,#20372b)}
+
+/* =========================================================
+   SEMINAR PUBLIC PAGE — LIGHT MODE
+   Scoped to the seminar page; keeps its violet + cyan identity.
+   Reads the shared navbar theme: html[data-theme="light"].
+   ========================================================= */
+[data-theme="light"] .workshop-public-page {
+  --sp-bg: #f1f4e9;
+  --sp-surface: #ffffff;
+  --sp-surface-soft: #f1f4e9;
+  --sp-border: #e1def2;
+  --sp-text: #1d302b;
+  --sp-muted: #6f7088;
+  --sp-accent: #719f3d;
+  --sp-accent-dark: #ffffff;
+  background: var(--sp-bg);
+  color: var(--sp-text);
+}
+
+[data-theme="light"] .workshop-public-page .sp-glow-one {
+  background: radial-gradient(circle, rgba(200,241,105,.12), transparent 70%);
+}
+[data-theme="light"] .workshop-public-page .sp-glow-two {
+  background: radial-gradient(circle, rgba(155,211,94,.10), transparent 70%);
+}
+[data-theme="light"] .workshop-public-page .sp-nav,
+[data-theme="light"] .workshop-public-page .sp-footer {
+  border-color: var(--sp-border);
+}
+[data-theme="light"] .workshop-public-page .sp-nav-back,
+[data-theme="light"] .workshop-public-page .sp-nav-share,
+[data-theme="light"] .workshop-public-page .sp-footer > p {
+  color: var(--sp-muted);
+}
+[data-theme="light"] .workshop-public-page .sp-brand,
+[data-theme="light"] .workshop-public-page .sp-footer-brand {
+  color: var(--sp-text) !important;
+}
+[data-theme="light"] .workshop-public-page .sp-brand-mark,
+[data-theme="light"] .workshop-public-page .sp-fact-icon,
+[data-theme="light"] .workshop-public-page .sp-art-icon,
+[data-theme="light"] .workshop-public-page .sp-register-heading > span,
+[data-theme="light"] .workshop-public-page .sp-instructor > span,
+[data-theme="light"] .workshop-public-page .sp-state-icon {
+  border-color: #e8f4d9;
+  background: #f1f4e9;
+  color: var(--sp-accent);
+}
+[data-theme="light"] .workshop-public-page .sp-eyebrow,
+[data-theme="light"] .workshop-public-page .sp-title-spark,
+[data-theme="light"] .workshop-public-page .sp-section-title > span,
+[data-theme="light"] .workshop-public-page .sp-facts svg,
+[data-theme="light"] .workshop-public-page .sp-register-meta svg,
+[data-theme="light"] .workshop-public-page .sp-outcome svg:first-child,
+[data-theme="light"] .workshop-public-page .sp-contact-link {
+  color: var(--sp-accent);
+}
+[data-theme="light"] .workshop-public-page .sp-eyebrow > span:not(.sp-live-dot) {
+  color: #9993b5;
+}
+[data-theme="light"] .workshop-public-page .sp-live-dot {
+  background: var(--sp-accent);
+  box-shadow: 0 0 10px rgba(121,86,216,.18);
+}
+[data-theme="light"] .workshop-public-page .sp-hero {
+  background: linear-gradient(135deg, #f1f4e9 0%, #f1f4e9 60%, #f1f7e9 100%);
+  border: 1px solid #e8f4d9;
+  border-radius: 16px;
+}
+[data-theme="light"] .workshop-public-page .sp-tags > span {
+  border-color: var(--sp-border);
+  background: rgba(255,255,255,.85);
+  color: #56556f;
+}
+[data-theme="light"] .workshop-public-page .sp-tags .open {
+  color: #527d32;
+  border-color: #e4f7c7;
+  background: #f1f4e9;
+}
+[data-theme="light"] .workshop-public-page .sp-tags .closed,
+[data-theme="light"] .workshop-public-page .sp-closed-pill {
+  color: #b42335;
+}
+[data-theme="light"] .workshop-public-page .sp-button-primary {
+  background: #719f3d;
+  color: #fff;
+}
+[data-theme="light"] .workshop-public-page .sp-button-primary:hover {
+  background: #568b32;
+}
+[data-theme="light"] .workshop-public-page .sp-button-secondary {
+  border-color: #e0ead8;
+  background: #fff;
+  color: var(--sp-text);
+}
+[data-theme="light"] .workshop-public-page .sp-button-secondary:hover {
+  border-color: #b8a8eb;
+}
+[data-theme="light"] .workshop-public-page .sp-art-card {
+  border-color: #e4f7c7;
+  background: #f1edff;
+  box-shadow: 0 24px 55px rgba(63,48,113,.10);
+}
+[data-theme="light"] .workshop-public-page .sp-art-card > b {
+  border-color: #e1def2;
+  background: #fff;
+  color: var(--sp-accent);
+}
+[data-theme="light"] .workshop-public-page .sp-art-placeholder {
+  background: radial-gradient(circle at 78% 20%, rgba(200,241,105,.16), transparent 36%), linear-gradient(145deg, #f1f4e9, #f1f4e9 72%, #f1f7e9);
+  color: var(--sp-text);
+}
+[data-theme="light"] .workshop-public-page .sp-art-grid {
+  opacity: .38;
+  background-image: linear-gradient(rgba(121,86,216,.10) 1px, transparent 1px), linear-gradient(90deg, rgba(121,86,216,.10) 1px, transparent 1px);
+}
+[data-theme="light"] .workshop-public-page .sp-art-placeholder > span {
+  color: #7d7897;
+}
+[data-theme="light"] .workshop-public-page .sp-orbit {
+  border-color: rgba(121,86,216,.16);
+}
+[data-theme="light"] .workshop-public-page .sp-orbit-two {
+  border-color: rgba(34,160,181,.15);
+}
+[data-theme="light"] .workshop-public-page .sp-float-chip {
+  border-color: #e1def2;
+  background: rgba(255,255,255,.96);
+  box-shadow: 0 10px 28px rgba(45,39,82,.10);
+  color: #263a31;
+}
+[data-theme="light"] .workshop-public-page .sp-float-chip svg {
+  color: var(--sp-accent);
+}
+[data-theme="light"] .workshop-public-page .sp-facts {
+  border-color: var(--sp-border);
+  background: #fff;
+}
+[data-theme="light"] .workshop-public-page .sp-facts small,
+[data-theme="light"] .workshop-public-page .sp-instructor small {
+  color: #85819f;
+}
+[data-theme="light"] .workshop-public-page .sp-facts em {
+  color: var(--sp-muted);
+}
+[data-theme="light"] .workshop-public-page .sp-outcome {
+  border-color: var(--sp-border);
+  background: #fff;
+  color: #34483d;
+}
+[data-theme="light"] .workshop-public-page .sp-outcome svg:last-child {
+  color: #9692ad;
+}
+[data-theme="light"] .workshop-public-page .sp-prerequisites p {
+  color: var(--sp-muted);
+}
+[data-theme="light"] .workshop-public-page .sp-instructor {
+  border-color: var(--sp-border);
+}
+[data-theme="light"] .workshop-public-page .sp-register-card {
+  border-color: #ded6f8;
+  background: radial-gradient(circle at 100% 0%, rgba(200,241,105,.10), transparent 38%), #fff;
+  box-shadow: 0 18px 45px rgba(54,43,91,.07);
+}
+[data-theme="light"] .workshop-public-page .sp-register-heading small,
+[data-theme="light"] .workshop-public-page .sp-register-meta p {
+  color: var(--sp-muted);
+}
+[data-theme="light"] .workshop-public-page .sp-register-meta {
+  border-color: var(--sp-border);
+}
+[data-theme="light"] .workshop-public-page .sp-register-meta strong {
+  color: var(--sp-text);
+}
+[data-theme="light"] .workshop-public-page .sp-form-field {
+  color: var(--sp-text);
+}
+[data-theme="light"] .workshop-public-page .sp-form-field input:not([type="checkbox"]):not([type="radio"]),
+[data-theme="light"] .workshop-public-page .sp-form-field textarea,
+[data-theme="light"] .workshop-public-page .sp-form-field select {
+  border-color: #e0ead8;
+  background: #f1f4e9;
+  color: #263a31;
+}
+[data-theme="light"] .workshop-public-page .sp-form-field input::placeholder,
+[data-theme="light"] .workshop-public-page .sp-form-field textarea::placeholder {
+  color: #9995ad;
+}
+[data-theme="light"] .workshop-public-page .sp-choice,
+[data-theme="light"] .workshop-public-page .sp-consent,
+[data-theme="light"] .workshop-public-page .sp-consent-copy {
+  color: var(--sp-muted);
+}
+[data-theme="light"] .workshop-public-page .sp-choice input,
+[data-theme="light"] .workshop-public-page .sp-consent input {
+  accent-color: var(--sp-accent);
+}
+[data-theme="light"] .workshop-public-page .sp-privacy-note {
+  color: #85819b;
+}
+[data-theme="light"] .workshop-public-page .sp-form-alert {
+  border-color: #ddd4fa;
+  background: #f1f4e9;
+  color: #405b32;
+}
+[data-theme="light"] .workshop-public-page .sp-alert-success {
+  border-color: #b8e5c6;
+  background: #effaf2;
+  color: #216738;
+}
+[data-theme="light"] .workshop-public-page .sp-alert-closed,
+[data-theme="light"] .workshop-public-page .sp-form-alert.sp-alert-duplicate {
+  border-color: #f0c7cd;
+  background: #fff2f3;
+  color: #a32136;
+}
+[data-theme="light"] .workshop-public-page .sp-state > p:not(.sp-eyebrow) {
+  color: var(--sp-muted);
+}
+[data-theme="light"] .workshop-public-page .sp-footer > button:last-child {
+  color: var(--sp-accent);
+}
+
+/* Light-mode hero refinement: soften the panel edges and blend into the facts strip. */
+[data-theme="light"] .workshop-public-page .sp-hero {
+  position: relative;
+  isolation: isolate;
+  width: min(1240px, calc(100% - 64px));
+  padding: 66px clamp(24px, 4vw, 54px) 55px;
+  overflow: hidden;
+  border: 1px solid rgba(200,241,105, 0.18);
+  border-radius: 18px 18px 12px 12px;
+  background:
+    radial-gradient(ellipse at 86% 42%, rgba(200,241,105, 0.13), transparent 42%),
+    radial-gradient(ellipse at 70% 100%, rgba(155,211,94, 0.09), transparent 45%),
+    linear-gradient(135deg, #f1f4e9 0%, #f8f7ff 58%, #f1f7e9 100%);
+  box-shadow: 0 18px 48px rgba(54, 43, 91, 0.045);
+}
+
+[data-theme="light"] .workshop-public-page .sp-hero::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: auto 0 0;
+  height: 90px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent, rgba(232, 228, 250, 0.32));
+}
+
+[data-theme="light"] .workshop-public-page .sp-facts {
+  position: relative;
+  margin-top: 0;
+  border-top-color: rgba(222, 214, 248, 0.72);
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(54, 43, 91, 0.035);
+}
+
+@media (max-width: 720px) {
+  [data-theme="light"] .workshop-public-page .sp-hero {
+    width: calc(100% - 36px);
+    padding: 44px 22px 36px;
+    border-radius: 15px;
+  }
+}
+
+@media (max-width: 380px) {
+  [data-theme="light"] .workshop-public-page .sp-hero {
+    width: calc(100% - 26px);
+    padding-inline: 17px;
+  }
+}
+
+
+/* Full-width event details and dedicated registration view */
+.workshop-public-page .sp-content-details{display:block;width:min(1120px,calc(100% - 64px))}
+.workshop-public-page .sp-content-details .sp-main-content{max-width:900px}
+.workshop-public-page .sp-event-overview{margin-top:64px;padding:30px;border:1px solid var(--sp-border);border-radius:16px;background:linear-gradient(120deg,rgba(200,241,105,.10),rgba(255,255,255,.018)),var(--sp-surface)}
+.workshop-public-page .sp-overview-heading{display:flex;align-items:center;gap:14px}
+.workshop-public-page .sp-overview-icon{width:46px;height:46px;display:grid;place-items:center;border:1px solid rgba(200,241,105,.3);border-radius:12px;background:rgba(200,241,105,.12);color:#d8f5a2}
+.workshop-public-page .sp-overview-heading h2{margin:7px 0 0;font:500 clamp(22px,3vw,30px)/1.2 'Space Grotesk',sans-serif;letter-spacing:-.8px}
+.workshop-public-page .sp-reward-highlight{display:flex;align-items:center;gap:16px;margin-top:25px;padding:20px 22px;border:1px solid rgba(200,241,105,.38);border-radius:12px;background:linear-gradient(100deg,rgba(200,241,105,.18),rgba(200,241,105,.045))}
+.workshop-public-page .sp-reward-highlight>span{width:48px;height:48px;flex:0 0 48px;display:grid;place-items:center;border-radius:13px;background:rgba(200,241,105,.18);color:#c7b3ff}
+.workshop-public-page .sp-reward-highlight small{display:block;color:#dff5b5;font-size:9px;font-weight:800;letter-spacing:1.5px}
+.workshop-public-page .sp-reward-highlight strong{display:block;margin-top:4px;color:var(--sp-text);font:700 clamp(23px,3vw,32px)/1.1 'Space Grotesk',sans-serif}
+.workshop-public-page .sp-reward-highlight em{color:#dff5b5;font-size:.65em;font-style:normal}
+.workshop-public-page .sp-reward-highlight p{margin:5px 0 0;color:var(--sp-muted);font-size:11px}
+.workshop-public-page .sp-overview-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:22px 0;padding:20px 0;border-top:1px solid var(--sp-border);border-bottom:1px solid var(--sp-border)}
+.workshop-public-page .sp-overview-grid>div{display:flex;align-items:flex-start;gap:10px;color:#d8f5a2}
+.workshop-public-page .sp-overview-grid span{display:grid;gap:5px;min-width:0}
+.workshop-public-page .sp-overview-grid small{color:var(--sp-muted);font-size:10px}
+.workshop-public-page .sp-overview-grid strong{color:var(--sp-text);font-size:12px;line-height:1.5}
+.workshop-public-page .sp-overview-cta{min-width:190px}
+.workshop-public-page .sp-registration-topbar{position:relative;z-index:2;width:min(1240px,calc(100% - 64px));min-height:76px;margin:auto;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--sp-border)}
+.workshop-public-page .sp-registration-topbar .sp-brand{display:flex;align-items:center;gap:8px;border:0;background:none;color:var(--sp-text);font-weight:800}
+.workshop-public-page .sp-registration-topbar .sp-brand>span:last-child{color:#d8f5a2}
+.workshop-public-page .sp-registration-step{color:var(--sp-muted);font-size:9px;font-weight:700;letter-spacing:1.5px}
+.workshop-public-page .sp-registration-shell{position:relative;z-index:1;width:min(1080px,calc(100% - 64px));margin:0 auto;padding:70px 0 90px;display:grid;grid-template-columns:minmax(0,.85fr) minmax(420px,1.15fr);align-items:start;gap:70px}
+.workshop-public-page .sp-registration-intro{position:sticky;top:50px;padding-top:20px}
+.workshop-public-page .sp-registration-intro h1{margin:20px 0 0;font:600 clamp(42px,5vw,64px)/1.02 'Space Grotesk',sans-serif;letter-spacing:-2.5px}
+.workshop-public-page .sp-registration-intro>p:not(.sp-eyebrow){max-width:390px;margin:20px 0 0;color:var(--sp-muted);font-size:14px;line-height:1.8}
+.workshop-public-page .sp-registration-intro>p strong{color:var(--sp-text)}
+.workshop-public-page .sp-registration-event-facts{display:grid;gap:13px;margin-top:28px;color:var(--sp-muted);font-size:12px}
+.workshop-public-page .sp-registration-event-facts span{display:flex;align-items:center;gap:10px}
+.workshop-public-page .sp-registration-event-facts svg{color:#d8f5a2}
+.workshop-public-page .sp-registration-form-panel{padding:32px;border:1px solid rgba(200,241,105,.28);border-radius:16px;background:var(--sp-surface);box-shadow:0 25px 80px rgba(0,0,0,.18)}
+.workshop-public-page .sp-registration-form-heading h2{margin:8px 0;font:500 28px/1.2 'Space Grotesk',sans-serif;letter-spacing:-.8px}
+.workshop-public-page .sp-registration-form-heading>p:last-child{margin:0;color:var(--sp-muted);font-size:11px}
+.workshop-public-page .sp-registration-form-panel .sp-registration-form{margin-top:25px;gap:18px}
+.workshop-public-page .sp-registration-form-panel .sp-form-field{font-size:12px}
+.workshop-public-page .sp-registration-form-panel .sp-form-field input:not([type=checkbox]):not([type=radio]),.workshop-public-page .sp-registration-form-panel .sp-form-field textarea,.workshop-public-page .sp-registration-form-panel .sp-form-field select{min-height:48px}
+.workshop-public-page .sp-registration-form-panel .sp-full-button{min-height:50px}
+@media(max-width:850px){
+ .workshop-public-page .sp-overview-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .workshop-public-page .sp-registration-shell{grid-template-columns:1fr;gap:32px;padding-top:42px}
+ .workshop-public-page .sp-registration-intro{position:static}
+ .workshop-public-page .sp-registration-intro h1 br{display:none}
+}
+@media(max-width:600px){
+ .workshop-public-page .sp-content-details,.workshop-public-page .sp-registration-topbar,.workshop-public-page .sp-registration-shell{width:calc(100% - 36px)}
+ .workshop-public-page .sp-event-overview{padding:20px;margin-top:42px}
+ .workshop-public-page .sp-overview-grid{gap:18px 10px}
+ .workshop-public-page .sp-reward-highlight{padding:16px}
+ .workshop-public-page .sp-registration-topbar{min-height:66px}
+ .workshop-public-page .sp-registration-step{display:none}
+ .workshop-public-page .sp-registration-form-panel{padding:21px}
+ .workshop-public-page .sp-registration-intro h1{font-size:43px}
+}
+
+
+/* Animated registration-side experience */
+.workshop-public-page .sp-registration-intro h1.sp-animated-headline{
+  min-height:2.2em;max-width:520px;margin:22px 0 0;
+  font:700 clamp(42px,5.2vw,66px)/1.08 'Space Grotesk',sans-serif;
+  letter-spacing:-2.8px;overflow:visible;
+}
+.workshop-public-page .sp-animated-headline span{
+  display:inline-block;max-width:100%;
+  background:linear-gradient(105deg,#c8f169 0%,#dff5b5 24%,#c8f169 48%,#c8f169 72%,#c8f169 100%);
+  background-size:260% auto;background-clip:text;-webkit-background-clip:text;color:transparent;
+  animation:sp-headline-enter .75s cubic-bezier(.2,.8,.2,1) both,sp-gradient-flow 4s linear infinite;
+  filter:drop-shadow(0 0 22px rgba(200,241,105,.16));
+}
+@keyframes sp-headline-enter{from{opacity:0;transform:translateY(18px);clip-path:inset(0 100% 0 0)}to{opacity:1;transform:translateY(0);clip-path:inset(0 0 0 0)}}
+@keyframes sp-gradient-flow{to{background-position:260% center}}
+.workshop-public-page .sp-registration-intro{min-width:0}
+.workshop-public-page .sp-registration-intro>p:not(.sp-eyebrow){animation:sp-copy-enter .8s .12s both}
+@keyframes sp-copy-enter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* Registration success celebration */
+.workshop-public-page .sp-success-overlay{
+  position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:24px;
+  background:rgba(7,8,20,.78);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  animation:sp-overlay-in .22s ease-out both;overflow:hidden;
+}
+@keyframes sp-overlay-in{from{opacity:0}to{opacity:1}}
+.workshop-public-page .sp-success-modal{
+  position:relative;z-index:2;width:min(470px,100%);padding:42px 34px 30px;text-align:center;
+  border:1px solid rgba(200,241,105,.48);border-radius:22px;
+  background:radial-gradient(ellipse at 50% 0%,rgba(200,241,105,.2),transparent 58%),var(--sp-surface);
+  box-shadow:0 28px 100px rgba(0,0,0,.48),0 0 55px rgba(200,241,105,.13);
+  animation:sp-modal-pop .48s cubic-bezier(.16,1.3,.3,1) both;
+}
+@keyframes sp-modal-pop{from{opacity:0;transform:translateY(24px) scale(.86)}to{opacity:1;transform:translateY(0) scale(1)}}
+.workshop-public-page .sp-success-close{
+  position:absolute;top:14px;right:14px;width:36px;height:36px;display:grid;place-items:center;
+  border:1px solid var(--sp-border);border-radius:10px;background:transparent;color:var(--sp-text);cursor:pointer;
+}
+.workshop-public-page .sp-success-emblem{
+  width:76px;height:76px;margin:0 auto 20px;display:grid;place-items:center;border-radius:50%;
+  color:#e4f7c7;background:rgba(200,241,105,.17);border:1px solid rgba(200,241,105,.45);
+  box-shadow:0 0 0 9px rgba(200,241,105,.055),0 0 40px rgba(200,241,105,.2);
+  animation:sp-emblem-pulse 1.8s ease-in-out infinite;
+}
+@keyframes sp-emblem-pulse{50%{transform:scale(1.07);box-shadow:0 0 0 15px rgba(200,241,105,.025),0 0 55px rgba(200,241,105,.28)}}
+.workshop-public-page .sp-success-modal h2{margin:10px 0;font:700 clamp(27px,5vw,36px)/1.15 'Space Grotesk',sans-serif;letter-spacing:-1px}
+.workshop-public-page .sp-success-modal>p:not(.sp-eyebrow){max-width:350px;margin:0 auto;color:var(--sp-muted);font-size:13px;line-height:1.7}
+.workshop-public-page .sp-success-points{
+  display:inline-flex;align-items:center;gap:9px;margin:20px auto 0;padding:12px 17px;
+  border:1px solid rgba(200,241,105,.35);border-radius:999px;background:rgba(200,241,105,.1);color:#cbb9ff;font-size:13px;
+}
+.workshop-public-page .sp-success-countdown{margin-top:25px}
+.workshop-public-page .sp-success-countdown>span{color:var(--sp-muted);font-size:8px;font-weight:800;letter-spacing:1.5px}
+.workshop-public-page .sp-success-countdown>div{height:4px;margin-top:9px;overflow:hidden;border-radius:99px;background:rgba(200,241,105,.14)}
+.workshop-public-page .sp-success-countdown>div i{display:block;width:100%;height:100%;border-radius:inherit;background:linear-gradient(90deg,#c8f169,#c8f169);transform-origin:left;animation:sp-countdown 5s linear forwards}
+@keyframes sp-countdown{to{transform:scaleX(0)}}
+.workshop-public-page .sp-success-done{width:100%;margin-top:20px;min-height:46px}
+.workshop-public-page .sp-confetti{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.workshop-public-page .sp-confetti i{
+  position:absolute;top:-12%;left:calc((var(--i, 0) * 1%));width:8px;height:13px;border-radius:2px;
+  background:hsl(calc(var(--i, 0) * 37),85%,70%);opacity:0;
+  animation:sp-confetti-fall 2.8s ease-in infinite;
+}
+.workshop-public-page .sp-confetti i:nth-child(34n+1){--i:3;left:3%;animation-delay:.02s}
+.workshop-public-page .sp-confetti i:nth-child(34n+2){--i:19;left:19%;animation-delay:.25s}
+.workshop-public-page .sp-confetti i:nth-child(34n+3){--i:35;left:35%;animation-delay:.12s}
+.workshop-public-page .sp-confetti i:nth-child(34n+4){--i:51;left:51%;animation-delay:.4s}
+.workshop-public-page .sp-confetti i:nth-child(34n+5){--i:67;left:67%;animation-delay:.18s}
+.workshop-public-page .sp-confetti i:nth-child(34n+6){--i:83;left:83%;animation-delay:.55s}
+.workshop-public-page .sp-confetti i:nth-child(34n+7){--i:97;left:97%;animation-delay:.32s}
+.workshop-public-page .sp-confetti i:nth-child(n+8){left:calc((var(--i) * 1%));animation-delay:calc(var(--i) * .035s)}
+@keyframes sp-confetti-fall{0%{opacity:0;transform:translateY(-10px) rotate(0)}12%{opacity:1}100%{opacity:0;transform:translateY(115vh) rotate(680deg)}}
+@media(prefers-reduced-motion:reduce){
+ .workshop-public-page .sp-animated-headline span,.workshop-public-page .sp-confetti i,.workshop-public-page .sp-success-emblem{animation:none}
+}
+
+
+/* Cinematic typewriter panel: fast, varied, continuously animated */
+.workshop-public-page .sp-cinematic-copy{
+  position:relative;min-height:260px;margin:18px 0 22px;padding:27px 24px 24px;
+  overflow:hidden;border:1px solid rgba(200,241,105,.25);border-radius:18px;
+  background:
+    radial-gradient(ellipse at 82% 20%,rgba(200,241,105,.13),transparent 38%),
+    radial-gradient(ellipse at 8% 90%,rgba(200,241,105,.17),transparent 42%),
+    linear-gradient(135deg,rgba(25,25,48,.95),rgba(13,15,31,.92));
+  box-shadow:inset 0 1px rgba(255,255,255,.05),0 20px 65px rgba(0,0,0,.15);
+}
+.workshop-public-page .sp-cinematic-copy:before{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.24;
+  background-image:linear-gradient(rgba(190,180,255,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(190,180,255,.12) 1px,transparent 1px);
+  background-size:34px 34px;mask-image:linear-gradient(120deg,#000,transparent 85%);
+}
+.workshop-public-page .sp-cinematic-copy:after{
+  content:"";position:absolute;width:190px;height:190px;right:-70px;bottom:-100px;border:1px solid rgba(200,241,105,.28);border-radius:50%;
+  box-shadow:0 0 0 18px rgba(200,241,105,.025),0 0 0 38px rgba(200,241,105,.025);
+  animation:sp-orbit-pulse 5s ease-in-out infinite alternate;
+}
+@keyframes sp-orbit-pulse{to{transform:scale(1.35) translate(-15px,-12px);opacity:.35}}
+.workshop-public-page .sp-cinematic-kicker{
+  position:relative;z-index:1;display:flex;align-items:center;gap:9px;margin:0 0 32px;
+  color:#dff5b5;font-size:9px;font-weight:800;letter-spacing:2.2px;
+}
+.workshop-public-page .sp-cinematic-kicker span{width:6px;height:6px;border-radius:50%;background:#c8f169;box-shadow:0 0 12px #c8f169;animation:sp-kicker-blink 1s ease-in-out infinite alternate}
+@keyframes sp-kicker-blink{to{opacity:.3;transform:scale(.65)}}
+.workshop-public-page .sp-registration-intro h1.sp-animated-headline{
+  position:relative;z-index:1;min-height:2.3em;max-width:100%;margin:0;
+  font:800 clamp(31px,4.1vw,53px)/1.13 'Space Grotesk',sans-serif;letter-spacing:-1.9px;
+  overflow-wrap:anywhere;
+}
+.workshop-public-page .sp-animated-headline span{
+  display:inline;background:linear-gradient(100deg,#fff 0%,#e4f7c7 30%,#c8f169 62%,#dff5b5 90%);
+  background-size:220% auto;background-clip:text;-webkit-background-clip:text;color:transparent;
+  animation:sp-gradient-flow 2.8s linear infinite;
+  filter:drop-shadow(0 0 16px rgba(200,241,105,.2));
+}
+.workshop-public-page .sp-copy-style-1 .sp-animated-headline span{background-image:linear-gradient(100deg,#c8f169,#c8f169,#fff,#c8f169)}
+.workshop-public-page .sp-copy-style-2 .sp-animated-headline span{background-image:linear-gradient(100deg,#dff5b5,#c8f169,#fbbf24,#dff5b5)}
+.workshop-public-page .sp-type-caret{display:inline-block;width:3px;height:.92em;margin-left:5px;vertical-align:-.08em;background:#c8f169;box-shadow:0 0 12px #c8f169;animation:sp-caret-blink .65s steps(2,start) infinite}
+@keyframes sp-caret-blink{to{opacity:0}}
+.workshop-public-page .sp-cinematic-subline{position:relative;z-index:1;margin-top:22px;color:#9da1bc;font-size:9px;font-weight:700;letter-spacing:1.5px}
+.workshop-public-page .sp-cinematic-subline span:first-child{color:#e4f7c7}
+.workshop-public-page .sp-cinematic-subline b{padding:0 7px;color:#c8f169}
+.workshop-public-page .sp-cinematic-progress{position:relative;z-index:1;height:2px;margin-top:20px;overflow:hidden;background:rgba(255,255,255,.09)}
+.workshop-public-page .sp-cinematic-progress i{display:block;width:100%;height:100%;transform-origin:left;background:linear-gradient(90deg,#c8f169,#c8f169,#dff5b5);animation:sp-progress-run 3.5s linear both}
+@keyframes sp-progress-run{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.workshop-public-page .sp-registration-intro>p:not(.sp-eyebrow){animation:sp-copy-enter .55s ease-out both}
+
+/* Real falling confetti: separate pieces, varied sizes, colours, drift and rotation */
+.workshop-public-page .sp-confetti{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.workshop-public-page .sp-confetti i{
+  position:absolute;top:-24px;left:var(--x);width:var(--piece-width);height:var(--piece-height);
+  display:block;border-radius:2px;background:var(--piece-color);opacity:0;
+  animation:sp-confetti-fall var(--duration) linear var(--delay) infinite;
+  box-shadow:0 0 5px color-mix(in srgb,var(--piece-color),transparent 45%);
+}
+@keyframes sp-confetti-fall{
+  0%{opacity:0;transform:translate3d(0,-4vh,0) rotate(0deg)}
+  8%{opacity:1}
+  85%{opacity:.95}
+  100%{opacity:0;transform:translate3d(var(--drift),112vh,0) rotate(var(--spin))}
+}
+
+
+/* Clean purple + white motion typography — intentionally no panel/card */
+.workshop-public-page .sp-registration-intro .sp-cinematic-copy{
+  position:relative;display:block;min-height:190px;margin:24px 0 18px;padding:0;
+  overflow:visible;border:0;border-radius:0;background:none;box-shadow:none;
+}
+.workshop-public-page .sp-registration-intro .sp-cinematic-copy:before,
+.workshop-public-page .sp-registration-intro .sp-cinematic-copy:after{display:none;content:none}
+.workshop-public-page .sp-registration-intro h1.sp-animated-headline{
+  display:block;position:relative;z-index:1;max-width:540px;min-height:2.5em;margin:0;
+  overflow-wrap:normal;font:700 clamp(39px,5vw,66px)/1.12 'Space Grotesk',sans-serif;
+  letter-spacing:-2.7px;color:#fff;
+}
+.workshop-public-page .sp-registration-intro h1.sp-animated-headline span{
+  display:inline;color:#fff;
+  background:linear-gradient(90deg,#fff 0%,#fff 42%,#e4f7c7 52%,#9bd35e 70%,#9bd35e 100%);
+  background-size:240% 100%;background-position:100% 0;
+  background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  filter:none;animation:sp-purple-fill 3.8s cubic-bezier(.55,.05,.25,1) both;
+}
+@keyframes sp-purple-fill{
+  0%{background-position:100% 0}
+  100%{background-position:0 0}
+}
+/* Four distinct, deliberately slow entrance motions */
+.workshop-public-page .sp-registration-intro h1.sp-headline-motion-0 span{
+  animation:sp-purple-fill 3.8s cubic-bezier(.55,.05,.25,1) both,sp-reveal-wipe 1.7s cubic-bezier(.2,.75,.25,1) both;
+}
+.workshop-public-page .sp-registration-intro h1.sp-headline-motion-1 span{
+  animation:sp-purple-fill 3.8s cubic-bezier(.55,.05,.25,1) both,sp-rise-settle 1.9s cubic-bezier(.2,.8,.25,1) both;
+}
+.workshop-public-page .sp-registration-intro h1.sp-headline-motion-2 span{
+  animation:sp-purple-fill 3.8s cubic-bezier(.55,.05,.25,1) both,sp-letter-space 2s cubic-bezier(.2,.8,.25,1) both;
+}
+.workshop-public-page .sp-registration-intro h1.sp-headline-motion-3 span{
+  animation:sp-purple-fill 3.8s cubic-bezier(.55,.05,.25,1) both,sp-soft-focus 2s cubic-bezier(.2,.8,.25,1) both;
+}
+@keyframes sp-reveal-wipe{
+  from{clip-path:inset(0 100% 0 0);transform:translateX(-16px)}
+  to{clip-path:inset(0 0 0 0);transform:translateX(0)}
+}
+@keyframes sp-rise-settle{
+  0%{transform:translateY(34px);opacity:0}
+  65%{transform:translateY(-5px);opacity:1}
+  100%{transform:translateY(0);opacity:1}
+}
+@keyframes sp-letter-space{
+  from{letter-spacing:5px;opacity:.25;filter:blur(5px)}
+  to{letter-spacing:-2.7px;opacity:1;filter:blur(0)}
+}
+@keyframes sp-soft-focus{
+  0%{transform:scale(.94);filter:blur(9px);opacity:0}
+  65%{filter:blur(0);opacity:1}
+  100%{transform:scale(1);filter:blur(0);opacity:1}
+}
+/* Celebration confetti uses only purple shades and white */
+.workshop-public-page .sp-confetti i{
+  background:var(--piece-color);box-shadow:0 0 5px rgba(200,241,105,.22);
+}
+@media(prefers-reduced-motion:reduce){
+ .workshop-public-page .sp-registration-intro h1.sp-animated-headline span{animation:none!important;background-position:0 0}
+}
+
+
+/* FINAL typography correction: full-width wrapping, purple + white only */
+.workshop-public-page .sp-registration-shell{grid-template-columns:minmax(0, .9fr) minmax(420px,1.1fr);gap:56px}
+.workshop-public-page .sp-registration-intro{min-width:0;width:100%;max-width:100%;overflow:visible}
+.workshop-public-page .sp-registration-intro .sp-cinematic-copy{
+  display:block!important;position:relative!important;width:100%!important;max-width:100%!important;
+  min-height:0!important;height:auto!important;margin:25px 0 24px!important;padding:0!important;
+  overflow:visible!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;
+}
+.workshop-public-page .sp-registration-intro .sp-cinematic-copy:before,
+.workshop-public-page .sp-registration-intro .sp-cinematic-copy:after{display:none!important;content:none!important}
+.workshop-public-page .sp-registration-intro h1.sp-animated-headline{
+  display:block!important;position:relative!important;width:100%!important;max-width:100%!important;
+  min-height:0!important;height:auto!important;margin:0!important;padding:0!important;
+  overflow:visible!important;white-space:normal!important;overflow-wrap:normal!important;word-break:normal!important;
+  font-family:'Space Grotesk',sans-serif!important;font-size:clamp(34px,3.5vw,54px)!important;
+  font-weight:700!important;line-height:1.08!important;letter-spacing:-1.9px!important;
+  color:#fff!important;text-align:left!important;
+}
+.workshop-public-page .sp-registration-intro h1.sp-animated-headline .sp-headline-line{
+  display:block!important;width:max-content!important;max-width:100%!important;
+  white-space:nowrap!important;overflow:visible!important;
+  color:#fff!important;background:linear-gradient(90deg,#fff 0%,#fff 38%,#e4f7c7 60%,#c8f169 100%)!important;
+  background-size:220% 100%!important;background-position:100% 0!important;
+  background-clip:text!important;-webkit-background-clip:text!important;
+  -webkit-text-fill-color:transparent!important;filter:none!important;
+  animation:sp-white-purple-fill 3.2s ease-in-out both!important;
+}
+.workshop-public-page .sp-registration-intro h1.sp-animated-headline .sp-headline-line-two{animation-delay:.22s!important}
+@keyframes sp-white-purple-fill{from{background-position:100% 0}to{background-position:0 0}}
+/* Deliberately varied, slow entrances; no repetitive fade-only transition */
+.workshop-public-page .sp-registration-intro h1.sp-headline-motion-0 .sp-headline-line-one{animation:sp-white-purple-fill 3.2s ease-in-out both,sp-motion-wipe 1.6s cubic-bezier(.6,0,.2,1) both!important}
+.workshop-public-page .sp-registration-intro h1.sp-headline-motion-0 .sp-headline-line-two{animation:sp-white-purple-fill 3.2s ease-in-out .22s both,sp-motion-wipe 1.6s cubic-bezier(.6,0,.2,1) .18s both!important}
+.workshop-public-page .sp-registration-intro h1.sp-headline-motion-1 .sp-headline-line-one{animation:sp-white-purple-fill 3.2s ease-in-out both,sp-motion-lift 1.7s cubic-bezier(.2,.75,.25,1) both!important}
+.workshop-public-page .sp-registration-intro h1.sp-headline-motion-1 .sp-headline-line-two{animation:sp-white-purple-fill 3.2s ease-in-out .22s both,sp-motion-lift 1.7s cubic-bezier(.2,.75,.25,1) .2s both!important}
+.workshop-public-page .sp-registration-intro h1.sp-headline-motion-2 .sp-headline-line-one{animation:sp-white-purple-fill 3.2s ease-in-out both,sp-motion-track 1.8s cubic-bezier(.2,.75,.25,1) both!important}
+.workshop-public-page .sp-registration-intro h1.sp-headline-motion-2 .sp-headline-line-two{animation:sp-white-purple-fill 3.2s ease-in-out .22s both,sp-motion-track 1.8s cubic-bezier(.2,.75,.25,1) .2s both!important}
+.workshop-public-page .sp-registration-intro h1.sp-headline-motion-3 .sp-headline-line-one{animation:sp-white-purple-fill 3.2s ease-in-out both,sp-motion-rise 1.8s cubic-bezier(.2,.75,.25,1) both!important}
+.workshop-public-page .sp-registration-intro h1.sp-headline-motion-3 .sp-headline-line-two{animation:sp-white-purple-fill 3.2s ease-in-out .22s both,sp-motion-rise 1.8s cubic-bezier(.2,.75,.25,1) .2s both!important}
+@keyframes sp-motion-wipe{from{clip-path:inset(0 100% 0 0);transform:translateX(-12px)}to{clip-path:inset(0 0 0 0);transform:translateX(0)}}
+@keyframes sp-motion-lift{from{transform:translateY(26px)}to{transform:translateY(0)}}
+@keyframes sp-motion-track{from{letter-spacing:5px;filter:blur(2px)}to{letter-spacing:-1.9px;filter:blur(0)}}
+@keyframes sp-motion-rise{0%{transform:translateY(18px) scale(.97)}65%{transform:translateY(-3px) scale(1.01)}100%{transform:translateY(0) scale(1)}}
+@media(max-width:1100px){
+ .workshop-public-page .sp-registration-shell{grid-template-columns:minmax(0,.85fr) minmax(390px,1.15fr);gap:34px}
+ .workshop-public-page .sp-registration-intro h1.sp-animated-headline{font-size:clamp(32px,4vw,46px)!important}
+}
+@media(max-width:850px){
+ .workshop-public-page .sp-registration-shell{grid-template-columns:minmax(0,1fr);gap:32px}
+ .workshop-public-page .sp-registration-intro h1.sp-animated-headline{font-size:clamp(36px,8vw,54px)!important}
+}
+@media(max-width:430px){
+ .workshop-public-page .sp-registration-intro h1.sp-animated-headline{font-size:clamp(29px,8vw,38px)!important;letter-spacing:-1.2px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .workshop-public-page .sp-registration-intro h1.sp-animated-headline .sp-headline-line{animation:none!important;background-position:0 0!important}
+}
+
+
+/* Single approved headline motion: slow left-to-right roll/reveal */
+.workshop-public-page .sp-registration-intro h1.sp-headline-roll .sp-headline-line{
+  animation:
+    sp-white-purple-fill 3.8s ease-in-out both,
+    sp-motion-wipe 2.15s cubic-bezier(.55,.08,.25,1) both !important;
+  will-change:clip-path,transform,background-position;
+}
+.workshop-public-page .sp-registration-intro h1.sp-headline-roll .sp-headline-line-two{
+  animation-delay:.28s,.18s !important;
+}
+.workshop-public-page .sp-registration-intro h1.sp-headline-roll .sp-headline-line-one{
+  animation-delay:0s,0s !important;
+}
+@keyframes sp-motion-wipe{
+  0%{clip-path:inset(0 100% 0 0);transform:translateX(-18px)}
+  100%{clip-path:inset(0 0 0 0);transform:translateX(0)}
+}
+/* Disable the previous alternate entrance styles; keep one consistent motion. */
+.workshop-public-page .sp-registration-intro h1.sp-headline-roll .sp-headline-line{
+  opacity:1;
+}
+
+
+/* Confetti positioning fix: override legacy nth-child left rules.
+   Every piece gets its own full-width viewport position. */
+.workshop-public-page .sp-success-overlay .sp-confetti{
+  position:absolute!important;inset:0!important;width:100%!important;height:100%!important;
+  z-index:1!important;overflow:hidden!important;pointer-events:none!important;
+}
+.workshop-public-page .sp-success-overlay .sp-confetti i,
+.workshop-public-page .sp-success-overlay .sp-confetti i:nth-child(n){
+  position:absolute!important;top:-24px!important;left:var(--x)!important;
+  width:var(--piece-width)!important;height:var(--piece-height)!important;
+  display:block!important;opacity:0;
+  background:var(--piece-color)!important;
+  animation:sp-confetti-fall var(--duration) linear var(--delay) infinite!important;
+}
+
+
+/* Workshop registration mode uses the same purple-and-white full-screen experience. */
+.workshop-public-page.sp-registration-page{
+  --sp-bg:#101b19;
+  --sp-surface:#172522;
+  --sp-text:#f1f4e9;
+  --sp-muted:#a7a4bf;
+  --sp-accent:#c8f169;
+  background:#101b19!important;
+  color:#f1f4e9!important;
+}
+.workshop-public-page.sp-registration-page .sp-success-overlay .sp-confetti{
+  position:absolute!important;inset:0!important;width:100%!important;height:100%!important;
+  z-index:1!important;overflow:hidden!important;pointer-events:none!important;
+}
+.workshop-public-page.sp-registration-page .sp-success-overlay .sp-confetti i,
+.workshop-public-page.sp-registration-page .sp-success-overlay .sp-confetti i:nth-child(n){
+  position:absolute!important;top:-24px!important;left:var(--x)!important;
+  width:var(--piece-width)!important;height:var(--piece-height)!important;
+  display:block!important;opacity:0;background:var(--piece-color)!important;
+  animation:sp-confetti-fall var(--duration) linear var(--delay) infinite!important;
+}
+
+
+/* Workshop overview details: balanced 2x2 grid instead of cramped columns. */
+.workshop-public-page .wp-register-meta{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  column-gap:22px;
+  row-gap:17px;
+}
+.workshop-public-page .wp-register-meta p{
+  min-width:0;
+  align-items:flex-start;
+  line-height:1.55;
+}
+.workshop-public-page .wp-register-meta p span{
+  min-width:0;
+  display:grid;
+  gap:4px;
+}
+.workshop-public-page .wp-register-meta strong{
+  display:block;
+  overflow-wrap:anywhere;
+  line-height:1.45;
+}
+@media(max-width:520px){
+  .workshop-public-page .wp-register-meta{
+    grid-template-columns:1fr;
+    row-gap:14px;
+  }
+}
+
+/* Final workshop identity lock: retain the original green/lime theme. */
+.workshop-public-page.sp-registration-page {
+  --sp-bg: #101b19 !important;
+  --sp-surface: #172522 !important;
+  --sp-surface-soft: #1d302b !important;
+  --sp-border: rgba(226,244,230,.14) !important;
+  --sp-text: #f1f4e9 !important;
+  --sp-muted: #a2b4a8 !important;
+  --sp-accent: #c8f169 !important;
+  --sp-accent-dark: #1b2c22 !important;
+  background: #101b19 !important;
+  color: #f1f4e9 !important;
+}
+.workshop-public-page.sp-registration-page .sp-registration-intro h1.sp-animated-headline .sp-headline-line {
+  background: linear-gradient(90deg,#ffffff 0%,#ffffff 38%,#e4f7c7 60%,#c8f169 100%) !important;
+  background-size: 220% 100% !important;
+  background-position: 100% 0 !important;
+  background-clip: text !important;
+  -webkit-background-clip: text !important;
+}
+.workshop-public-page.sp-registration-page .sp-success-modal,
+.workshop-public-page.sp-registration-page .sp-registration-form-panel {
+  border-color: rgba(200,241,105,.28) !important;
+}
+.workshop-public-page.sp-registration-page .sp-success-points,
+.workshop-public-page.sp-registration-page .sp-reward-highlight {
+  border-color: rgba(200,241,105,.32) !important;
+}

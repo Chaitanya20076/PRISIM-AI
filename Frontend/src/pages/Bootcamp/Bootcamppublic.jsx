@@ -19,10 +19,26 @@ import {
   ClipboardList,
   ShieldCheck,
   CircleCheck,
+  Sun,
+  Moon,
   X,
 } from "lucide-react";
 
+import { getAuth } from "firebase/auth";
 import "./Bootcamppublic.css";
+
+
+
+// Firebase identity for member-linked registrations. The UID is derived
+// from the verified Firebase ID token on the backend, never from form data.
+async function getMemberAuthHeaders() {
+  const user = getAuth().currentUser;
+  if (!user) {
+    throw new Error("Please sign in to your PRISM AI account before registering. This lets us link your registration to your PRISM Points wallet.");
+  }
+  const idToken = await user.getIdToken();
+  return { Authorization: `Bearer ${idToken}` };
+}
 
 const API_BASE_URL = (
   import.meta.env.VITE_API_URL ||
@@ -188,12 +204,69 @@ function QuestionInput({ field, value, onChange }) {
 }
 
 // --------------------------------------------------
+// GLOBAL THEME HELPERS
+// --------------------------------------------------
+
+const readGlobalTheme = () => {
+  if (typeof document === "undefined") return "dark";
+  const rootTheme = document.documentElement.getAttribute("data-theme");
+  const bodyTheme = document.body?.getAttribute("data-theme");
+  let storedTheme = null;
+  try { storedTheme = localStorage.getItem("theme") || localStorage.getItem("prism-theme"); } catch {}
+  return [rootTheme, bodyTheme, storedTheme].includes("light") ? "light" : "dark";
+};
+
+const applyGlobalTheme = (theme) => {
+  if (typeof document === "undefined") return;
+  document.documentElement.setAttribute("data-theme", theme);
+  document.body?.setAttribute("data-theme", theme);
+  document.documentElement.style.colorScheme = theme;
+  try {
+    localStorage.setItem("theme", theme);
+    localStorage.setItem("prism-theme", theme);
+  } catch {}
+  window.dispatchEvent(new CustomEvent("prism-theme-change", { detail: { theme } }));
+};
+
+function BootcampThemeToggle({ theme, onToggle }) {
+  return (
+    <button type="button" className="sp-theme-toggle" onClick={onToggle}
+      aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+      title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}>
+      {theme === "dark" ? <Sun size={17} /> : <Moon size={17} />}
+      <span>{theme === "dark" ? "Light mode" : "Dark mode"}</span>
+    </button>
+  );
+}
+
+// --------------------------------------------------
 // MAIN COMPONENT
 // --------------------------------------------------
 
 export default function Bootcamppublic() {
   const navigate = useNavigate();
   const { slug } = useParams();
+  const [theme, setTheme] = useState(readGlobalTheme);
+
+  useEffect(() => {
+    const syncTheme = () => setTheme(readGlobalTheme());
+    const onStorage = (event) => {
+      if (event.key === "theme" || event.key === "prism-theme") syncTheme();
+    };
+    window.addEventListener("storage", onStorage);
+    window.addEventListener("prism-theme-change", syncTheme);
+    applyGlobalTheme(readGlobalTheme());
+    return () => {
+      window.removeEventListener("storage", onStorage);
+      window.removeEventListener("prism-theme-change", syncTheme);
+    };
+  }, []);
+
+  const toggleTheme = () => {
+    const nextTheme = theme === "dark" ? "light" : "dark";
+    setTheme(nextTheme);
+    applyGlobalTheme(nextTheme);
+  };
 
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -205,6 +278,12 @@ export default function Bootcamppublic() {
 
   const [submitting, setSubmitting] = useState(false);
   const [submissionMessage, setSubmissionMessage] = useState("");
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [successHeading, setSuccessHeading] = useState("Congratulations!");
+  const [successDescription, setSuccessDescription] = useState(
+    "Your bootcamp registration has been submitted successfully."
+  );
+  const registrationTab = new URLSearchParams(window.location.search).get("register") === "1";
 
   const [shareCopied, setShareCopied] = useState(false);
 
@@ -355,6 +434,8 @@ export default function Bootcamppublic() {
 
   const waitlistEnabled = Boolean(event?.waitlistEnabled);
 
+  const rewardPoints = Math.max(0, Math.floor(Number(event?.rewardPoints) || 0));
+
   const externalLink = String(
     event?.registrationLink || ""
   ).trim();
@@ -486,7 +567,8 @@ export default function Bootcamppublic() {
         {
           method: "POST",
 
-          headers: {
+          headers: { ...(await getMemberAuthHeaders()),
+          
             "Content-Type": "application/json",
             Accept: "application/json",
           },
@@ -516,6 +598,25 @@ export default function Bootcamppublic() {
 
       setAnswers({});
 
+      const registrationStatus = String(savedRegistration.status || "").toLowerCase();
+      const successCopy = registrationStatus === "waitlisted"
+        ? {
+            heading: "You're on the list!",
+            description: "Your waitlist request has been submitted successfully. The PRISM AI team will contact you if a spot becomes available."
+          }
+        : registrationStatus === "pending"
+          ? {
+              heading: "Application submitted!",
+              description: "Your registration is awaiting organizer approval. We'll let you know once it has been reviewed."
+            }
+          : {
+              heading: "Congratulations!",
+              description: "Your bootcamp registration has been confirmed. Get ready to learn, build and apply!"
+            };
+
+      setSuccessHeading(successCopy.heading);
+      setSuccessDescription(successCopy.description);
+      setShowSuccess(true);
       setSubmissionMessage(
         savedRegistration.status === "Waitlisted"
           ? "You're on the waitlist. Your registration has been recorded."
@@ -621,6 +722,129 @@ export default function Bootcamppublic() {
   }
 
   // --------------------------------------------------
+  // DEDICATED REGISTRATION TAB
+  // --------------------------------------------------
+
+  if (registrationTab) {
+    return (
+      <main className="bootcamp-public-page sp-registration-page">
+        <div className="sp-registration-shell">
+          <header className="sp-registration-nav">
+            <button type="button" className="sp-nav-back" onClick={() => navigate(-1)}>
+              <ArrowLeft size={17}/> Back to bootcamp
+            </button>
+            <button className="sp-brand" type="button" onClick={() => navigate("/")}>
+              <span className="sp-brand-mark"><Sparkles size={16}/></span>
+              PRISM<span>AI</span>
+            </button>
+            <div className="sp-registration-nav-actions">
+              <BootcampThemeToggle theme={theme} onToggle={toggleTheme} />
+              <span className="sp-registration-nav-label">BOOTCAMP REGISTRATION</span>
+            </div>
+          </header>
+
+          <div className="sp-registration-layout">
+            <section className="sp-registration-intro">
+              <p className="sp-eyebrow"><span className="sp-live-dot"/> PRISM AI <span>/</span> BOOTCAMP REGISTRATION</p>
+              <h1 className="sp-bootcamp-changing-heading">
+                <span className="sp-bootcamp-heading-static">Build your</span>
+                <span className="sp-bootcamp-word-window" aria-label="next chapter, new skills, bright future">
+                  <span className="sp-bootcamp-word-stack">
+                    <em>next chapter.</em>
+                    <em>new skills.</em>
+                    <em>bright future.</em>
+                  </span>
+                </span>
+              </h1>
+              <p className="sp-registration-lead">
+                You're one step away from joining <strong>{event.title || event.name || "this bootcamp"}</strong>. Complete the details to reserve your place.
+              </p>
+              <div className="sp-registration-summary">
+                <div><small>BOOTCAMP</small><strong>{event.title || event.name}</strong></div>
+                <div><small>DATE</small><strong>{formatDate(event.date || event.startDate)}</strong></div>
+                <div><small>REGISTRATION FEE</small><strong>{fee}</strong></div>
+                {rewardPoints > 0 && <div className="sp-registration-points"><small>YOU CAN EARN</small><strong><Sparkles size={15}/> {rewardPoints.toLocaleString("en-IN")} PRISM Points</strong></div>}
+              </div>
+              <p className="sp-registration-note">Explore. Innovate. Impact.</p>
+            </section>
+
+            <section className="sp-registration-card">
+              <div className="sp-registration-card-heading">
+                <span className="sp-registration-step">STEP 01 / YOUR DETAILS</span>
+                <h2>Bootcamp registration</h2>
+                <p>Fields marked <b>*</b> are required.</p>
+              </div>
+
+              {closed ? (
+                <div className="sp-form-alert sp-alert-closed"><X size={17}/>Registration for this bootcamp is closed.</div>
+              ) : externalLink ? (
+                <a className="sp-button sp-button-primary sp-full-button" href={externalLink}>
+                  Continue to registration <ExternalLink size={16}/>
+                </a>
+              ) : (
+                <form className="sp-registration-form sp-registration-tab-form" onSubmit={submitRegistration} noValidate>
+                  {full && !waitlistEnabled && <div className="sp-form-alert sp-alert-closed">This bootcamp has reached capacity.</div>}
+                  {full && waitlistEnabled && <div className="sp-form-alert"><Users size={17}/>Full capacity — submit to join the waitlist.</div>}
+                  {event.requireApproval && <div className="sp-form-alert"><ShieldCheck size={17}/>Registrations require organizer approval.</div>}
+
+                  {fields.length === 0 && <div className="sp-form-alert">The organizer has not configured registration questions yet.</div>}
+
+                  {fields.map((field) => (
+                    <label className="sp-form-field" key={field.id}>
+                      <span>{field.label}{field.required && <b> *</b>}</span>
+                      {field.helpText && field.type !== "checkbox" && <small>{field.helpText}</small>}
+                      <QuestionInput field={field} value={answers[field.id]} onChange={updateAnswer}/>
+                    </label>
+                  ))}
+
+                  {event.registrationConsent && <p className="sp-consent-copy"><ShieldCheck size={15}/>{event.registrationConsent}</p>}
+
+                  {submissionMessage && (
+                    <div className={`sp-form-alert ${submissionMessage.startsWith("Already registered") ? "sp-alert-duplicate" : "sp-alert-closed"}`} role="status">
+                      {submissionMessage}
+                    </div>
+                  )}
+
+                  <button className="sp-button sp-button-primary sp-full-button" type="submit" disabled={submitting || fields.length === 0 || (full && !waitlistEnabled)}>
+                    {submitting ? "Submitting…" : full && waitlistEnabled ? "Join the waitlist" : "Submit registration"}
+                    <ArrowUpRight size={17}/>
+                  </button>
+                  <small className="sp-privacy-note">Your answers are securely submitted to PRISM AI.</small>
+                </form>
+              )}
+              {event.contactEmail && <a className="sp-contact-link" href={`mailto:${event.contactEmail}`}>Questions? Contact the organizer <ArrowUpRight size={14}/></a>}
+            </section>
+          </div>
+        </div>
+
+        {showSuccess && (
+          <div className="sp-success-overlay" role="dialog" aria-modal="true" aria-labelledby="sp-success-title">
+            <div className="sp-confetti" aria-hidden="true">
+              {Array.from({length: 54}, (_, index) => (
+                <i key={index} style={{
+                  "--x": `${(index * 37) % 100}%`,
+                  "--delay": `${(index % 11) * .12}s`,
+                  "--duration": `${3.2 + (index % 5) * .38}s`,
+                  "--drift": `${((index * 19) % 190) - 95}px`,
+                  "--spin": `${(index * 71) % 720}deg`
+                }}/>
+              ))}
+            </div>
+            <section className="sp-success-card">
+              <span className="sp-success-icon"><CheckCircle2 size={36}/></span>
+              <small>PRISM AI / BOOTCAMP REGISTRATION</small>
+              <h2 id="sp-success-title">{successHeading}</h2>
+              <p>{successDescription}</p>
+              {rewardPoints > 0 && <div className="sp-success-points"><Sparkles size={17}/><strong>{rewardPoints.toLocaleString("en-IN")} PRISM Points</strong><span>Registration reward</span></div>}
+              <button type="button" onClick={() => setShowSuccess(false)}>Awesome <ArrowUpRight size={16}/></button>
+            </section>
+          </div>
+        )}
+      </main>
+    );
+  }
+
+  // --------------------------------------------------
   // MAIN UI
   // --------------------------------------------------
 
@@ -652,13 +876,13 @@ export default function Bootcamppublic() {
           PRISM<span>AI</span>
         </button>
 
-        <button
-          className="sp-nav-share"
-          onClick={share}
-        >
-          <Share2 size={16} />
-          {shareCopied ? "Copied" : "Share"}
-        </button>
+        <div className="sp-nav-actions">
+          <BootcampThemeToggle theme={theme} onToggle={toggleTheme} />
+          <button className="sp-nav-share" onClick={share}>
+            <Share2 size={16} />
+            {shareCopied ? "Copied" : "Share"}
+          </button>
+        </div>
 
       </header>
 
@@ -714,8 +938,6 @@ export default function Bootcamppublic() {
               <a
                 className="sp-button sp-button-primary"
                 href={externalLink}
-                target="_blank"
-                rel="noreferrer"
               >
                 Register externally
                 <ExternalLink size={17} />
@@ -725,11 +947,7 @@ export default function Bootcamppublic() {
             {platformRegistration && !closed && (
               <button
                 className="sp-button sp-button-primary"
-                onClick={() =>
-                  document
-                    .getElementById("sp-registration")
-                    ?.scrollIntoView({ behavior: "smooth" })
-                }
+                onClick={() => navigate(`${window.location.pathname}?register=1`)}
               >
                 Register for bootcamp
                 <ArrowUpRight size={17} />
@@ -954,205 +1172,49 @@ export default function Bootcamppublic() {
 
         </div>
 
-        {/* REGISTRATION CARD */}
+        {/* REGISTRATION CARD — FORM OPENS IN A SEPARATE TAB */}
 
-        <aside
-          className="sp-register-card"
-          id="sp-registration"
-        >
-
+        <aside className="sp-register-card sp-register-overview">
           <div className="sp-register-heading">
-            <span>
-              <Ticket size={21} />
-            </span>
-
+            <span><Ticket size={21} /></span>
             <small>YOUR NEXT STEP</small>
           </div>
 
-          <h2>
-            Ready to
-            <br />
-            discover what’s next?
-          </h2>
-
-          <p>
-            Complete the registration form to save your
-            spot and join a community of curious minds.
-          </p>
+          <h2>Ready to<br/>level up?</h2>
+          <p>Take the next step in your learning journey. Open the dedicated registration page to reserve your place.</p>
 
           <div className="sp-register-meta">
-
-            <p>
-              <CalendarDays size={16} />
-              <span>
-                Deadline
-                <strong>
-                  {formatDate(event.registrationDeadline)}
-                </strong>
-              </span>
-            </p>
-
-            <p>
-              <Users size={16} />
-              <span>
-                {capacity
-                  ? `${Math.max(0, capacity - registrationCount)} spots remaining`
-                  : "Open to curious minds"}
-              </span>
-            </p>
-
-            <p>
-              <ClipboardList size={16} />
-              <span>
-                {fields.length} registration questions
-              </span>
-            </p>
-
+            <p><CalendarDays size={16}/><span>Deadline<strong>{formatDate(event.registrationDeadline)}</strong></span></p>
+            <p><Users size={16}/><span>{capacity ? `${Math.max(0, capacity - registrationCount)} spots remaining` : "Open to curious minds"}</span></p>
+            <p><ClipboardList size={16}/><span>{fields.length} registration questions</span></p>
+            {rewardPoints > 0 && (
+              <p className="sp-reward-meta"><Sparkles size={16}/><span>Registration reward<strong>{rewardPoints.toLocaleString("en-IN")} PRISM Points</strong></span></p>
+            )}
           </div>
 
           {closed ? (
-            <div className="sp-form-alert sp-alert-closed">
-              <X size={17} />
-              Registration for this bootcamp is closed.
-            </div>
+            <div className="sp-form-alert sp-alert-closed"><X size={17}/>Registration for this bootcamp is closed.</div>
           ) : externalLink ? (
-            <a
-              className="sp-button sp-button-primary sp-full-button"
-              href={externalLink}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Continue to registration
-              <ExternalLink size={16} />
+            <a className="sp-button sp-button-primary sp-full-button" href={externalLink}>
+              Continue to registration <ExternalLink size={16}/>
             </a>
           ) : (
-
-            <form
-              className="sp-registration-form"
-              onSubmit={submitRegistration}
-              noValidate
+            <button
+              className="sp-button sp-button-primary sp-full-button"
+              type="button"
+              disabled={full && !waitlistEnabled}
+              onClick={() => navigate(`${window.location.pathname}?register=1`)}
             >
-
-              {full && !waitlistEnabled && (
-                <div className="sp-form-alert sp-alert-closed">
-                  This bootcamp has reached capacity.
-                </div>
-              )}
-
-              {full && waitlistEnabled && (
-                <div className="sp-form-alert">
-                  <Users size={17} />
-                  Full capacity — submit to join the waitlist.
-                </div>
-              )}
-
-              {event.requireApproval && (
-                <div className="sp-form-alert">
-                  <ShieldCheck size={17} />
-                  Registrations require organizer approval.
-                </div>
-              )}
-
-              {fields.length === 0 && (
-                <div className="sp-form-alert">
-                  The organizer has not configured registration
-                  questions yet.
-                </div>
-              )}
-
-              {/* DYNAMIC QUESTIONS */}
-
-              {fields.map((field) => (
-                <label
-                  className="sp-form-field"
-                  key={field.id}
-                >
-
-                  <span>
-                    {field.label}
-                    {field.required && <b> *</b>}
-                  </span>
-
-                  {field.helpText &&
-                    field.type !== "checkbox" && (
-                      <small>{field.helpText}</small>
-                    )}
-
-                  <QuestionInput
-                    field={field}
-                    value={answers[field.id]}
-                    onChange={updateAnswer}
-                  />
-
-                </label>
-              ))}
-
-              {/* CONSENT */}
-
-              {event.registrationConsent && (
-                <p className="sp-consent-copy">
-                  <ShieldCheck size={15} />
-                  {event.registrationConsent}
-                </p>
-              )}
-
-              {/* FEEDBACK */}
-
-              {submissionMessage && (
-                <div
-                  className={`sp-form-alert ${
-                    submissionMessage.startsWith("Already registered")
-                      ? "sp-alert-duplicate"
-                      : submissionMessage.includes("registered") ||
-                          submissionMessage.includes("waitlist") ||
-                          submissionMessage.includes("approval")
-                        ? "sp-alert-success"
-                        : "sp-alert-closed"
-                  }`}
-                  role="status"
-                >
-                  <CircleCheck size={17} />
-                  {submissionMessage}
-                </div>
-              )}
-
-              {/* SUBMIT */}
-
-              <button
-                className="sp-button sp-button-primary sp-full-button"
-                type="submit"
-                disabled={
-                  submitting ||
-                  fields.length === 0 ||
-                  (full && !waitlistEnabled)
-                }
-              >
-                {submitting
-                  ? "Submitting…"
-                  : full && waitlistEnabled
-                    ? "Join the waitlist"
-                    : "Submit registration"}
-
-                <ArrowUpRight size={17} />
-              </button>
-
-              <small className="sp-privacy-note">
-                Your answers are securely submitted to PRISM AI.
-              </small>
-
-            </form>
+              {full && waitlistEnabled ? "Open waitlist form" : "Open registration form"}
+              <ArrowUpRight size={17}/>
+            </button>
           )}
 
           {event.contactEmail && (
-            <a
-              className="sp-contact-link"
-              href={`mailto:${event.contactEmail}`}
-            >
-              Questions? Contact the organizer
-              <ArrowUpRight size={14} />
+            <a className="sp-contact-link" href={`mailto:${event.contactEmail}`}>
+              Questions? Contact the organizer <ArrowUpRight size={14}/>
             </a>
           )}
-
         </aside>
 
       </section>

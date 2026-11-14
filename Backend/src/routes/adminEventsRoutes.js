@@ -1,6 +1,6 @@
-
 const express = require("express");
 const { db } = require("../config/firebaseAdmin");
+const { awardRegistrationPoints } = require("./pointsService");
 const { requireAdmin } = require("./adminAuthRoutes");
 
 const router = express.Router();
@@ -30,18 +30,29 @@ const normalizeText = (value) =>
 function normalizeType(value) {
   const input = normalizeText(value);
 
-  if (["other", "others", "other event", "other events"].includes(input)) {
+  if (
+    ["other", "others", "other event", "other events"].includes(input)
+  ) {
     return "Other";
   }
 
-  return ALLOWED_TYPES.find((type) => type.toLowerCase() === input) || null;
+  return (
+    ALLOWED_TYPES.find(
+      (type) => type.toLowerCase() === input
+    ) || null
+  );
 }
 
 function getEventType(event = {}) {
-  for (const value of [event.type, event.customCategory, event.category]) {
+  for (const value of [
+    event.type,
+    event.customCategory,
+    event.category,
+  ]) {
     const type = normalizeType(value);
     if (type) return type;
   }
+
   return null;
 }
 
@@ -60,19 +71,28 @@ function cleanEventData(data = {}) {
 }
 
 function eventResponse(snapshot) {
-  return { ...snapshot.data(), id: snapshot.id };
+  return {
+    ...snapshot.data(),
+    id: snapshot.id,
+  };
 }
 
 function toMillis(value) {
   if (!value) return 0;
-  if (typeof value.toMillis === "function") return value.toMillis();
-  if (typeof value.toDate === "function") return value.toDate().getTime();
+
+  if (typeof value.toMillis === "function") {
+    return value.toMillis();
+  }
+
+  if (typeof value.toDate === "function") {
+    return value.toDate().getTime();
+  }
 
   const parsed = new Date(value).getTime();
+
   return Number.isFinite(parsed) ? parsed : 0;
 }
 
-// Generate a clean URL/document-safe slug.
 function createSlug(value) {
   return String(value || "")
     .trim()
@@ -90,7 +110,10 @@ async function getRegistrations(eventId) {
     .orderBy("submittedAt", "desc")
     .get();
 
-  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  return snapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
 }
 
 async function getRegistrationCount(eventId) {
@@ -105,7 +128,11 @@ async function getRegistrationCount(eventId) {
 
 function sendServerError(res, error, label, message) {
   console.error(`${label}:`, error);
-  return res.status(500).json({ success: false, message });
+
+  return res.status(500).json({
+    success: false,
+    message,
+  });
 }
 
 // All routes in this router require admin authentication.
@@ -155,7 +182,10 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const eventRef = eventsCollection.doc(String(req.params.id));
+    const eventRef = eventsCollection.doc(
+      String(req.params.id)
+    );
+
     const snapshot = await eventRef.get();
 
     if (!snapshot.exists) {
@@ -165,7 +195,9 @@ router.get("/:id", async (req, res) => {
       });
     }
 
-    const registrations = await getRegistrations(snapshot.id);
+    const registrations = await getRegistrations(
+      snapshot.id
+    );
 
     const event = {
       ...eventResponse(snapshot),
@@ -196,7 +228,10 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const body = req.body || {};
-    const title = String(body.title || body.name || "").trim();
+
+    const title = String(
+      body.title || body.name || ""
+    ).trim();
 
     if (!title) {
       return res.status(400).json({
@@ -206,7 +241,9 @@ router.post("/", async (req, res) => {
     }
 
     const requestedType = normalizeType(
-      body.type || body.customCategory || body.category
+      body.type ||
+      body.customCategory ||
+      body.category
     );
 
     if (!requestedType) {
@@ -215,11 +252,6 @@ router.post("/", async (req, res) => {
         message: `A valid event type is required. Allowed types: ${ALLOWED_TYPES.join(", ")}.`,
       });
     }
-
-    // --------------------------------------------------
-    // HACKATHON READABLE FIRESTORE DOCUMENT ID
-    // Example: hackathon-ai-innovation-challenge
-    // --------------------------------------------------
 
     let eventRef;
     let slug;
@@ -235,13 +267,16 @@ router.post("/", async (req, res) => {
       }
 
       const readableId = `hackathon-${slug}`;
+
       eventRef = eventsCollection.doc(readableId);
     } else {
       eventRef = body.id
         ? eventsCollection.doc(String(body.id).trim())
         : eventsCollection.doc();
 
-      slug = String(body.slug || eventRef.id).trim();
+      slug = String(
+        body.slug || eventRef.id
+      ).trim();
     }
 
     if (!eventRef.id) {
@@ -256,7 +291,8 @@ router.post("/", async (req, res) => {
     if (existing.exists) {
       return res.status(409).json({
         success: false,
-        message: "An event with this ID already exists. Please use a different event title or slug.",
+        message:
+          "An event with this ID already exists. Please use a different event title or slug.",
       });
     }
 
@@ -265,7 +301,6 @@ router.post("/", async (req, res) => {
     const eventData = {
       ...cleanEventData(body),
 
-      // Always use the actual Firestore document ID.
       id: eventRef.id,
 
       title,
@@ -277,8 +312,13 @@ router.post("/", async (req, res) => {
 
       slug: slug || eventRef.id,
 
-      status: String(body.status || "Draft").trim(),
-      visibility: String(body.visibility || "Public").trim(),
+      status: String(
+        body.status || "Draft"
+      ).trim(),
+
+      visibility: String(
+        body.visibility || "Public"
+      ).trim(),
 
       createdAt: now,
       updatedAt: now,
@@ -314,7 +354,10 @@ router.post("/", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   try {
-    const eventRef = eventsCollection.doc(String(req.params.id));
+    const eventRef = eventsCollection.doc(
+      String(req.params.id)
+    );
+
     const snapshot = await eventRef.get();
 
     if (!snapshot.exists) {
@@ -343,11 +386,13 @@ router.put("/:id", async (req, res) => {
 
     if (
       existingType &&
-      requestedType.toLowerCase() !== existingType.toLowerCase()
+      requestedType.toLowerCase() !==
+        existingType.toLowerCase()
     ) {
       return res.status(400).json({
         success: false,
-        message: "Event type cannot be changed while editing.",
+        message:
+          "Event type cannot be changed while editing.",
       });
     }
 
@@ -355,10 +400,13 @@ router.put("/:id", async (req, res) => {
 
     const finalData = {
       ...cleaned,
+
       id: snapshot.id,
+
       type: requestedType,
       category: requestedType,
       customCategory: requestedType,
+
       updatedAt: new Date().toISOString(),
     };
 
@@ -366,7 +414,9 @@ router.put("/:id", async (req, res) => {
       Object.prototype.hasOwnProperty.call(body, "title") ||
       Object.prototype.hasOwnProperty.call(body, "name")
     ) {
-      const title = String(body.title || body.name || "").trim();
+      const title = String(
+        body.title || body.name || ""
+      ).trim();
 
       if (!title) {
         return res.status(400).json({
@@ -376,18 +426,28 @@ router.put("/:id", async (req, res) => {
       }
 
       finalData.title = title;
-      finalData.name = String(body.name || title).trim();
+      finalData.name = String(
+        body.name || title
+      ).trim();
     }
 
-    if (Object.prototype.hasOwnProperty.call(body, "slug")) {
+    if (
+      Object.prototype.hasOwnProperty.call(body, "slug")
+    ) {
       finalData.slug =
-        String(body.slug || snapshot.id).trim() || snapshot.id;
+        String(body.slug || snapshot.id).trim() ||
+        snapshot.id;
     }
 
-    await eventRef.set(finalData, { merge: true });
+    await eventRef.set(finalData, {
+      merge: true,
+    });
 
     const updated = await eventRef.get();
-    const registrations = await getRegistrations(snapshot.id);
+
+    const registrations = await getRegistrations(
+      snapshot.id
+    );
 
     return res.status(200).json({
       success: true,
@@ -415,7 +475,10 @@ router.put("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   try {
-    const eventRef = eventsCollection.doc(String(req.params.id));
+    const eventRef = eventsCollection.doc(
+      String(req.params.id)
+    );
+
     const snapshot = await eventRef.get();
 
     if (!snapshot.exists) {
@@ -425,10 +488,13 @@ router.delete("/:id", async (req, res) => {
       });
     }
 
-    const registrationsRef = eventRef.collection("registrations");
+    const registrationsRef =
+      eventRef.collection("registrations");
 
     while (true) {
-      const registrations = await registrationsRef.limit(400).get();
+      const registrations = await registrationsRef
+        .limit(400)
+        .get();
 
       if (registrations.empty) break;
 
@@ -445,7 +511,8 @@ router.delete("/:id", async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      message: "Event and registrations deleted successfully.",
+      message:
+        "Event and registrations deleted successfully.",
     });
   } catch (error) {
     return sendServerError(
@@ -462,64 +529,146 @@ router.delete("/:id", async (req, res) => {
 // PATCH /api/admin/events/:id/registrations/:registrationId
 // ==================================================
 
-router.patch("/:id/registrations/:registrationId", async (req, res) => {
-  try {
-    const { id, registrationId } = req.params;
-    const { status } = req.body || {};
+router.patch(
+  "/:id/registrations/:registrationId",
+  async (req, res) => {
+    try {
+      const { id, registrationId } = req.params;
+      const { status } = req.body || {};
 
-    if (!ALLOWED_REGISTRATION_STATUSES.includes(status)) {
-      return res.status(400).json({
-        success: false,
-        message: `Invalid registration status. Allowed values: ${ALLOWED_REGISTRATION_STATUSES.join(", ")}.`,
+      if (
+        !ALLOWED_REGISTRATION_STATUSES.includes(status)
+      ) {
+        return res.status(400).json({
+          success: false,
+          message: `Invalid registration status. Allowed values: ${ALLOWED_REGISTRATION_STATUSES.join(", ")}.`,
+        });
+      }
+
+      const eventRef = eventsCollection.doc(
+        String(id)
+      );
+
+      const registrationRef = eventRef
+        .collection("registrations")
+        .doc(String(registrationId));
+
+      const result = await db.runTransaction(
+        async (transaction) => {
+          const eventSnapshot = await transaction.get(
+            eventRef
+          );
+
+          if (!eventSnapshot.exists) {
+            throw Object.assign(
+              new Error("Event not found."),
+              { status: 404 }
+            );
+          }
+
+          const registrationSnapshot =
+            await transaction.get(registrationRef);
+
+          if (!registrationSnapshot.exists) {
+            throw Object.assign(
+              new Error("Registration not found."),
+              { status: 404 }
+            );
+          }
+
+          transaction.update(registrationRef, {
+            status,
+            reviewedAt: new Date().toISOString(),
+          });
+
+          return {
+            event: {
+              id: eventSnapshot.id,
+              ...eventSnapshot.data(),
+            },
+
+            registration: {
+              id: registrationSnapshot.id,
+              ...registrationSnapshot.data(),
+              status,
+            },
+          };
+        }
+      );
+
+      // --------------------------------------------------
+      // PRISM POINTS CREDIT
+      // --------------------------------------------------
+
+      let pointsAward = {
+        awarded: false,
+        points: 0,
+      };
+
+      const uid =
+        result.registration.uid ||
+        result.registration.memberUid;
+
+      if (
+        uid &&
+        ["approved", "registered"].includes(
+          normalizeText(status)
+        )
+      ) {
+        try {
+          pointsAward = await awardRegistrationPoints({
+            uid,
+            eventId: id,
+            registrationId,
+            points: result.event.rewardPoints,
+            eventTitle:
+              result.event.title ||
+              result.event.name,
+          });
+        } catch (pointsError) {
+          console.error(
+            "ADMIN APPROVAL PRISM POINTS CREDIT FAILED:",
+            pointsError
+          );
+
+          return res.status(500).json({
+            success: false,
+            message:
+              "Registration status was updated, but points could not be credited. Retry the same status update to safely retry the credit.",
+          });
+        }
+      }
+
+      const updated = await registrationRef.get();
+
+      return res.status(200).json({
+        success: true,
+        message:
+          "Registration status updated successfully.",
+
+        registration: {
+          id: updated.id,
+          ...updated.data(),
+        },
+
+        pointsAward,
       });
+    } catch (error) {
+      if (error.status) {
+        return res.status(error.status).json({
+          success: false,
+          message: error.message,
+        });
+      }
+
+      return sendServerError(
+        res,
+        error,
+        "UPDATE REGISTRATION ERROR",
+        "Failed to update registration status."
+      );
     }
-
-    const eventRef = eventsCollection.doc(String(id));
-    const eventSnapshot = await eventRef.get();
-
-    if (!eventSnapshot.exists) {
-      return res.status(404).json({
-        success: false,
-        message: "Event not found.",
-      });
-    }
-
-    const registrationRef = eventRef
-      .collection("registrations")
-      .doc(String(registrationId));
-
-    const registrationSnapshot = await registrationRef.get();
-
-    if (!registrationSnapshot.exists) {
-      return res.status(404).json({
-        success: false,
-        message: "Registration not found.",
-      });
-    }
-
-    await registrationRef.update({
-      status,
-      reviewedAt: new Date().toISOString(),
-    });
-
-    const updated = await registrationRef.get();
-
-    return res.status(200).json({
-      success: true,
-      message: "Registration status updated successfully.",
-      registration: {
-        id: updated.id,
-        ...updated.data(),
-      },
-    });
-  } catch (error) {
-    return sendServerError(
-      res,
-      error,
-      "UPDATE REGISTRATION ERROR",
-      "Failed to update registration status."
-    );
   }
-});
+);
 
 module.exports = router;

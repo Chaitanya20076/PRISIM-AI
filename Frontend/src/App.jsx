@@ -29,6 +29,7 @@ import SeminarPublic from "./pages/Seminar/seminarpublic.jsx";
 import Webinarpublic from "./pages/Webinar/Webinarpublic.jsx";
 import Bootcamppublic from "./pages/Bootcamp/Bootcamppublic.jsx";
 import Competitionpublic from "./pages/Competition/Competitionpublic.jsx";
+import OtherEventpublic from "./pages/OtherEvents/OtherEventpublic.jsx";
 import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
 import RecruitmentPortal from "./pages/Recruitments/RecruitmentPortal.jsx";
 import TermsAndConditions from "./pages/TermsAndConditions/TermsAndConditions";
@@ -226,6 +227,11 @@ function App() {
         <Route
           path="/events/competitions/:slug"
           element={<Competitionpublic />}
+        />
+
+        <Route
+          path="/events/other/:slug"
+          element={<OtherEventpublic />}
         />
 
         {/* Recruitment */}

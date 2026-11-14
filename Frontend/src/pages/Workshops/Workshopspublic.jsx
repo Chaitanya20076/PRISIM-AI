@@ -21,7 +21,21 @@ import {
   CircleCheck,
   X,
 } from "lucide-react";
+import { getAuth } from "firebase/auth";
 import "./Workshopspublic.css";
+
+
+
+// Firebase identity for member-linked registrations. The UID is derived
+// from the verified Firebase ID token on the backend, never from form data.
+async function getMemberAuthHeaders() {
+  const user = getAuth().currentUser;
+  if (!user) {
+    throw new Error("Please sign in to your PRISM AI account before registering. This lets us link your registration to your PRISM Points wallet.");
+  }
+  const idToken = await user.getIdToken();
+  return { Authorization: `Bearer ${idToken}` };
+}
 
 const API_BASE_URL =
   import.meta.env.VITE_API_URL ||
@@ -88,6 +102,7 @@ async function apiRequest(endpoint, options = {}) {
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     ...options,
     headers: {
+          
       "Content-Type": "application/json",
       ...options.headers,
     },
@@ -206,6 +221,7 @@ function QuestionInput({ field, value, onChange }) {
 export default function Workshopspublic() {
   const navigate = useNavigate();
   const { slug } = useParams();
+  const registrationMode = new URLSearchParams(window.location.search).get("register") === "1";
 
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -215,6 +231,33 @@ export default function Workshopspublic() {
   const [submitting, setSubmitting] = useState(false);
   const [submissionMessage, setSubmissionMessage] = useState("");
   const [shareCopied, setShareCopied] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [successHeading, setSuccessHeading] = useState("Congratulations!");
+  const [successDescription, setSuccessDescription] = useState("Your registration has been recorded successfully.");
+  const [headlineIndex, setHeadlineIndex] = useState(0);
+
+  const animatedHeadlines = [
+    ["IDEAS BECOME", "IMPACT."],
+    ["THINK. CREATE.", "REPEAT."],
+    ["BUILD WHAT'S", "NEXT."],
+    ["LEARN WITHOUT", "LIMITS."],
+    ["TURN CURIOSITY", "INTO CODE."],
+    ["MAKE YOUR", "MARK."]
+  ];
+
+  useEffect(() => {
+    if (!registrationMode) return undefined;
+    const timer = window.setTimeout(() => {
+      setHeadlineIndex((current) => (current + 1) % animatedHeadlines.length);
+    }, 5600);
+    return () => window.clearTimeout(timer);
+  }, [registrationMode, headlineIndex]);
+
+  useEffect(() => {
+    if (!showSuccessPopup) return undefined;
+    const dismissTimer = window.setTimeout(() => setShowSuccessPopup(false), 5000);
+    return () => window.clearTimeout(dismissTimer);
+  }, [showSuccessPopup]);
 
   // --------------------------------------------------
   // FETCH WORKSHOP FROM FIRESTORE THROUGH BACKEND
@@ -299,6 +342,7 @@ export default function Workshopspublic() {
   const registrationCount = Number(
     event?.registrationCount ?? 0
   );
+  const rewardPoints = Math.max(0, Math.floor(Number(event?.rewardPoints) || 0));
 
   const startDate = event?.date || event?.startDate;
 
@@ -476,6 +520,7 @@ export default function Workshopspublic() {
         `/api/events/${encodeURIComponent(event.id)}/registrations`,
         {
           method: "POST",
+          headers: await getMemberAuthHeaders(),
           body: JSON.stringify(registrationPayload),
         }
       );
@@ -489,13 +534,24 @@ export default function Workshopspublic() {
 
       setAnswers({});
 
+      const isWaitlisted = data.registration?.status === "Waitlisted";
+      const isPending = data.registration?.status === "Pending";
       setSubmissionMessage(
-        data.registration?.status === "Waitlisted"
+        isWaitlisted
           ? "You're on the waitlist. Your registration has been recorded."
-          : data.registration?.status === "Pending"
+          : isPending
             ? "Registration submitted! It is pending organizer approval."
             : "You're registered! Your registration has been recorded successfully."
       );
+      setSuccessHeading(isWaitlisted ? "You're on the waitlist!" : isPending ? "Registration submitted!" : "Congratulations!");
+      setSuccessDescription(
+        isWaitlisted
+          ? "Your place on the waitlist is confirmed. We'll keep you updated."
+          : isPending
+            ? "Your registration is in. The organizer will review and approve it."
+            : "Your registration is confirmed. Get ready for an amazing PRISM AI experience!"
+      );
+      setShowSuccessPopup(true);
     } catch (error) {
       setSubmissionMessage(
         error.message ||
@@ -588,6 +644,141 @@ export default function Workshopspublic() {
   }
 
   // --------------------------------------------------
+  // FULL-SCREEN REGISTRATION PAGE
+  // --------------------------------------------------
+
+  if (registrationMode) {
+    return (
+      <main className="workshop-public-page sp-registration-page">
+        <div className="sp-glow sp-glow-one" />
+        <div className="sp-glow sp-glow-two" />
+
+        <header className="sp-registration-topbar">
+          <button className="sp-nav-back" onClick={() => navigate(-1)}>
+            <ArrowLeft size={17} /> Back to workshop
+          </button>
+          <div className="sp-brand">
+            <span className="sp-brand-mark"><Sparkles size={16} /></span>
+            PRISM<span>AI</span>
+          </div>
+          <span className="sp-registration-step">EVENT REGISTRATION</span>
+        </header>
+
+        <section className="sp-registration-shell">
+          <div className="sp-registration-intro">
+            <p className="sp-eyebrow">PRISM AI / WORKSHOP</p>
+            <div className="sp-cinematic-copy">
+              <h1 className="sp-animated-headline sp-headline-roll" key={headlineIndex}>
+                <span className="sp-headline-line sp-headline-line-one">{animatedHeadlines[headlineIndex][0]}</span>
+                <span className="sp-headline-line sp-headline-line-two">{animatedHeadlines[headlineIndex][1]}</span>
+              </h1>
+            </div>
+            <p>Complete the details below to reserve your place at <strong>{event.title || event.name || "this workshop"}</strong>.</p>
+
+            {rewardPoints > 0 && (
+              <div className="sp-reward-highlight">
+                <span><Sparkles size={25} /></span>
+                <div>
+                  <small>REGISTRATION REWARD</small>
+                  <strong>{rewardPoints.toLocaleString("en-IN")} <em>PRISM Points</em></strong>
+                  <p>Earn points by being part of this workshop.</p>
+                </div>
+              </div>
+            )}
+
+            <div className="sp-registration-event-facts">
+              <span><CalendarDays size={16} />{formatDate(startDate)}</span>
+              <span><Clock3 size={16} />{event.startTime || "Time to be announced"}</span>
+              <span>{isOnline ? <Monitor size={16} /> : <MapPin size={16} />}{venue}</span>
+            </div>
+          </div>
+
+          <section className="sp-registration-form-panel">
+            <div className="sp-registration-form-heading">
+              <p className="sp-eyebrow">YOUR DETAILS</p>
+              <h2>Complete your registration</h2>
+              <p>Fields marked with * are required.</p>
+            </div>
+
+            {closed ? (
+              <div className="sp-form-alert sp-alert-closed"><X size={17} /> Registration for this workshop is closed.</div>
+            ) : externalLink ? (
+              <a className="sp-button sp-button-primary sp-full-button" href={externalLink}>
+                Continue to registration <ExternalLink size={16} />
+              </a>
+            ) : (
+              <form className="sp-registration-form" onSubmit={submitRegistration}>
+                {full && !waitlistEnabled && <div className="sp-form-alert sp-alert-closed">This workshop has reached capacity.</div>}
+                {full && waitlistEnabled && <div className="sp-form-alert"><Users size={17} /> Full capacity — submit to join the waitlist.</div>}
+                {event.requireApproval && <div className="sp-form-alert"><ShieldCheck size={17} /> Registrations require organizer approval.</div>}
+                {fields.length === 0 && <div className="sp-form-alert">The organizer has not configured registration questions yet.</div>}
+
+                {fields.map((field) => (
+                  <label className="sp-form-field" key={field.id}>
+                    <span>{field.label}{field.required && <b> *</b>}</span>
+                    {field.helpText && field.type !== "checkbox" && <small>{field.helpText}</small>}
+                    <QuestionInput field={field} value={answers[field.id]} onChange={updateAnswer} />
+                  </label>
+                ))}
+
+                {event.registrationConsent && <p className="sp-consent-copy"><ShieldCheck size={15} />{event.registrationConsent}</p>}
+
+                {submissionMessage && (
+                  <div className={`sp-form-alert ${submissionMessage.startsWith("Already registered") ? "sp-alert-duplicate" : submissionMessage.includes("registered") || submissionMessage.includes("waitlist") || submissionMessage.includes("approval") ? "sp-alert-success" : "sp-alert-closed"}`} role="status">
+                    <CircleCheck size={17} />{submissionMessage}
+                  </div>
+                )}
+
+                <button className="sp-button sp-button-primary sp-full-button" type="submit" disabled={submitting || fields.length === 0 || (full && !waitlistEnabled)}>
+                  {submitting ? "Submitting…" : full && waitlistEnabled ? "Join the waitlist" : "Submit registration"}
+                  <ArrowUpRight size={17} />
+                </button>
+                <small className="sp-privacy-note">Your answers are saved with this workshop registration.</small>
+              </form>
+            )}
+
+            {event.contactEmail && <a className="sp-contact-link" href={`mailto:${event.contactEmail}`}>Need help? Contact the organizer <ArrowUpRight size={14} /></a>}
+          </section>
+        </section>
+
+        {showSuccessPopup && (
+          <div className="sp-success-overlay" role="dialog" aria-modal="true" aria-labelledby="sp-success-title">
+            <div className="sp-confetti" aria-hidden="true">
+              {Array.from({ length: 90 }, (_, index) => {
+                const colors = ["#9bd35e", "#c8f169", "#e4f7b7", "#ffffff"];
+                const x = (index * 37 + 11) % 100;
+                return (
+                  <i key={index} style={{
+                    "--x": `${x}%`,
+                    left: `${x}%`,
+                    "--delay": `${(index % 18) * 0.075}s`,
+                    "--duration": `${2.4 + (index % 7) * 0.24}s`,
+                    "--drift": `${((index * 17) % 180) - 90}px`,
+                    "--spin": `${360 + (index % 4) * 360}deg`,
+                    "--piece-color": colors[index % colors.length],
+                    "--piece-width": `${5 + (index % 4) * 2}px`,
+                    "--piece-height": `${8 + (index % 5) * 3}px`
+                  }} />
+                );
+              })}
+            </div>
+            <section className="sp-success-modal">
+              <button className="sp-success-close" type="button" aria-label="Close congratulations message" onClick={() => setShowSuccessPopup(false)}><X size={19} /></button>
+              <div className="sp-success-emblem"><CircleCheck size={39} /></div>
+              <p className="sp-eyebrow">PRISM AI / YOU DID IT</p>
+              <h2 id="sp-success-title">{successHeading}</h2>
+              <p>{successDescription}</p>
+              {rewardPoints > 0 && <div className="sp-success-points"><Sparkles size={18} /><strong>+{rewardPoints.toLocaleString("en-IN")} PRISM Points</strong></div>}
+              <div className="sp-success-countdown"><span>THIS MESSAGE CLOSES IN 5 SECONDS</span><div><i /></div></div>
+              <button className="sp-button sp-button-primary sp-success-done" type="button" onClick={() => setShowSuccessPopup(false)}>Awesome!</button>
+            </section>
+          </div>
+        )}
+      </main>
+    );
+  }
+
+  // --------------------------------------------------
   // MAIN PAGE
   // --------------------------------------------------
 
@@ -671,8 +862,6 @@ export default function Workshopspublic() {
               <a
                 className="wp-button wp-button-primary"
                 href={externalLink}
-                target="_blank"
-                rel="noreferrer"
               >
                 Register externally
                 <ExternalLink size={17} />
@@ -683,9 +872,7 @@ export default function Workshopspublic() {
               <button
                 className="wp-button wp-button-primary"
                 onClick={() =>
-                  document
-                    .getElementById("wp-registration")
-                    ?.scrollIntoView({ behavior: "smooth" })
+                  navigate(`${window.location.pathname}?register=1`)
                 }
               >
                 Register for workshop
@@ -889,194 +1076,43 @@ export default function Workshopspublic() {
           )}
         </div>
 
-        {/* REGISTRATION CARD */}
-
-        <aside
-          className="wp-register-card"
-          id="wp-registration"
-        >
+        {/* REGISTRATION SUMMARY — FORM OPENS IN A DEDICATED TAB */}
+        <aside className="wp-register-card" id="wp-registration">
           <div className="wp-register-heading">
-            <span>
-              <Ticket size={21} />
-            </span>
-
+            <span><Ticket size={21} /></span>
             <small>YOUR NEXT STEP</small>
           </div>
 
-          <h2>
-            Ready to
-            <br />
-            get hands-on?
-          </h2>
-
-          <p>
-            Complete the registration form to save your spot
-            and join a room full of curious minds.
-          </p>
+          <h2>Ready to<br />get hands-on?</h2>
+          <p>Explore the details and reserve your place in this workshop.</p>
 
           <div className="wp-register-meta">
-            <p>
-              <CalendarDays size={16} />
-
-              <span>
-                Deadline{" "}
-                <strong>
-                  {formatDate(event.registrationDeadline)}
-                </strong>
-              </span>
-            </p>
-
-            <p>
-              <Users size={16} />
-
-              <span>
-                {capacity
-                  ? `${Math.max(
-                      0,
-                      capacity - registrationCount
-                    )} spots remaining`
-                  : "Open to curious minds"}
-              </span>
-            </p>
-
-            <p>
-              <ClipboardList size={16} />
-
-              <span>
-                {fields.length} registration questions
-              </span>
-            </p>
+            {rewardPoints > 0 && (
+              <p><Sparkles size={16} /><span>Registration reward <strong>{rewardPoints.toLocaleString("en-IN")} PRISM Points</strong></span></p>
+            )}
+            <p><CalendarDays size={16} /><span>Registration deadline <strong>{formatDate(event.registrationDeadline)}</strong></span></p>
+            <p><Users size={16} /><span>Availability <strong>{capacity ? `${Math.max(0, capacity - registrationCount)} spots remaining` : "Open to curious minds"}</strong></span></p>
+            <p><ClipboardList size={16} /><span>Registration questions <strong>{fields.length} questions</strong></span></p>
+            <p><ShieldCheck size={16} /><span>Approval <strong>{event.requireApproval ? "Organizer approval required" : "Instant registration"}</strong></span></p>
           </div>
 
           {closed ? (
-            <div className="wp-form-alert wp-alert-closed">
-              <X size={17} />
-              Registration for this workshop is closed.
-            </div>
+            <div className="wp-form-alert wp-alert-closed"><X size={17} /> Registration for this workshop is closed.</div>
           ) : externalLink ? (
-            <a
-              className="wp-button wp-button-primary wp-full-button"
-              href={externalLink}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Continue to registration
-              <ExternalLink size={16} />
+            <a className="wp-button wp-button-primary wp-full-button" href={externalLink}>
+              Continue to registration <ExternalLink size={16} />
             </a>
+          ) : platformRegistration ? (
+            <button className="wp-button wp-button-primary wp-full-button" type="button" onClick={() => navigate(`${window.location.pathname}?register=1`)}>
+              Register now <ArrowUpRight size={17} />
+            </button>
           ) : (
-            <form
-              className="wp-registration-form"
-              onSubmit={submitRegistration}
-            >
-              {full && !waitlistEnabled && (
-                <div className="wp-form-alert wp-alert-closed">
-                  This workshop has reached capacity.
-                </div>
-              )}
-
-              {full && waitlistEnabled && (
-                <div className="wp-form-alert">
-                  <Users size={17} />
-                  Full capacity — submit to join the waitlist.
-                </div>
-              )}
-
-              {event.requireApproval && (
-                <div className="wp-form-alert">
-                  <ShieldCheck size={17} />
-                  Registrations require organizer approval.
-                </div>
-              )}
-
-              {fields.length === 0 && (
-                <div className="wp-form-alert">
-                  The organizer has not configured
-                  registration questions yet.
-                </div>
-              )}
-
-              {fields.map((field) => (
-                <label
-                  className="wp-form-field"
-                  key={field.id}
-                >
-                  <span>
-                    {field.label}
-                    {field.required && <b> *</b>}
-                  </span>
-
-                  {field.helpText &&
-                    field.type !== "checkbox" && (
-                      <small>{field.helpText}</small>
-                    )}
-
-                  <QuestionInput
-                    field={field}
-                    value={answers[field.id]}
-                    onChange={updateAnswer}
-                  />
-                </label>
-              ))}
-
-              {event.registrationConsent && (
-                <p className="wp-consent-copy">
-                  <ShieldCheck size={15} />
-                  {event.registrationConsent}
-                </p>
-              )}
-
-              {submissionMessage && (
-                <div
-                  className={`wp-form-alert ${
-                    submissionMessage.startsWith(
-                      "Already registered"
-                    )
-                      ? "wp-alert-duplicate"
-                      : submissionMessage.includes("registered") ||
-                          submissionMessage.includes("waitlist") ||
-                          submissionMessage.includes("approval")
-                        ? "wp-alert-success"
-                        : "wp-alert-closed"
-                  }`}
-                  role="status"
-                >
-                  <CircleCheck size={17} />
-                  {submissionMessage}
-                </div>
-              )}
-
-              <button
-                className="wp-button wp-button-primary wp-full-button"
-                type="submit"
-                disabled={
-                  submitting ||
-                  fields.length === 0 ||
-                  (full && !waitlistEnabled)
-                }
-              >
-                {submitting
-                  ? "Submitting…"
-                  : full && waitlistEnabled
-                    ? "Join the waitlist"
-                    : "Submit registration"}
-
-                <ArrowUpRight size={17} />
-              </button>
-
-              <small className="wp-privacy-note">
-                Your answers are saved with this workshop
-                registration.
-              </small>
-            </form>
+            <div className="wp-form-alert">Online registration is unavailable for this workshop.</div>
           )}
 
           {event.contactEmail && (
-            <a
-              className="wp-contact-link"
-              href={`mailto:${event.contactEmail}`}
-            >
-              Questions? Contact the organizer
-              <ArrowUpRight size={14} />
+            <a className="wp-contact-link" href={`mailto:${event.contactEmail}`}>
+              Questions? Contact the organizer <ArrowUpRight size={14} />
             </a>
           )}
         </aside>

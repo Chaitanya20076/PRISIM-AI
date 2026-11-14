@@ -23,11 +23,25 @@ import {
   Trophy,
 } from "lucide-react";
 
+import { getAuth } from "firebase/auth";
 import "./Competitionpublic.css";
 
 // --------------------------------------------------
 // FIRESTORE-BACKED PUBLIC API
 // --------------------------------------------------
+
+
+
+// Firebase identity for member-linked registrations. The UID is derived
+// from the verified Firebase ID token on the backend, never from form data.
+async function getMemberAuthHeaders() {
+  const user = getAuth().currentUser;
+  if (!user) {
+    throw new Error("Please sign in to your PRISM AI account before registering. This lets us link your registration to your PRISM Points wallet.");
+  }
+  const idToken = await user.getIdToken();
+  return { Authorization: `Bearer ${idToken}` };
+}
 
 const API_BASE_URL =
   import.meta.env.VITE_API_URL ||
@@ -251,6 +265,13 @@ export default function Competitionpublic() {
   const [submitting, setSubmitting] = useState(false);
   const [submissionMessage, setSubmissionMessage] = useState("");
   const [shareCopied, setShareCopied] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [successHeading, setSuccessHeading] = useState("You're in!");
+  const [successDescription, setSuccessDescription] = useState(
+    "Your competition registration has been submitted successfully."
+  );
+  const registrationTab =
+    new URLSearchParams(window.location.search).get("register") === "1";
 
   // --------------------------------------------------
   // LOAD PUBLISHED COMPETITIONS FROM FIRESTORE API
@@ -448,6 +469,10 @@ export default function Competitionpublic() {
     capacity > 0 && registrationCount >= capacity;
 
   const waitlistEnabled = Boolean(event?.waitlistEnabled);
+  const rewardPoints = Math.max(
+    0,
+    Math.floor(Number(event?.rewardPoints) || 0)
+  );
 
   const externalLink = String(
     event?.registrationLink || ""
@@ -611,7 +636,8 @@ export default function Competitionpublic() {
         `${PUBLIC_EVENTS_ENDPOINT}/${encodeURIComponent(event.id)}/registrations`,
         {
           method: "POST",
-          headers: {
+          headers: { ...(await getMemberAuthHeaders()),
+          
             "Content-Type": "application/json",
             Accept: "application/json",
           },
@@ -632,6 +658,34 @@ export default function Competitionpublic() {
       const data = await response.json();
 
       setAnswers({});
+
+      const registrationStatus = String(
+        data.registration?.status || ""
+      ).toLowerCase();
+
+      const successCopy =
+        registrationStatus === "waitlisted"
+          ? {
+              heading: "You're on the list!",
+              description:
+                "Your waitlist request has been submitted. The PRISM AI team will contact you if a place becomes available."
+            }
+          : registrationStatus === "pending"
+            ? {
+                heading: "Submission received!",
+                description:
+                  "Your registration is awaiting organizer approval. We'll let you know once it has been reviewed."
+              }
+            : {
+                heading: "You're in!",
+                description:
+                  "Your competition registration has been confirmed. Bring your ideas, give it your best and make an impact!"
+              };
+
+      setSuccessHeading(successCopy.heading);
+      setSuccessDescription(successCopy.description);
+      setShowSuccess(true);
+
       setSubmissionMessage(
         data.registration?.status === "Waitlisted"
           ? "You're on the waitlist. Your registration has been recorded."
@@ -747,6 +801,237 @@ export default function Competitionpublic() {
   }
 
   // --------------------------------------------------
+  // DEDICATED REGISTRATION TAB
+  // --------------------------------------------------
+
+  if (registrationTab) {
+    return (
+      <main className="competition-public-page cp-registration-page">
+        <div className="cp-registration-shell">
+          <header className="cp-registration-nav">
+            <button
+              type="button"
+              className="cp-nav-back"
+              onClick={() => window.close()}
+            >
+              <ArrowLeft size={17} />
+              Back to competition
+            </button>
+
+            <button className="cp-brand" type="button" onClick={() => navigate("/")}>
+              <span className="cp-brand-mark"><Sparkles size={16} /></span>
+              PRISM<span>AI</span>
+            </button>
+
+            <span className="cp-registration-nav-label">COMPETITION REGISTRATION</span>
+          </header>
+
+          <div className="cp-registration-layout">
+            <section className="cp-registration-intro">
+              <p className="cp-eyebrow">
+                <span className="cp-live-dot" />
+                PRISM AI <span>/</span> COMPETITION REGISTRATION
+              </p>
+
+              <h1 className="cp-rollout-heading">
+                Bring your
+                <span className="cp-rollout-window" aria-label="best ideas, bold innovations, big wins">
+                  <span className="cp-rollout-track">
+                    <em>best ideas.</em>
+                    <em>bold innovations.</em>
+                    <em>big wins.</em>
+                    <em>best ideas.</em>
+                  </span>
+                </span>
+              </h1>
+
+              <p className="cp-registration-lead">
+                You're one step away from entering{" "}
+                <strong>{event.title || event.name || "this competition"}</strong>.
+                Complete the details to secure your entry.
+              </p>
+
+              <div className="cp-registration-summary">
+                <div>
+                  <small>COMPETITION</small>
+                  <strong>{event.title || event.name}</strong>
+                </div>
+                <div>
+                  <small>DATE</small>
+                  <strong>{formatDate(startDate)}</strong>
+                </div>
+                <div>
+                  <small>ENTRY FEE</small>
+                  <strong>{fee}</strong>
+                </div>
+                {rewardPoints > 0 && (
+                  <div className="cp-registration-points">
+                    <small>REGISTRATION REWARD</small>
+                    <strong><Sparkles size={15} /> {rewardPoints.toLocaleString("en-IN")} PRISM Points</strong>
+                  </div>
+                )}
+              </div>
+
+              <p className="cp-registration-note">Explore. Innovate. Impact.</p>
+            </section>
+
+            <section className="cp-registration-card">
+              <div className="cp-registration-card-heading">
+                <span className="cp-registration-step">STEP 01 / YOUR DETAILS</span>
+                <h2>Competition registration</h2>
+                <p>Fields marked <b>*</b> are required.</p>
+              </div>
+
+              {closed ? (
+                <div className="cp-form-alert cp-alert-closed">
+                  <X size={17} />
+                  Registration for this competition is closed.
+                </div>
+              ) : externalLink ? (
+                <a
+                  className="cp-button cp-button-primary cp-full-button"
+                  href={externalLink}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Continue to registration <ExternalLink size={16} />
+                </a>
+              ) : (
+                <form className="cp-registration-form cp-registration-tab-form" onSubmit={submitRegistration}>
+                  {full && !waitlistEnabled && (
+                    <div className="cp-form-alert cp-alert-closed">
+                      This competition has reached capacity.
+                    </div>
+                  )}
+
+                  {full && waitlistEnabled && (
+                    <div className="cp-form-alert">
+                      <Users size={17} />
+                      Full capacity — submit to join the waitlist.
+                    </div>
+                  )}
+
+                  {event.requireApproval && (
+                    <div className="cp-form-alert">
+                      <ShieldCheck size={17} />
+                      Registrations require organizer approval.
+                    </div>
+                  )}
+
+                  {fields.length === 0 && (
+                    <div className="cp-form-alert">
+                      The organizer has not configured registration questions yet.
+                    </div>
+                  )}
+
+                  {fields.map((field) => (
+                    <label className="cp-form-field" key={field.id}>
+                      <span>{field.label}{field.required && <b> *</b>}</span>
+                      {field.helpText && field.type !== "checkbox" && (
+                        <small>{field.helpText}</small>
+                      )}
+                      <QuestionInput
+                        field={field}
+                        value={answers[field.id]}
+                        onChange={updateAnswer}
+                      />
+                    </label>
+                  ))}
+
+                  {event.registrationConsent && (
+                    <p className="cp-consent-copy">
+                      <ShieldCheck size={15} />
+                      {event.registrationConsent}
+                    </p>
+                  )}
+
+                  {submissionMessage && (
+                    <div
+                      className={`cp-form-alert ${
+                        submissionMessage.startsWith("Already registered")
+                          ? "cp-alert-duplicate"
+                          : submissionMessage.includes("registered") ||
+                              submissionMessage.includes("waitlist") ||
+                              submissionMessage.includes("approval")
+                            ? "cp-alert-success"
+                            : "cp-alert-closed"
+                      }`}
+                      role="status"
+                    >
+                      <CircleCheck size={17} />
+                      {submissionMessage}
+                    </div>
+                  )}
+
+                  <button
+                    className="cp-button cp-button-primary cp-full-button"
+                    type="submit"
+                    disabled={submitting || fields.length === 0 || (full && !waitlistEnabled)}
+                  >
+                    {submitting
+                      ? "Submitting…"
+                      : full && waitlistEnabled
+                        ? "Join the waitlist"
+                        : "Submit registration"}
+                    <ArrowUpRight size={17} />
+                  </button>
+
+                  <small className="cp-privacy-note">
+                    Your answers are saved with this competition registration.
+                  </small>
+                </form>
+              )}
+
+              {event.contactEmail && (
+                <a className="cp-contact-link" href={`mailto:${event.contactEmail}`}>
+                  Questions? Contact the organizer <ArrowUpRight size={14} />
+                </a>
+              )}
+            </section>
+          </div>
+        </div>
+
+        {showSuccess && (
+          <div className="cp-success-overlay" role="dialog" aria-modal="true" aria-labelledby="cp-success-title">
+            <div className="cp-confetti" aria-hidden="true">
+              {Array.from({ length: 54 }, (_, index) => (
+                <i
+                  key={index}
+                  style={{
+                    "--x": `${(index * 37) % 100}%`,
+                    "--delay": `${(index % 11) * 0.12}s`,
+                    "--duration": `${3.2 + (index % 5) * 0.38}s`,
+                    "--drift": `${((index * 19) % 190) - 95}px`
+                  }}
+                />
+              ))}
+            </div>
+
+            <section className="cp-success-card">
+              <span className="cp-success-icon"><CheckCircle2 size={36} /></span>
+              <small>PRISM AI / COMPETITION REGISTRATION</small>
+              <h2 id="cp-success-title">{successHeading}</h2>
+              <p>{successDescription}</p>
+
+              {rewardPoints > 0 && (
+                <div className="cp-success-points">
+                  <Sparkles size={17} />
+                  <strong>{rewardPoints.toLocaleString("en-IN")} PRISM Points</strong>
+                  <span>Registration reward</span>
+                </div>
+              )}
+
+              <button type="button" onClick={() => setShowSuccess(false)}>
+                Awesome <ArrowUpRight size={16} />
+              </button>
+            </section>
+          </div>
+        )}
+      </main>
+    );
+  }
+
+  // --------------------------------------------------
   // MAIN UI
   // --------------------------------------------------
 
@@ -854,11 +1139,11 @@ export default function Competitionpublic() {
               <button
                 className="cp-button cp-button-primary"
                 onClick={() =>
-                  document
-                    .getElementById("cp-registration")
-                    ?.scrollIntoView({
-                      behavior: "smooth",
-                    })
+                  window.open(
+                    `${window.location.pathname}?register=1`,
+                    "_blank",
+                    "noopener,noreferrer"
+                  )
                 }
               >
                 Register for competition
@@ -1241,9 +1526,17 @@ export default function Competitionpublic() {
               </span>
             </p>
 
-          </div>
+            {rewardPoints > 0 && (
+              <p className="cp-reward-meta">
+                <Sparkles size={16} />
+                <span>
+                  Registration reward
+                  <strong>{rewardPoints.toLocaleString("en-IN")} PRISM Points</strong>
+                </span>
+              </p>
+            )}
 
-          {/* CLOSED REGISTRATION */}
+          </div>
 
           {closed ? (
             <div className="cp-form-alert cp-alert-closed">
@@ -1261,128 +1554,22 @@ export default function Competitionpublic() {
               <ExternalLink size={16} />
             </a>
           ) : (
-
-            /* REGISTRATION FORM */
-
-            <form
-              className="cp-registration-form"
-              onSubmit={submitRegistration}
+            <button
+              className="cp-button cp-button-primary cp-full-button"
+              type="button"
+              disabled={full && !waitlistEnabled}
+              onClick={() =>
+                window.open(
+                  `${window.location.pathname}?register=1`,
+                  "_blank",
+                  "noopener,noreferrer"
+                )
+              }
             >
-
-              {full && !waitlistEnabled && (
-                <div className="cp-form-alert cp-alert-closed">
-                  This competition has reached capacity.
-                </div>
-              )}
-
-              {full && waitlistEnabled && (
-                <div className="cp-form-alert">
-                  <Users size={17} />
-                  Full capacity — submit to join the waitlist.
-                </div>
-              )}
-
-              {event.requireApproval && (
-                <div className="cp-form-alert">
-                  <ShieldCheck size={17} />
-                  Registrations require organizer approval.
-                </div>
-              )}
-
-              {fields.length === 0 && (
-                <div className="cp-form-alert">
-                  The organizer has not configured registration
-                  questions yet.
-                </div>
-              )}
-
-              {/* DYNAMIC QUESTIONS */}
-
-              {fields.map((field) => (
-                <label
-                  className="cp-form-field"
-                  key={field.id}
-                >
-
-                  <span>
-                    {field.label}
-                    {field.required && <b> *</b>}
-                  </span>
-
-                  {field.helpText &&
-                    field.type !== "checkbox" && (
-                      <small>{field.helpText}</small>
-                    )}
-
-                  <QuestionInput
-                    field={field}
-                    value={answers[field.id]}
-                    onChange={updateAnswer}
-                  />
-
-                </label>
-              ))}
-
-              {/* CONSENT */}
-
-              {event.registrationConsent && (
-                <p className="cp-consent-copy">
-                  <ShieldCheck size={15} />
-                  {event.registrationConsent}
-                </p>
-              )}
-
-              {/* SUBMISSION FEEDBACK */}
-
-              {submissionMessage && (
-                <div
-                  className={`cp-form-alert ${
-                    submissionMessage.startsWith(
-                      "Already registered"
-                    )
-                      ? "cp-alert-duplicate"
-                      : submissionMessage.includes("registered") ||
-                          submissionMessage.includes("waitlist") ||
-                          submissionMessage.includes("approval")
-                        ? "cp-alert-success"
-                        : "cp-alert-closed"
-                  }`}
-                  role="status"
-                >
-                  <CircleCheck size={17} />
-                  {submissionMessage}
-                </div>
-              )}
-
-              {/* SUBMIT BUTTON */}
-
-              <button
-                className="cp-button cp-button-primary cp-full-button"
-                type="submit"
-                disabled={
-                  submitting ||
-                  fields.length === 0 ||
-                  (full && !waitlistEnabled)
-                }
-              >
-                {submitting
-                  ? "Submitting…"
-                  : full && waitlistEnabled
-                    ? "Join the waitlist"
-                    : "Submit registration"}
-
-                <ArrowUpRight size={17} />
-              </button>
-
-              <small className="cp-privacy-note">
-                Your answers are saved with this competition
-                registration.
-              </small>
-
-            </form>
+              {full && waitlistEnabled ? "Open waitlist form" : "Open registration form"}
+              <ArrowUpRight size={17} />
+            </button>
           )}
-
-          {/* CONTACT */}
 
           {event.contactEmail && (
             <a

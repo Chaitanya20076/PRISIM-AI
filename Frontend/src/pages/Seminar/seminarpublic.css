@@ -298,3 +298,614 @@
     padding-inline: 17px;
   }
 }
+
+
+/* Full-width event details and dedicated registration view */
+.seminar-public-page .sp-content-details{display:block;width:min(1120px,calc(100% - 64px))}
+.seminar-public-page .sp-content-details .sp-main-content{max-width:900px}
+.seminar-public-page .sp-event-overview{margin-top:64px;padding:30px;border:1px solid var(--sp-border);border-radius:16px;background:linear-gradient(120deg,rgba(167,139,250,.10),rgba(255,255,255,.018)),var(--sp-surface)}
+.seminar-public-page .sp-overview-heading{display:flex;align-items:center;gap:14px}
+.seminar-public-page .sp-overview-icon{width:46px;height:46px;display:grid;place-items:center;border:1px solid rgba(167,139,250,.3);border-radius:12px;background:rgba(167,139,250,.12);color:#b69aff}
+.seminar-public-page .sp-overview-heading h2{margin:7px 0 0;font:500 clamp(22px,3vw,30px)/1.2 'Space Grotesk',sans-serif;letter-spacing:-.8px}
+.seminar-public-page .sp-reward-highlight{display:flex;align-items:center;gap:16px;margin-top:25px;padding:20px 22px;border:1px solid rgba(167,139,250,.38);border-radius:12px;background:linear-gradient(100deg,rgba(167,139,250,.18),rgba(167,139,250,.045))}
+.seminar-public-page .sp-reward-highlight>span{width:48px;height:48px;flex:0 0 48px;display:grid;place-items:center;border-radius:13px;background:rgba(167,139,250,.18);color:#c7b3ff}
+.seminar-public-page .sp-reward-highlight small{display:block;color:#bba7f4;font-size:9px;font-weight:800;letter-spacing:1.5px}
+.seminar-public-page .sp-reward-highlight strong{display:block;margin-top:4px;color:var(--sp-text);font:700 clamp(23px,3vw,32px)/1.1 'Space Grotesk',sans-serif}
+.seminar-public-page .sp-reward-highlight em{color:#bba7f4;font-size:.65em;font-style:normal}
+.seminar-public-page .sp-reward-highlight p{margin:5px 0 0;color:var(--sp-muted);font-size:11px}
+.seminar-public-page .sp-overview-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:22px 0;padding:20px 0;border-top:1px solid var(--sp-border);border-bottom:1px solid var(--sp-border)}
+.seminar-public-page .sp-overview-grid>div{display:flex;align-items:flex-start;gap:10px;color:#b69aff}
+.seminar-public-page .sp-overview-grid span{display:grid;gap:5px;min-width:0}
+.seminar-public-page .sp-overview-grid small{color:var(--sp-muted);font-size:10px}
+.seminar-public-page .sp-overview-grid strong{color:var(--sp-text);font-size:12px;line-height:1.5}
+.seminar-public-page .sp-overview-cta{min-width:190px}
+.seminar-public-page .sp-registration-topbar{position:relative;z-index:2;width:min(1240px,calc(100% - 64px));min-height:76px;margin:auto;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--sp-border)}
+.seminar-public-page .sp-registration-topbar .sp-brand{display:flex;align-items:center;gap:8px;border:0;background:none;color:var(--sp-text);font-weight:800}
+.seminar-public-page .sp-registration-topbar .sp-brand>span:last-child{color:#b69aff}
+.seminar-public-page .sp-registration-step{color:var(--sp-muted);font-size:9px;font-weight:700;letter-spacing:1.5px}
+.seminar-public-page .sp-registration-shell{position:relative;z-index:1;width:min(1080px,calc(100% - 64px));margin:0 auto;padding:70px 0 90px;display:grid;grid-template-columns:minmax(0,.85fr) minmax(420px,1.15fr);align-items:start;gap:70px}
+.seminar-public-page .sp-registration-intro{position:sticky;top:50px;padding-top:20px}
+.seminar-public-page .sp-registration-intro h1{margin:20px 0 0;font:600 clamp(42px,5vw,64px)/1.02 'Space Grotesk',sans-serif;letter-spacing:-2.5px}
+.seminar-public-page .sp-registration-intro>p:not(.sp-eyebrow){max-width:390px;margin:20px 0 0;color:var(--sp-muted);font-size:14px;line-height:1.8}
+.seminar-public-page .sp-registration-intro>p strong{color:var(--sp-text)}
+.seminar-public-page .sp-registration-event-facts{display:grid;gap:13px;margin-top:28px;color:var(--sp-muted);font-size:12px}
+.seminar-public-page .sp-registration-event-facts span{display:flex;align-items:center;gap:10px}
+.seminar-public-page .sp-registration-event-facts svg{color:#b69aff}
+.seminar-public-page .sp-registration-form-panel{padding:32px;border:1px solid rgba(167,139,250,.28);border-radius:16px;background:var(--sp-surface);box-shadow:0 25px 80px rgba(0,0,0,.18)}
+.seminar-public-page .sp-registration-form-heading h2{margin:8px 0;font:500 28px/1.2 'Space Grotesk',sans-serif;letter-spacing:-.8px}
+.seminar-public-page .sp-registration-form-heading>p:last-child{margin:0;color:var(--sp-muted);font-size:11px}
+.seminar-public-page .sp-registration-form-panel .sp-registration-form{margin-top:25px;gap:18px}
+.seminar-public-page .sp-registration-form-panel .sp-form-field{font-size:12px}
+.seminar-public-page .sp-registration-form-panel .sp-form-field input:not([type=checkbox]):not([type=radio]),.seminar-public-page .sp-registration-form-panel .sp-form-field textarea,.seminar-public-page .sp-registration-form-panel .sp-form-field select{min-height:48px}
+.seminar-public-page .sp-registration-form-panel .sp-full-button{min-height:50px}
+@media(max-width:850px){
+ .seminar-public-page .sp-overview-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .seminar-public-page .sp-registration-shell{grid-template-columns:1fr;gap:32px;padding-top:42px}
+ .seminar-public-page .sp-registration-intro{position:static}
+ .seminar-public-page .sp-registration-intro h1 br{display:none}
+}
+@media(max-width:600px){
+ .seminar-public-page .sp-content-details,.seminar-public-page .sp-registration-topbar,.seminar-public-page .sp-registration-shell{width:calc(100% - 36px)}
+ .seminar-public-page .sp-event-overview{padding:20px;margin-top:42px}
+ .seminar-public-page .sp-overview-grid{gap:18px 10px}
+ .seminar-public-page .sp-reward-highlight{padding:16px}
+ .seminar-public-page .sp-registration-topbar{min-height:66px}
+ .seminar-public-page .sp-registration-step{display:none}
+ .seminar-public-page .sp-registration-form-panel{padding:21px}
+ .seminar-public-page .sp-registration-intro h1{font-size:43px}
+}
+
+
+/* Animated registration-side experience */
+.seminar-public-page .sp-registration-intro h1.sp-animated-headline{
+  min-height:2.2em;max-width:520px;margin:22px 0 0;
+  font:700 clamp(42px,5.2vw,66px)/1.08 'Space Grotesk',sans-serif;
+  letter-spacing:-2.8px;overflow:visible;
+}
+.seminar-public-page .sp-animated-headline span{
+  display:inline-block;max-width:100%;
+  background:linear-gradient(105deg,#a78bfa 0%,#f0abfc 24%,#67e8f9 48%,#a3e635 72%,#a78bfa 100%);
+  background-size:260% auto;background-clip:text;-webkit-background-clip:text;color:transparent;
+  animation:sp-headline-enter .75s cubic-bezier(.2,.8,.2,1) both,sp-gradient-flow 4s linear infinite;
+  filter:drop-shadow(0 0 22px rgba(167,139,250,.16));
+}
+@keyframes sp-headline-enter{from{opacity:0;transform:translateY(18px);clip-path:inset(0 100% 0 0)}to{opacity:1;transform:translateY(0);clip-path:inset(0 0 0 0)}}
+@keyframes sp-gradient-flow{to{background-position:260% center}}
+.seminar-public-page .sp-registration-intro{min-width:0}
+.seminar-public-page .sp-registration-intro>p:not(.sp-eyebrow){animation:sp-copy-enter .8s .12s both}
+@keyframes sp-copy-enter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* Registration success celebration */
+.seminar-public-page .sp-success-overlay{
+  position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:24px;
+  background:rgba(7,8,20,.78);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  animation:sp-overlay-in .22s ease-out both;overflow:hidden;
+}
+@keyframes sp-overlay-in{from{opacity:0}to{opacity:1}}
+.seminar-public-page .sp-success-modal{
+  position:relative;z-index:2;width:min(470px,100%);padding:42px 34px 30px;text-align:center;
+  border:1px solid rgba(167,139,250,.48);border-radius:22px;
+  background:radial-gradient(ellipse at 50% 0%,rgba(167,139,250,.2),transparent 58%),var(--sp-surface);
+  box-shadow:0 28px 100px rgba(0,0,0,.48),0 0 55px rgba(167,139,250,.13);
+  animation:sp-modal-pop .48s cubic-bezier(.16,1.3,.3,1) both;
+}
+@keyframes sp-modal-pop{from{opacity:0;transform:translateY(24px) scale(.86)}to{opacity:1;transform:translateY(0) scale(1)}}
+.seminar-public-page .sp-success-close{
+  position:absolute;top:14px;right:14px;width:36px;height:36px;display:grid;place-items:center;
+  border:1px solid var(--sp-border);border-radius:10px;background:transparent;color:var(--sp-text);cursor:pointer;
+}
+.seminar-public-page .sp-success-emblem{
+  width:76px;height:76px;margin:0 auto 20px;display:grid;place-items:center;border-radius:50%;
+  color:#d8ccff;background:rgba(167,139,250,.17);border:1px solid rgba(167,139,250,.45);
+  box-shadow:0 0 0 9px rgba(167,139,250,.055),0 0 40px rgba(167,139,250,.2);
+  animation:sp-emblem-pulse 1.8s ease-in-out infinite;
+}
+@keyframes sp-emblem-pulse{50%{transform:scale(1.07);box-shadow:0 0 0 15px rgba(167,139,250,.025),0 0 55px rgba(167,139,250,.28)}}
+.seminar-public-page .sp-success-modal h2{margin:10px 0;font:700 clamp(27px,5vw,36px)/1.15 'Space Grotesk',sans-serif;letter-spacing:-1px}
+.seminar-public-page .sp-success-modal>p:not(.sp-eyebrow){max-width:350px;margin:0 auto;color:var(--sp-muted);font-size:13px;line-height:1.7}
+.seminar-public-page .sp-success-points{
+  display:inline-flex;align-items:center;gap:9px;margin:20px auto 0;padding:12px 17px;
+  border:1px solid rgba(167,139,250,.35);border-radius:999px;background:rgba(167,139,250,.1);color:#cbb9ff;font-size:13px;
+}
+.seminar-public-page .sp-success-countdown{margin-top:25px}
+.seminar-public-page .sp-success-countdown>span{color:var(--sp-muted);font-size:8px;font-weight:800;letter-spacing:1.5px}
+.seminar-public-page .sp-success-countdown>div{height:4px;margin-top:9px;overflow:hidden;border-radius:99px;background:rgba(167,139,250,.14)}
+.seminar-public-page .sp-success-countdown>div i{display:block;width:100%;height:100%;border-radius:inherit;background:linear-gradient(90deg,#a78bfa,#67e8f9);transform-origin:left;animation:sp-countdown 5s linear forwards}
+@keyframes sp-countdown{to{transform:scaleX(0)}}
+.seminar-public-page .sp-success-done{width:100%;margin-top:20px;min-height:46px}
+.seminar-public-page .sp-confetti{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.seminar-public-page .sp-confetti i{
+  position:absolute;top:-12%;left:calc((var(--i, 0) * 1%));width:8px;height:13px;border-radius:2px;
+  background:hsl(calc(var(--i, 0) * 37),85%,70%);opacity:0;
+  animation:sp-confetti-fall 2.8s ease-in infinite;
+}
+.seminar-public-page .sp-confetti i:nth-child(34n+1){--i:3;left:3%;animation-delay:.02s}
+.seminar-public-page .sp-confetti i:nth-child(34n+2){--i:19;left:19%;animation-delay:.25s}
+.seminar-public-page .sp-confetti i:nth-child(34n+3){--i:35;left:35%;animation-delay:.12s}
+.seminar-public-page .sp-confetti i:nth-child(34n+4){--i:51;left:51%;animation-delay:.4s}
+.seminar-public-page .sp-confetti i:nth-child(34n+5){--i:67;left:67%;animation-delay:.18s}
+.seminar-public-page .sp-confetti i:nth-child(34n+6){--i:83;left:83%;animation-delay:.55s}
+.seminar-public-page .sp-confetti i:nth-child(34n+7){--i:97;left:97%;animation-delay:.32s}
+.seminar-public-page .sp-confetti i:nth-child(n+8){left:calc((var(--i) * 1%));animation-delay:calc(var(--i) * .035s)}
+@keyframes sp-confetti-fall{0%{opacity:0;transform:translateY(-10px) rotate(0)}12%{opacity:1}100%{opacity:0;transform:translateY(115vh) rotate(680deg)}}
+@media(prefers-reduced-motion:reduce){
+ .seminar-public-page .sp-animated-headline span,.seminar-public-page .sp-confetti i,.seminar-public-page .sp-success-emblem{animation:none}
+}
+
+
+/* Cinematic typewriter panel: fast, varied, continuously animated */
+.seminar-public-page .sp-cinematic-copy{
+  position:relative;min-height:260px;margin:18px 0 22px;padding:27px 24px 24px;
+  overflow:hidden;border:1px solid rgba(167,139,250,.25);border-radius:18px;
+  background:
+    radial-gradient(ellipse at 82% 20%,rgba(103,232,249,.13),transparent 38%),
+    radial-gradient(ellipse at 8% 90%,rgba(167,139,250,.17),transparent 42%),
+    linear-gradient(135deg,rgba(25,25,48,.95),rgba(13,15,31,.92));
+  box-shadow:inset 0 1px rgba(255,255,255,.05),0 20px 65px rgba(0,0,0,.15);
+}
+.seminar-public-page .sp-cinematic-copy:before{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.24;
+  background-image:linear-gradient(rgba(190,180,255,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(190,180,255,.12) 1px,transparent 1px);
+  background-size:34px 34px;mask-image:linear-gradient(120deg,#000,transparent 85%);
+}
+.seminar-public-page .sp-cinematic-copy:after{
+  content:"";position:absolute;width:190px;height:190px;right:-70px;bottom:-100px;border:1px solid rgba(103,232,249,.28);border-radius:50%;
+  box-shadow:0 0 0 18px rgba(103,232,249,.025),0 0 0 38px rgba(167,139,250,.025);
+  animation:sp-orbit-pulse 5s ease-in-out infinite alternate;
+}
+@keyframes sp-orbit-pulse{to{transform:scale(1.35) translate(-15px,-12px);opacity:.35}}
+.seminar-public-page .sp-cinematic-kicker{
+  position:relative;z-index:1;display:flex;align-items:center;gap:9px;margin:0 0 32px;
+  color:#bba7f4;font-size:9px;font-weight:800;letter-spacing:2.2px;
+}
+.seminar-public-page .sp-cinematic-kicker span{width:6px;height:6px;border-radius:50%;background:#67e8f9;box-shadow:0 0 12px #67e8f9;animation:sp-kicker-blink 1s ease-in-out infinite alternate}
+@keyframes sp-kicker-blink{to{opacity:.3;transform:scale(.65)}}
+.seminar-public-page .sp-registration-intro h1.sp-animated-headline{
+  position:relative;z-index:1;min-height:2.3em;max-width:100%;margin:0;
+  font:800 clamp(31px,4.1vw,53px)/1.13 'Space Grotesk',sans-serif;letter-spacing:-1.9px;
+  overflow-wrap:anywhere;
+}
+.seminar-public-page .sp-animated-headline span{
+  display:inline;background:linear-gradient(100deg,#fff 0%,#c4b5fd 30%,#67e8f9 62%,#f0abfc 90%);
+  background-size:220% auto;background-clip:text;-webkit-background-clip:text;color:transparent;
+  animation:sp-gradient-flow 2.8s linear infinite;
+  filter:drop-shadow(0 0 16px rgba(167,139,250,.2));
+}
+.seminar-public-page .sp-copy-style-1 .sp-animated-headline span{background-image:linear-gradient(100deg,#67e8f9,#a3e635,#fff,#67e8f9)}
+.seminar-public-page .sp-copy-style-2 .sp-animated-headline span{background-image:linear-gradient(100deg,#f0abfc,#a78bfa,#fbbf24,#f0abfc)}
+.seminar-public-page .sp-type-caret{display:inline-block;width:3px;height:.92em;margin-left:5px;vertical-align:-.08em;background:#67e8f9;box-shadow:0 0 12px #67e8f9;animation:sp-caret-blink .65s steps(2,start) infinite}
+@keyframes sp-caret-blink{to{opacity:0}}
+.seminar-public-page .sp-cinematic-subline{position:relative;z-index:1;margin-top:22px;color:#9da1bc;font-size:9px;font-weight:700;letter-spacing:1.5px}
+.seminar-public-page .sp-cinematic-subline span:first-child{color:#c4b5fd}
+.seminar-public-page .sp-cinematic-subline b{padding:0 7px;color:#67e8f9}
+.seminar-public-page .sp-cinematic-progress{position:relative;z-index:1;height:2px;margin-top:20px;overflow:hidden;background:rgba(255,255,255,.09)}
+.seminar-public-page .sp-cinematic-progress i{display:block;width:100%;height:100%;transform-origin:left;background:linear-gradient(90deg,#a78bfa,#67e8f9,#f0abfc);animation:sp-progress-run 3.5s linear both}
+@keyframes sp-progress-run{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.seminar-public-page .sp-registration-intro>p:not(.sp-eyebrow){animation:sp-copy-enter .55s ease-out both}
+
+/* Real falling confetti: separate pieces, varied sizes, colours, drift and rotation */
+.seminar-public-page .sp-confetti{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.seminar-public-page .sp-confetti i{
+  position:absolute;top:-24px;left:var(--x);width:var(--piece-width);height:var(--piece-height);
+  display:block;border-radius:2px;background:var(--piece-color);opacity:0;
+  animation:sp-confetti-fall var(--duration) linear var(--delay) infinite;
+  box-shadow:0 0 5px color-mix(in srgb,var(--piece-color),transparent 45%);
+}
+@keyframes sp-confetti-fall{
+  0%{opacity:0;transform:translate3d(0,-4vh,0) rotate(0deg)}
+  8%{opacity:1}
+  85%{opacity:.95}
+  100%{opacity:0;transform:translate3d(var(--drift),112vh,0) rotate(var(--spin))}
+}
+
+
+/* Clean purple + white motion typography — intentionally no panel/card */
+.seminar-public-page .sp-registration-intro .sp-cinematic-copy{
+  position:relative;display:block;min-height:190px;margin:24px 0 18px;padding:0;
+  overflow:visible;border:0;border-radius:0;background:none;box-shadow:none;
+}
+.seminar-public-page .sp-registration-intro .sp-cinematic-copy:before,
+.seminar-public-page .sp-registration-intro .sp-cinematic-copy:after{display:none;content:none}
+.seminar-public-page .sp-registration-intro h1.sp-animated-headline{
+  display:block;position:relative;z-index:1;max-width:540px;min-height:2.5em;margin:0;
+  overflow-wrap:normal;font:700 clamp(39px,5vw,66px)/1.12 'Space Grotesk',sans-serif;
+  letter-spacing:-2.7px;color:#fff;
+}
+.seminar-public-page .sp-registration-intro h1.sp-animated-headline span{
+  display:inline;color:#fff;
+  background:linear-gradient(90deg,#fff 0%,#fff 42%,#c4b5fd 52%,#8b5cf6 70%,#8b5cf6 100%);
+  background-size:240% 100%;background-position:100% 0;
+  background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  filter:none;animation:sp-purple-fill 3.8s cubic-bezier(.55,.05,.25,1) both;
+}
+@keyframes sp-purple-fill{
+  0%{background-position:100% 0}
+  100%{background-position:0 0}
+}
+/* Four distinct, deliberately slow entrance motions */
+.seminar-public-page .sp-registration-intro h1.sp-headline-motion-0 span{
+  animation:sp-purple-fill 3.8s cubic-bezier(.55,.05,.25,1) both,sp-reveal-wipe 1.7s cubic-bezier(.2,.75,.25,1) both;
+}
+.seminar-public-page .sp-registration-intro h1.sp-headline-motion-1 span{
+  animation:sp-purple-fill 3.8s cubic-bezier(.55,.05,.25,1) both,sp-rise-settle 1.9s cubic-bezier(.2,.8,.25,1) both;
+}
+.seminar-public-page .sp-registration-intro h1.sp-headline-motion-2 span{
+  animation:sp-purple-fill 3.8s cubic-bezier(.55,.05,.25,1) both,sp-letter-space 2s cubic-bezier(.2,.8,.25,1) both;
+}
+.seminar-public-page .sp-registration-intro h1.sp-headline-motion-3 span{
+  animation:sp-purple-fill 3.8s cubic-bezier(.55,.05,.25,1) both,sp-soft-focus 2s cubic-bezier(.2,.8,.25,1) both;
+}
+@keyframes sp-reveal-wipe{
+  from{clip-path:inset(0 100% 0 0);transform:translateX(-16px)}
+  to{clip-path:inset(0 0 0 0);transform:translateX(0)}
+}
+@keyframes sp-rise-settle{
+  0%{transform:translateY(34px);opacity:0}
+  65%{transform:translateY(-5px);opacity:1}
+  100%{transform:translateY(0);opacity:1}
+}
+@keyframes sp-letter-space{
+  from{letter-spacing:5px;opacity:.25;filter:blur(5px)}
+  to{letter-spacing:-2.7px;opacity:1;filter:blur(0)}
+}
+@keyframes sp-soft-focus{
+  0%{transform:scale(.94);filter:blur(9px);opacity:0}
+  65%{filter:blur(0);opacity:1}
+  100%{transform:scale(1);filter:blur(0);opacity:1}
+}
+/* Celebration confetti uses only purple shades and white */
+.seminar-public-page .sp-confetti i{
+  background:var(--piece-color);box-shadow:0 0 5px rgba(167,139,250,.22);
+}
+@media(prefers-reduced-motion:reduce){
+ .seminar-public-page .sp-registration-intro h1.sp-animated-headline span{animation:none!important;background-position:0 0}
+}
+
+
+/* FINAL typography correction: full-width wrapping, purple + white only */
+.seminar-public-page .sp-registration-shell{grid-template-columns:minmax(0, .9fr) minmax(420px,1.1fr);gap:56px}
+.seminar-public-page .sp-registration-intro{min-width:0;width:100%;max-width:100%;overflow:visible}
+.seminar-public-page .sp-registration-intro .sp-cinematic-copy{
+  display:block!important;position:relative!important;width:100%!important;max-width:100%!important;
+  min-height:0!important;height:auto!important;margin:25px 0 24px!important;padding:0!important;
+  overflow:visible!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;
+}
+.seminar-public-page .sp-registration-intro .sp-cinematic-copy:before,
+.seminar-public-page .sp-registration-intro .sp-cinematic-copy:after{display:none!important;content:none!important}
+.seminar-public-page .sp-registration-intro h1.sp-animated-headline{
+  display:block!important;position:relative!important;width:100%!important;max-width:100%!important;
+  min-height:0!important;height:auto!important;margin:0!important;padding:0!important;
+  overflow:visible!important;white-space:normal!important;overflow-wrap:normal!important;word-break:normal!important;
+  font-family:'Space Grotesk',sans-serif!important;font-size:clamp(34px,3.5vw,54px)!important;
+  font-weight:700!important;line-height:1.08!important;letter-spacing:-1.9px!important;
+  color:#fff!important;text-align:left!important;
+}
+.seminar-public-page .sp-registration-intro h1.sp-animated-headline .sp-headline-line{
+  display:block!important;width:max-content!important;max-width:100%!important;
+  white-space:nowrap!important;overflow:visible!important;
+  color:#fff!important;background:linear-gradient(90deg,#fff 0%,#fff 38%,#ddd1ff 60%,#a78bfa 100%)!important;
+  background-size:220% 100%!important;background-position:100% 0!important;
+  background-clip:text!important;-webkit-background-clip:text!important;
+  -webkit-text-fill-color:transparent!important;filter:none!important;
+  animation:sp-white-purple-fill 3.2s ease-in-out both!important;
+}
+.seminar-public-page .sp-registration-intro h1.sp-animated-headline .sp-headline-line-two{animation-delay:.22s!important}
+@keyframes sp-white-purple-fill{from{background-position:100% 0}to{background-position:0 0}}
+/* Deliberately varied, slow entrances; no repetitive fade-only transition */
+.seminar-public-page .sp-registration-intro h1.sp-headline-motion-0 .sp-headline-line-one{animation:sp-white-purple-fill 3.2s ease-in-out both,sp-motion-wipe 1.6s cubic-bezier(.6,0,.2,1) both!important}
+.seminar-public-page .sp-registration-intro h1.sp-headline-motion-0 .sp-headline-line-two{animation:sp-white-purple-fill 3.2s ease-in-out .22s both,sp-motion-wipe 1.6s cubic-bezier(.6,0,.2,1) .18s both!important}
+.seminar-public-page .sp-registration-intro h1.sp-headline-motion-1 .sp-headline-line-one{animation:sp-white-purple-fill 3.2s ease-in-out both,sp-motion-lift 1.7s cubic-bezier(.2,.75,.25,1) both!important}
+.seminar-public-page .sp-registration-intro h1.sp-headline-motion-1 .sp-headline-line-two{animation:sp-white-purple-fill 3.2s ease-in-out .22s both,sp-motion-lift 1.7s cubic-bezier(.2,.75,.25,1) .2s both!important}
+.seminar-public-page .sp-registration-intro h1.sp-headline-motion-2 .sp-headline-line-one{animation:sp-white-purple-fill 3.2s ease-in-out both,sp-motion-track 1.8s cubic-bezier(.2,.75,.25,1) both!important}
+.seminar-public-page .sp-registration-intro h1.sp-headline-motion-2 .sp-headline-line-two{animation:sp-white-purple-fill 3.2s ease-in-out .22s both,sp-motion-track 1.8s cubic-bezier(.2,.75,.25,1) .2s both!important}
+.seminar-public-page .sp-registration-intro h1.sp-headline-motion-3 .sp-headline-line-one{animation:sp-white-purple-fill 3.2s ease-in-out both,sp-motion-rise 1.8s cubic-bezier(.2,.75,.25,1) both!important}
+.seminar-public-page .sp-registration-intro h1.sp-headline-motion-3 .sp-headline-line-two{animation:sp-white-purple-fill 3.2s ease-in-out .22s both,sp-motion-rise 1.8s cubic-bezier(.2,.75,.25,1) .2s both!important}
+@keyframes sp-motion-wipe{from{clip-path:inset(0 100% 0 0);transform:translateX(-12px)}to{clip-path:inset(0 0 0 0);transform:translateX(0)}}
+@keyframes sp-motion-lift{from{transform:translateY(26px)}to{transform:translateY(0)}}
+@keyframes sp-motion-track{from{letter-spacing:5px;filter:blur(2px)}to{letter-spacing:-1.9px;filter:blur(0)}}
+@keyframes sp-motion-rise{0%{transform:translateY(18px) scale(.97)}65%{transform:translateY(-3px) scale(1.01)}100%{transform:translateY(0) scale(1)}}
+@media(max-width:1100px){
+ .seminar-public-page .sp-registration-shell{grid-template-columns:minmax(0,.85fr) minmax(390px,1.15fr);gap:34px}
+ .seminar-public-page .sp-registration-intro h1.sp-animated-headline{font-size:clamp(32px,4vw,46px)!important}
+}
+@media(max-width:850px){
+ .seminar-public-page .sp-registration-shell{grid-template-columns:minmax(0,1fr);gap:32px}
+ .seminar-public-page .sp-registration-intro h1.sp-animated-headline{font-size:clamp(36px,8vw,54px)!important}
+}
+@media(max-width:430px){
+ .seminar-public-page .sp-registration-intro h1.sp-animated-headline{font-size:clamp(29px,8vw,38px)!important;letter-spacing:-1.2px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .seminar-public-page .sp-registration-intro h1.sp-animated-headline .sp-headline-line{animation:none!important;background-position:0 0!important}
+}
+
+
+/* Single approved headline motion: slow left-to-right roll/reveal */
+.seminar-public-page .sp-registration-intro h1.sp-headline-roll .sp-headline-line{
+  animation:
+    sp-white-purple-fill 3.8s ease-in-out both,
+    sp-motion-wipe 2.15s cubic-bezier(.55,.08,.25,1) both !important;
+  will-change:clip-path,transform,background-position;
+}
+.seminar-public-page .sp-registration-intro h1.sp-headline-roll .sp-headline-line-two{
+  animation-delay:.28s,.18s !important;
+}
+.seminar-public-page .sp-registration-intro h1.sp-headline-roll .sp-headline-line-one{
+  animation-delay:0s,0s !important;
+}
+@keyframes sp-motion-wipe{
+  0%{clip-path:inset(0 100% 0 0);transform:translateX(-18px)}
+  100%{clip-path:inset(0 0 0 0);transform:translateX(0)}
+}
+/* Disable the previous alternate entrance styles; keep one consistent motion. */
+.seminar-public-page .sp-registration-intro h1.sp-headline-roll .sp-headline-line{
+  opacity:1;
+}
+
+
+/* Confetti positioning fix: override legacy nth-child left rules.
+   Every piece gets its own full-width viewport position. */
+.seminar-public-page .sp-success-overlay .sp-confetti{
+  position:absolute!important;inset:0!important;width:100%!important;height:100%!important;
+  z-index:1!important;overflow:hidden!important;pointer-events:none!important;
+}
+.seminar-public-page .sp-success-overlay .sp-confetti i,
+.seminar-public-page .sp-success-overlay .sp-confetti i:nth-child(n){
+  position:absolute!important;top:-24px!important;left:var(--x)!important;
+  width:var(--piece-width)!important;height:var(--piece-height)!important;
+  display:block!important;opacity:0;
+  background:var(--piece-color)!important;
+  animation:sp-confetti-fall var(--duration) linear var(--delay) infinite!important;
+}
+
+
+/* =========================================================
+   SEMINAR REGISTRATION — TYPE-ON HEADLINE
+   A distinct animation from Bootcamp's soft-focus phrase swap:
+   the two headline lines reveal with a crisp horizontal mask,
+   followed by a subtle accent cursor blink.
+   ========================================================= */
+.seminar-public-page .sp-headline-type {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  overflow: visible;
+}
+.seminar-public-page .sp-headline-type .sp-headline-line {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(0 100% 0 0);
+  animation: sp-seminar-type-reveal 1.05s cubic-bezier(.22,.75,.25,1) both;
+}
+.seminar-public-page .sp-headline-type .sp-headline-line-two {
+  animation-delay: .28s;
+}
+.seminar-public-page .sp-headline-type .sp-headline-cursor {
+  position: absolute;
+  right: -12px;
+  bottom: .08em;
+  width: 3px;
+  height: .82em;
+  border-radius: 3px;
+  background: var(--sp-accent);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--sp-accent) 55%, transparent);
+  animation: sp-seminar-cursor-blink .85s steps(2, start) 1.35s 3;
+  opacity: 0;
+}
+@keyframes sp-seminar-type-reveal {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+@keyframes sp-seminar-cursor-blink {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .seminar-public-page .sp-headline-type .sp-headline-line {
+    clip-path: none;
+    animation: none;
+  }
+  .seminar-public-page .sp-headline-type .sp-headline-cursor {
+    display: none;
+    animation: none;
+  }
+}
+
+
+
+/* FINAL FIX — keep the registration headline visible while preserving the type-on reveal.
+   The previous stacked headline rules left the text dependent on transparent text-fill
+   and multiple competing animation declarations. */
+.seminar-public-page .sp-registration-intro .sp-cinematic-copy{
+  display:block!important;
+  width:100%!important;
+  min-height:0!important;
+  height:auto!important;
+  margin:25px 0 24px!important;
+  padding:0!important;
+  overflow:visible!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.seminar-public-page .sp-registration-intro h1.sp-animated-headline.sp-headline-type{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  position:relative!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-height:0!important;
+  height:auto!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:visible!important;
+  color:#fff!important;
+  font-family:'Space Grotesk',sans-serif!important;
+  font-size:clamp(34px,3.5vw,54px)!important;
+  font-weight:700!important;
+  line-height:1.08!important;
+  letter-spacing:-1.9px!important;
+  text-align:left!important;
+}
+.seminar-public-page .sp-registration-intro h1.sp-headline-type .sp-headline-line{
+  display:block!important;
+  width:max-content!important;
+  max-width:100%!important;
+  height:auto!important;
+  min-height:1.08em!important;
+  overflow:hidden!important;
+  white-space:normal!important;
+  overflow-wrap:anywhere!important;
+  clip-path:inset(0 0 0 0);
+  color:#fff!important;
+  background:none!important;
+  -webkit-background-clip:border-box!important;
+  background-clip:border-box!important;
+  -webkit-text-fill-color:#fff!important;
+  opacity:1!important;
+  animation:sp-seminar-visible-type 1.05s cubic-bezier(.22,.75,.25,1) both!important;
+}
+.seminar-public-page .sp-registration-intro h1.sp-headline-type .sp-headline-line-two{
+  color:#c4b5fd!important;
+  -webkit-text-fill-color:#c4b5fd!important;
+  animation-delay:.28s!important;
+}
+.seminar-public-page .sp-registration-intro h1.sp-headline-type .sp-headline-cursor{
+  display:block!important;
+  position:absolute!important;
+  right:-12px!important;
+  bottom:.08em!important;
+  width:3px!important;
+  height:.82em!important;
+  border-radius:3px!important;
+  background:#a78bfa!important;
+  box-shadow:0 0 16px rgba(167,139,250,.55)!important;
+  animation:sp-seminar-cursor-blink .85s steps(2,start) 1.35s 3!important;
+}
+@keyframes sp-seminar-visible-type{
+  from{clip-path:inset(0 100% 0 0);transform:translateX(-5px)}
+  to{clip-path:inset(0 0 0 0);transform:translateX(0)}
+}
+@media(max-width:430px){
+  .seminar-public-page .sp-registration-intro h1.sp-animated-headline.sp-headline-type{
+    font-size:clamp(29px,8vw,38px)!important;
+    letter-spacing:-1.2px!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .seminar-public-page .sp-registration-intro h1.sp-headline-type .sp-headline-line{
+    clip-path:none!important;
+    animation:none!important;
+  }
+  .seminar-public-page .sp-registration-intro h1.sp-headline-type .sp-headline-cursor{
+    display:none!important;
+    animation:none!important;
+  }
+}
+
+
+/* FINAL HEADLINE MOTION — clean staggered rise; no cursor, clipping, or competing effects. */
+.seminar-public-page .sp-registration-intro .sp-cinematic-copy {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 25px 0 24px !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.seminar-public-page .sp-registration-intro h1.sp-animated-headline.sp-headline-type {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  position: relative !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  color: #fff !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-size: clamp(34px, 3.5vw, 54px) !important;
+  font-weight: 700 !important;
+  line-height: 1.08 !important;
+  letter-spacing: -1.9px !important;
+  text-align: left !important;
+}
+
+.seminar-public-page .sp-registration-intro h1.sp-headline-type .sp-headline-line {
+  display: block !important;
+  width: auto !important;
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: 1.08em !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+  clip-path: none !important;
+  opacity: 0;
+  color: #fff !important;
+  background: none !important;
+  -webkit-text-fill-color: #fff !important;
+  filter: none !important;
+  transform: translate3d(0, 18px, 0);
+  animation: sp-headline-settle 780ms cubic-bezier(.2,.75,.25,1) both !important;
+  will-change: opacity, transform;
+}
+
+.seminar-public-page .sp-registration-intro h1.sp-headline-type .sp-headline-line-two {
+  color: #c4b5fd !important;
+  -webkit-text-fill-color: #c4b5fd !important;
+  animation-delay: 150ms !important;
+}
+
+@keyframes sp-headline-settle {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+  70% {
+    opacity: 1;
+    transform: translate3d(0, -2px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Cursor is intentionally removed; prevent any older cursor rules from showing it. */
+.seminar-public-page .sp-registration-intro .sp-headline-cursor {
+  display: none !important;
+  animation: none !important;
+}
+
+@media (max-width: 430px) {
+  .seminar-public-page .sp-registration-intro h1.sp-animated-headline.sp-headline-type {
+    font-size: clamp(29px, 8vw, 38px) !important;
+    letter-spacing: -1.2px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .seminar-public-page .sp-registration-intro h1.sp-headline-type .sp-headline-line {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    will-change: auto;
+  }
+}

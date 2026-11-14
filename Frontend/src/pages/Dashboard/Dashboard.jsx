@@ -95,6 +95,9 @@ export default function Dashboard() {
   const [activeSlide, setActiveSlide] = useState(0);
   const [failedImages, setFailedImages] = useState({});
   const [profile, setProfile] = useState(EMPTY_PROFILE);
+  const [prismPoints, setPrismPoints] = useState(0);
+  const [pointsLoading, setPointsLoading] = useState(true);
+  const [pointsError, setPointsError] = useState("");
   const [profileLoading, setProfileLoading] = useState(true);
   const [profileEditorOpen, setProfileEditorOpen] = useState(false);
   const [profileDraft, setProfileDraft] = useState(EMPTY_PROFILE);
@@ -161,6 +164,40 @@ export default function Dashboard() {
     }
 
     loadProfile();
+    return () => { active = false; };
+  }, [user]);
+
+  useEffect(() => {
+    if (!user?.uid) {
+      setPrismPoints(0);
+      setPointsLoading(false);
+      return undefined;
+    }
+
+    let active = true;
+    async function loadPrismPoints() {
+      setPointsLoading(true);
+      setPointsError("");
+      try {
+        const token = await user.getIdToken();
+        const apiBase = (import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || "http://localhost:5000").replace(/\/+$/, "");
+        const response = await fetch(`${apiBase}/api/points/me`, {
+          headers: { Authorization: `Bearer ${token}`, Accept: "application/json" },
+        });
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok || data.success === false) {
+          throw new Error(data.message || "Unable to load PRISM Points.");
+        }
+        if (active) setPrismPoints(Math.max(0, Number(data.wallet?.balance) || 0));
+      } catch (error) {
+        console.error("Could not load PRISM Points:", error);
+        if (active) setPointsError(error.message || "Unable to load points.");
+      } finally {
+        if (active) setPointsLoading(false);
+      }
+    }
+
+    loadPrismPoints();
     return () => { active = false; };
   }, [user]);
 
@@ -408,7 +445,7 @@ export default function Dashboard() {
           <span className="prism-brand-copy"><strong>PRISM <span>AI</span></strong><small>Explore. Innovate. Impact.</small></span>
         </Link>
         <div className="prism-dash-header-actions">
-          <div className="prism-points-pill"><span className="prism-points-sparkle"><Sparkles size={16} /></span><span><small>PRISM POINTS</small><strong>0</strong></span></div>
+          <div className="prism-points-pill" title={pointsError || "Your earned PRISM Points"}><span className="prism-points-sparkle"><Sparkles size={16} /></span><span><small>PRISM POINTS</small><strong>{pointsLoading ? "…" : prismPoints.toLocaleString("en-IN")}</strong></span></div>
           <button type="button" className="prism-icon-button prism-theme-button" onClick={() => setDarkMode((previous) => !previous)} aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"} title={darkMode ? "Light mode" : "Dark mode"}>{darkMode ? <Sun size={19} /> : <Moon size={19} />}<span>{darkMode ? "Light mode" : "Dark mode"}</span></button>
           <button type="button" className="prism-profile-trigger" onClick={() => setProfileOpen(true)} aria-label="Open profile menu" aria-expanded={profileOpen}><span className="prism-profile-trigger-avatar">{initials || <UserRound size={19} />}</span><ChevronDown size={15} /></button>
         </div>

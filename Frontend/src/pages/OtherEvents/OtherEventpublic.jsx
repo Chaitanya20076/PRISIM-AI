@@ -1,7 +1,21 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, ArrowUpRight, CalendarDays, Clock3, MapPin, Users, IndianRupee, Sparkles, CheckCircle2, ExternalLink, Monitor, GraduationCap, Share2, Ticket, ClipboardList, ShieldCheck, CircleCheck, X } from "lucide-react";
+import { getAuth } from "firebase/auth";
 import "./OtherEventpublic.css";
+
+
+
+// Firebase identity for member-linked registrations. The UID is derived
+// from the verified Firebase ID token on the backend, never from form data.
+async function getMemberAuthHeaders() {
+  const user = getAuth().currentUser;
+  if (!user) {
+    throw new Error("Please sign in to your PRISM AI account before registering. This lets us link your registration to your PRISM Points wallet.");
+  }
+  const idToken = await user.getIdToken();
+  return { Authorization: `Bearer ${idToken}` };
+}
 
 const API_BASE_URL =
   import.meta.env.VITE_API_URL ||
@@ -37,6 +51,17 @@ function QuestionInput({ field, value, onChange }) {
 export default function OtherEventpublic() {
   const navigate = useNavigate();
   const { slug } = useParams();
+  const registrationMode = new URLSearchParams(window.location.search).get("register") === "1";
+  const registrationPhrases = ["next move.", "big idea.", "new chapter.", "bold step.", "bright future.", "next breakthrough."];
+  const [registrationPhraseIndex, setRegistrationPhraseIndex] = useState(0);
+
+  useEffect(() => {
+    if (!registrationMode) return undefined;
+    const phraseTimer = window.setInterval(() => {
+      setRegistrationPhraseIndex((current) => (current + 1) % registrationPhrases.length);
+    }, 2800);
+    return () => window.clearInterval(phraseTimer);
+  }, [registrationMode]);
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState("");
@@ -46,6 +71,23 @@ export default function OtherEventpublic() {
   const [submitting, setSubmitting] = useState(false);
   const [submissionMessage, setSubmissionMessage] = useState("");
   const [shareCopied, setShareCopied] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [successCountdown, setSuccessCountdown] = useState(5);
+
+  useEffect(() => {
+    if (!showSuccess) return undefined;
+    setSuccessCountdown(5);
+    const startedAt = Date.now();
+    const interval = window.setInterval(() => {
+      const remaining = Math.max(0, 5 - Math.floor((Date.now() - startedAt) / 1000));
+      setSuccessCountdown(remaining);
+      if (remaining <= 0) {
+        window.clearInterval(interval);
+        setShowSuccess(false);
+      }
+    }, 200);
+    return () => window.clearInterval(interval);
+  }, [showSuccess]);
 
   useEffect(() => {
     let active = true;
@@ -87,6 +129,7 @@ export default function OtherEventpublic() {
   const capacity = Number(event?.capacity || 0);
   const full = capacity > 0 && registrationCount >= capacity;
   const waitlistEnabled = Boolean(event?.waitlistEnabled);
+  const rewardPoints = Math.max(0, Number(event?.rewardPoints || 0));
   const externalLink = String(event?.registrationLink || "").trim();
   const platformRegistration = !externalLink && event?.onPlatformRegistration !== false;
   const poster = ""; // Keep the public hero artwork consistent; do not stretch uploaded posters here.
@@ -141,7 +184,7 @@ export default function OtherEventpublic() {
 
       const response = await fetch(`${PUBLIC_EVENTS_ENDPOINT}/${encodeURIComponent(event.id)}/registrations`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...(await getMemberAuthHeaders()) },
         body: JSON.stringify(registration),
       });
       const payload = await response.json().catch(() => ({}));
@@ -167,6 +210,7 @@ export default function OtherEventpublic() {
         : event.requireApproval
           ? "Registration submitted! It is pending organizer approval."
           : "You're registered! Your registration has been recorded successfully.");
+      if (!full && !event.requireApproval) setShowSuccess(true);
     } catch (error) {
       setSubmissionMessage(error.message || "We couldn't submit your registration. Please try again.");
     } finally {
@@ -185,6 +229,104 @@ export default function OtherEventpublic() {
 
   if (!event) return <main className="other-event-public-page sp-state"><div className="sp-state-icon"><Sparkles size={28} /></div><p className="sp-eyebrow">PRISM AI / OTHER EVENTS</p><h1>Other Event not found.</h1><p>{loadError || "This event may not be published yet, or the link may be incorrect."}</p><button className="sp-button sp-button-primary" onClick={() => navigate("/events")}><ArrowLeft size={17} /> Explore events</button></main>;
 
+  if (registrationMode) {
+    return (
+      <main className="other-event-public-page sp-registration-page">
+        <div className="sp-glow sp-glow-one" /><div className="sp-glow sp-glow-two" />
+        <header className="sp-registration-topbar">
+          <button className="sp-nav-back" onClick={() => navigate(-1)}><ArrowLeft size={17} /> Back to event</button>
+          <div className="sp-brand"><span className="sp-brand-mark"><Sparkles size={16} /></span> PRISM<span>AI</span></div>
+          <span className="sp-registration-step">EVENT REGISTRATION</span>
+        </header>
+        <section className="sp-registration-shell">
+          <div className="sp-registration-intro">
+            <p className="sp-eyebrow">PRISM AI / OTHER EVENT</p>
+            <h1 className="sp-registration-animated-title">
+              Make your<br />
+              <span key={registrationPhraseIndex} className={`sp-rotating-phrase sp-phrase-motion-${registrationPhraseIndex % 6}`}>
+                {registrationPhrases[registrationPhraseIndex]}
+              </span>
+            </h1>
+            <p>Complete the details below to reserve your place at <strong>{event.title || event.name || "this event"}</strong>.</p>
+            <div className="sp-registration-event-facts">
+              <span><CalendarDays size={16} />{formatDate(startDate)}</span>
+              <span><Clock3 size={16} />{event.startTime || "Time to be announced"}</span>
+              <span>{isOnline ? <Monitor size={16} /> : <MapPin size={16} />}{venue}</span>
+            </div>
+            {rewardPoints > 0 && <div className="sp-registration-reward"><span className="sp-registration-reward-icon"><Sparkles size={22} /></span><span><small>THIS EVENT REWARDS</small><strong>+{rewardPoints.toLocaleString("en-IN")} PRISM Points</strong><em>Complete registration and meet the event eligibility requirements.</em></span></div>}
+            <div className="sp-registration-note"><ShieldCheck size={19} /><span><strong>Your information stays with this event.</strong><small>Fields marked with * are required.</small></span></div>
+          </div>
+          <section className="sp-registration-form-panel">
+            <div className="sp-registration-form-heading">
+              <p className="sp-eyebrow">YOUR DETAILS</p>
+              <h2>Complete your registration</h2>
+              <p>Fill in the details requested by the event organiser.</p>
+            </div>
+            {closed ? (
+              <div className="sp-form-alert sp-alert-closed"><X size={17} /> Registration for this event is closed.</div>
+            ) : externalLink ? (
+              <a className="sp-button sp-button-primary sp-full-button" href={externalLink}>Continue to registration <ExternalLink size={16} /></a>
+            ) : (
+              <form className="sp-registration-form" onSubmit={submitRegistration}>
+                {full && !waitlistEnabled && <div className="sp-form-alert sp-alert-closed">This event has reached capacity.</div>}
+                {full && waitlistEnabled && <div className="sp-form-alert"><Users size={17} /> Full capacity — submit to join the waitlist.</div>}
+                {event.requireApproval && <div className="sp-form-alert"><ShieldCheck size={17} /> Registrations require organizer approval.</div>}
+                {fields.length === 0 && <div className="sp-form-alert">The organiser has not configured registration questions yet.</div>}
+                {fields.map((field) => (
+                  <label className="sp-form-field" key={field.id}>
+                    <span>{field.label}{field.required && <b> *</b>}</span>
+                    {field.helpText && field.type !== "checkbox" && <small>{field.helpText}</small>}
+                    <QuestionInput field={field} value={answers[field.id]} onChange={updateAnswer} />
+                  </label>
+                ))}
+                {event.registrationConsent && <p className="sp-consent-copy"><ShieldCheck size={15} />{event.registrationConsent}</p>}
+                {submissionMessage && <div className={`sp-form-alert ${submissionMessage.startsWith("Already registered") ? "sp-alert-duplicate" : submissionMessage.includes("registered") || submissionMessage.includes("waitlist") || submissionMessage.includes("approval") ? "sp-alert-success" : "sp-alert-closed"}`} role="status"><CircleCheck size={17} />{submissionMessage}</div>}
+                <button className="sp-button sp-button-primary sp-full-button" type="submit" disabled={submitting || fields.length === 0 || (full && !waitlistEnabled)}>
+                  {submitting ? "Submitting…" : full && waitlistEnabled ? "Join the waitlist" : "Submit registration"} <ArrowUpRight size={17} />
+                </button>
+                <small className="sp-privacy-note">Your answers are saved with this event registration.</small>
+              </form>
+            )}
+            {event.contactEmail && <a className="sp-contact-link" href={`mailto:${event.contactEmail}`}>Questions? Contact the organiser <ArrowUpRight size={14} /></a>}
+          </section>
+        </section>
+        {showSuccess && (
+          <div className="sp-success-overlay" role="dialog" aria-modal="true" aria-labelledby="sp-success-title">
+            <div className="sp-success-confetti" aria-hidden="true">
+              {Array.from({ length: 72 }, (_, index) => (
+                <i key={index} style={{
+                  "--left": `${(index * 37) % 100}%`,
+                  "--delay": `${(index % 13) * -0.19}s`,
+                  "--duration": `${3.2 + (index % 7) * 0.32}s`,
+                  "--drift": `${((index * 19) % 180) - 90}px`,
+                  "--rotate": `${(index * 47) % 360}deg`
+                }} />
+              ))}
+            </div>
+            <section className="sp-success-card">
+              <button className="sp-success-close" onClick={() => setShowSuccess(false)} aria-label="Close"><X size={20} /></button>
+              <div className="sp-success-check"><CheckCircle2 size={42} /></div>
+              <p className="sp-eyebrow">PRISM AI / YOU DID IT</p>
+              <h2 id="sp-success-title">Congratulations!</h2>
+              <p className="sp-success-copy">Your registration is confirmed. Get ready for an amazing PRISM AI experience!</p>
+              {rewardPoints > 0 ? (
+                <div className="sp-success-points sp-success-points-earned">
+                  <Sparkles size={22} />
+                  <span><small>EVENT REWARD</small><strong>+{rewardPoints.toLocaleString("en-IN")} PRISM Points</strong><em>Reward for this event registration</em></span>
+                </div>
+              ) : (
+                <div className="sp-success-points"><Sparkles size={18} /> Registration successful</div>
+              )}
+              <small className="sp-success-timer">THIS MESSAGE CLOSES IN {successCountdown} SECONDS</small>
+              <div className="sp-success-progress"><span /></div>
+              <button className="sp-success-action" onClick={() => setShowSuccess(false)}>Awesome!</button>
+            </section>
+          </div>
+        )}
+      </main>
+    );
+  }
+
   return (
     <main className="other-event-public-page">
       <div className="sp-glow sp-glow-one" /><div className="sp-glow sp-glow-two" />
@@ -200,9 +342,10 @@ export default function OtherEventpublic() {
           <h1>{event.title || event.name || "Other Event"}<Sparkles className="sp-title-spark" size={24} /></h1>
           <p className="sp-tagline">{event.tagline || event.caption || "Discover new ideas. Connect with the community. Make an impact."}</p>
           <div className="sp-tags"><span><GraduationCap size={15} /> Community event</span><span><Sparkles size={14} /> Ideas into action</span><span className={closed ? "closed" : "open"}><i />{closed ? "Registrations closed" : "Registration open"}</span></div>
+          {rewardPoints > 0 && <div className="sp-prism-reward-banner"><span className="sp-prism-reward-icon"><Sparkles size={20} /></span><span><small>PRISM POINTS REWARD</small><strong>+{rewardPoints.toLocaleString("en-IN")} PRISM Points</strong><em>Complete your event registration to qualify</em></span><b>✦</b></div>}
           <div className="sp-hero-actions">
-            {externalLink && !closed && <a className="sp-button sp-button-primary" href={externalLink} target="_blank" rel="noreferrer">Register externally <ExternalLink size={17} /></a>}
-            {platformRegistration && !closed && <button className="sp-button sp-button-primary" onClick={() => document.getElementById("sp-registration")?.scrollIntoView({ behavior: "smooth" })}>Register for event <ArrowUpRight size={17} /></button>}
+            {externalLink && !closed && <a className="sp-button sp-button-primary" href={externalLink}>Register externally <ExternalLink size={17} /></a>}
+            {platformRegistration && !closed && <button className="sp-button sp-button-primary" onClick={() => navigate(`${window.location.pathname}?register=1`)}>Register for event <ArrowUpRight size={17} /></button>}
             {closed && <span className="sp-closed-pill"><X size={15} /> Registration closed</span>}
             <button className="sp-button sp-button-secondary" onClick={() => document.getElementById("sp-about")?.scrollIntoView({ behavior: "smooth" })}>Explore event <ArrowUpRight size={17} /></button>
           </div>
@@ -230,25 +373,40 @@ export default function OtherEventpublic() {
           <div className="sp-register-heading"><span><Ticket size={21} /></span><small>YOUR NEXT STEP</small></div>
           <h2>Ready to<br />discover what’s next?</h2>
           <p>Complete the registration form to save your spot and join a community of curious minds.</p>
-          <div className="sp-register-meta"><p><CalendarDays size={16} /><span>Deadline <strong>{formatDate(event.registrationDeadline)}</strong></span></p><p><Users size={16} /><span>{capacity ? `${Math.max(0, capacity - registrationCount)} spots remaining` : "Open to curious minds"}</span></p><p><ClipboardList size={16} /><span>{fields.length} registration questions</span></p></div>
-          {closed ? <div className="sp-form-alert sp-alert-closed"><X size={17} /> Registration for this event is closed.</div> : externalLink ? <a className="sp-button sp-button-primary sp-full-button" href={externalLink} target="_blank" rel="noreferrer">Continue to registration <ExternalLink size={16} /></a> : (
-            <form className="sp-registration-form" onSubmit={submitRegistration}>
-              {full && !waitlistEnabled && <div className="sp-form-alert sp-alert-closed">This event has reached capacity.</div>}
-              {full && waitlistEnabled && <div className="sp-form-alert"><Users size={17} /> Full capacity — submit to join the waitlist.</div>}
-              {event.requireApproval && <div className="sp-form-alert"><ShieldCheck size={17} /> Registrations require organizer approval.</div>}
-              {fields.length === 0 && <div className="sp-form-alert">The organizer has not configured registration questions yet.</div>}
-              {fields.map((field) => <label className="sp-form-field" key={field.id}><span>{field.label}{field.required && <b> *</b>}</span>{field.helpText && field.type !== "checkbox" && <small>{field.helpText}</small>}<QuestionInput field={field} value={answers[field.id]} onChange={updateAnswer} /></label>)}
-              {event.registrationConsent && <p className="sp-consent-copy"><ShieldCheck size={15} />{event.registrationConsent}</p>}
-              {submissionMessage && <div className={`sp-form-alert ${submissionMessage.startsWith("Already registered") ? "sp-alert-duplicate" : submissionMessage.includes("registered") || submissionMessage.includes("waitlist") || submissionMessage.includes("approval") ? "sp-alert-success" : "sp-alert-closed"}`} role="status"><CircleCheck size={17} />{submissionMessage}</div>}
-              <button className="sp-button sp-button-primary sp-full-button" type="submit" disabled={submitting || fields.length === 0 || (full && !waitlistEnabled)}>{submitting ? "Submitting…" : full && waitlistEnabled ? "Join the waitlist" : "Submit registration"}<ArrowUpRight size={17} /></button>
-              <small className="sp-privacy-note">Your answers are saved with this event registration.</small>
-            </form>
+          {rewardPoints > 0 && <div className="sp-register-reward"><Sparkles size={19} /><span><small>YOU CAN EARN</small><strong>+{rewardPoints.toLocaleString("en-IN")} PRISM Points</strong></span></div>}
+          <div className="sp-register-meta">
+            <p><CalendarDays size={16} /><span>Deadline <strong>{formatDate(event.registrationDeadline)}</strong></span></p>
+            <p><Users size={16} /><span>{capacity ? `${Math.max(0, capacity - registrationCount)} spots remaining` : "Open to curious minds"}</span></p>
+            <p><ClipboardList size={16} /><span>{fields.length} registration questions</span></p>
+          </div>
+          {closed ? (
+            <div className="sp-form-alert sp-alert-closed"><X size={17} /> Registration for this event is closed.</div>
+          ) : externalLink ? (
+            <a className="sp-button sp-button-primary sp-full-button" href={externalLink}>Continue to registration <ExternalLink size={16} /></a>
+          ) : (
+            <button className="sp-button sp-button-primary sp-full-button" onClick={() => navigate(`${window.location.pathname}?register=1`)}>
+              Register now <ArrowUpRight size={17} />
+            </button>
           )}
           {event.contactEmail && <a className="sp-contact-link" href={`mailto:${event.contactEmail}`}>Questions? Contact the organizer <ArrowUpRight size={14} /></a>}
         </aside>
       </section>
 
       <footer className="sp-footer"><button className="sp-footer-brand" onClick={() => navigate("/")}><span className="sp-brand-mark"><Sparkles size={14} /></span> PRISM AI</button><p>Explore. Innovate. Impact.</p><button onClick={() => navigate("/events")}>More events <ArrowUpRight size={15} /></button></footer>
+      {showSuccess && <div className="sp-success-overlay" role="dialog" aria-modal="true" aria-labelledby="sp-success-title">
+        <div className="sp-success-confetti" aria-hidden="true">{Array.from({ length: 64 }, (_, index) => <i key={index} style={{ "--left": `${(index * 37) % 100}%`, "--delay": `${(index % 13) * -0.19}s`, "--duration": `${3.2 + (index % 7) * 0.32}s`, "--drift": `${((index * 19) % 180) - 90}px`, "--rotate": `${(index * 47) % 360}deg` }} />)}</div>
+        <section className="sp-success-card">
+          <button className="sp-success-close" onClick={() => setShowSuccess(false)} aria-label="Close"><X size={20} /></button>
+          <div className="sp-success-check"><CheckCircle2 size={42} /></div>
+          <p className="sp-eyebrow">PRISM AI / YOU DID IT</p>
+          <h2 id="sp-success-title">Congratulations!</h2>
+          <p className="sp-success-copy">Your registration is confirmed. Get ready for an amazing PRISM AI experience!</p>
+          <div className="sp-success-points"><Sparkles size={18} /> Registration successful</div>
+          <small className="sp-success-timer">THIS MESSAGE CLOSES IN {successCountdown} SECONDS</small>
+          <div className="sp-success-progress"><span /></div>
+          <button className="sp-success-action" onClick={() => setShowSuccess(false)}>Awesome!</button>
+        </section>
+      </div>}
     </main>
   );
 }

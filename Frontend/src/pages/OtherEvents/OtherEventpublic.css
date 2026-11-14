@@ -274,3 +274,696 @@
 
 /* Other Events uses the requested pure-black accent. */
 .other-event-public-page .sp-button-primary{background:#000000;color:#ffffff;border:1px solid #555555}.other-event-public-page .sp-button-primary:hover{background:#222222;border-color:#000000}.other-event-public-page .sp-tags .open{color:#ffffff;border-color:#555555}.other-event-public-page .sp-live-dot{background:#000000;box-shadow:0 0 0 3px rgba(0,0,0,.18)}
+
+
+/* Registration success popup — Other Events teal + white palette. */
+.other-event-public-page .sp-success-overlay{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:24px;background:rgba(5,13,12,.84);backdrop-filter:blur(9px);overflow:hidden;isolation:isolate}
+.other-event-public-page .sp-success-confetti{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.other-event-public-page .sp-success-confetti i{position:absolute;top:-24px;left:var(--left);width:9px;height:15px;display:block;border:0!important;border-radius:2px;background:#41cdba!important;opacity:0;transform:translate3d(0,-10vh,0) rotate(var(--rotate));animation:sp-other-confetti-fall var(--duration) linear var(--delay) infinite;will-change:transform,opacity}
+.other-event-public-page .sp-success-confetti i:nth-child(4n){background:#ffffff!important}
+.other-event-public-page .sp-success-confetti i:nth-child(4n+1){background:#41cdba!important}
+.other-event-public-page .sp-success-confetti i:nth-child(4n+2){background:#8be8da!important}
+.other-event-public-page .sp-success-confetti i:nth-child(4n+3){background:#d8faf4!important}
+@keyframes sp-other-confetti-fall{0%{opacity:0;transform:translate3d(0,-8vh,0) rotate(0deg)}8%{opacity:1}88%{opacity:1}100%{opacity:0;transform:translate3d(var(--drift),110vh,0) rotate(760deg)}}
+.other-event-public-page .sp-success-card{position:relative;z-index:1;width:min(100%,510px);padding:42px 36px 32px;border:1px solid rgba(65,205,186,.38);border-radius:22px;background:radial-gradient(circle at 50% 0%,rgba(65,205,186,.13),transparent 43%),#142522;box-shadow:0 28px 90px rgba(0,0,0,.42);text-align:center;animation:sp-other-success-enter .55s cubic-bezier(.2,.8,.2,1) both}
+@keyframes sp-other-success-enter{from{opacity:0;transform:translateY(22px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+.other-event-public-page .sp-success-close{position:absolute;top:15px;right:15px;width:39px;height:39px;display:grid;place-items:center;border:1px solid var(--sp-border);border-radius:10px;background:transparent;color:var(--sp-text)}
+.other-event-public-page .sp-success-check{width:86px;height:86px;margin:0 auto 22px;display:grid;place-items:center;border:1px solid rgba(65,205,186,.55);border-radius:50%;background:rgba(65,205,186,.1);color:#ffffff;box-shadow:0 0 0 14px rgba(65,205,186,.045)}
+.other-event-public-page .sp-success-card .sp-eyebrow{justify-content:center;color:#41cdba}
+.other-event-public-page .sp-success-card h2{margin:15px 0 0;font-family:'Space Grotesk',sans-serif;color:#ffffff;font-size:clamp(29px,5vw,38px);letter-spacing:-1.3px}
+.other-event-public-page .sp-success-copy{max-width:390px;margin:13px auto 0;color:var(--sp-muted);font-size:13px;line-height:1.8}
+.other-event-public-page .sp-success-points{width:max-content;max-width:100%;min-height:46px;margin:23px auto 0;padding:0 17px;display:flex;align-items:center;justify-content:center;gap:9px;border:1px solid rgba(65,205,186,.38);border-radius:999px;background:rgba(65,205,186,.1);color:#ffffff;font-size:12px;font-weight:700}
+.other-event-public-page .sp-success-points svg{color:#41cdba}
+.other-event-public-page .sp-success-timer{display:block;margin-top:35px;color:#9dbcb5;font-size:8px;font-weight:700;letter-spacing:1.5px}
+.other-event-public-page .sp-success-progress{height:4px;margin-top:12px;overflow:hidden;border-radius:999px;background:rgba(65,205,186,.16)}
+.other-event-public-page .sp-success-progress span{display:block;width:100%;height:100%;transform-origin:left;background:linear-gradient(90deg,#41cdba,#ffffff);animation:sp-other-success-progress 5s linear forwards}
+@keyframes sp-other-success-progress{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+.other-event-public-page .sp-success-action{width:100%;min-height:50px;margin-top:22px;border:1px solid #41cdba;border-radius:9px;background:#41cdba;color:#0d211d;font-size:14px;font-weight:700;transition:background .2s}
+.other-event-public-page .sp-success-action:hover{background:#6be2d1}
+[data-theme="light"] .other-event-public-page .sp-success-overlay{background:rgba(15,35,31,.68)}
+[data-theme="light"] .other-event-public-page .sp-success-card{background:#ffffff}
+[data-theme="light"] .other-event-public-page .sp-success-card h2{color:#17312c}
+[data-theme="light"] .other-event-public-page .sp-success-check{color:#187f70}
+@media(max-width:520px){.other-event-public-page .sp-success-card{padding:38px 22px 24px}}
+@media(prefers-reduced-motion:reduce){.other-event-public-page .sp-success-confetti i{animation:none!important;display:none}.other-event-public-page .sp-success-card,.other-event-public-page .sp-success-progress span{animation:none!important}}
+
+
+/* =========================================================
+   OTHER EVENTS — MONOCHROME LIGHT / DARK THEME
+   Follows the app-wide [data-theme] setting.
+   ========================================================= */
+.other-event-public-page {
+  --sp-bg: #090909;
+  --sp-surface: #111111;
+  --sp-surface-soft: #191919;
+  --sp-border: rgba(255,255,255,.14);
+  --sp-text: #f7f7f7;
+  --sp-muted: #a7a7a7;
+  --sp-accent: #ffffff;
+  --sp-accent-dark: #171717;
+  min-height: 100vh;
+  background: var(--sp-bg) !important;
+  color: var(--sp-text) !important;
+  font-family: 'DM Sans', sans-serif;
+}
+.other-event-public-page .sp-glow-one,
+.other-event-public-page .sp-glow-two { display: none !important; }
+.other-event-public-page .sp-nav,
+.other-event-public-page .sp-facts,
+.other-event-public-page .sp-content,
+.other-event-public-page .sp-footer { border-color: var(--sp-border) !important; }
+.other-event-public-page .sp-nav-back,
+.other-event-public-page .sp-nav-share,
+.other-event-public-page .sp-footer button { color: var(--sp-muted); }
+.other-event-public-page .sp-brand,
+.other-event-public-page .sp-footer-brand { color: var(--sp-text) !important; }
+.other-event-public-page .sp-brand-mark,
+.other-event-public-page .sp-fact-icon,
+.other-event-public-page .sp-art-icon,
+.other-event-public-page .sp-register-heading > span,
+.other-event-public-page .sp-state-icon {
+  border-color: var(--sp-border) !important;
+  background: var(--sp-surface-soft) !important;
+  color: var(--sp-text) !important;
+}
+.other-event-public-page .sp-eyebrow,
+.other-event-public-page .sp-brand > span:last-child,
+.other-event-public-page .sp-title-spark,
+.other-event-public-page .sp-section-title > span,
+.other-event-public-page .sp-section-title .sp-eyebrow,
+.other-event-public-page .sp-contact-link,
+.other-event-public-page .sp-facts svg,
+.other-event-public-page .sp-register-meta svg,
+.other-event-public-page .sp-outcome svg,
+.other-event-public-page .sp-instructor > span { color: var(--sp-text) !important; }
+.other-event-public-page .sp-live-dot { background: var(--sp-text); box-shadow: none; }
+.other-event-public-page .sp-hero {
+  width: min(1240px, calc(100% - 64px));
+  padding: 66px clamp(24px, 4vw, 54px) 55px;
+  border: 1px solid var(--sp-border);
+  border-radius: 16px;
+  background: linear-gradient(135deg,#111 0%,#171717 58%,#101010 100%) !important;
+}
+.other-event-public-page .sp-art-card,
+.other-event-public-page .sp-art-placeholder {
+  border-color: var(--sp-border) !important;
+  background: linear-gradient(145deg,#1b1b1b,#101010 75%) !important;
+  color: var(--sp-text);
+}
+.other-event-public-page .sp-art-grid { opacity: .24; }
+.other-event-public-page .sp-art-placeholder::before,
+.other-event-public-page .sp-art-placeholder::after { opacity: .2; }
+.other-event-public-page .sp-float-chip {
+  border-color: var(--sp-border);
+  background: #171717;
+  color: var(--sp-text);
+  box-shadow: 0 12px 35px rgba(0,0,0,.25);
+}
+.other-event-public-page .sp-tags > span {
+  border-color: var(--sp-border);
+  background: #171717;
+  color: var(--sp-muted);
+}
+.other-event-public-page .sp-tags .open {
+  border-color: rgba(255,255,255,.3);
+  background: #202020;
+  color: #fff;
+}
+.other-event-public-page .sp-tags .closed,
+.other-event-public-page .sp-closed-pill { color: #ffb4b4; }
+.other-event-public-page .sp-button-primary {
+  border: 1px solid #fff;
+  background: #fff;
+  color: #080808;
+}
+.other-event-public-page .sp-button-primary:hover {
+  border-color: #d8d8d8;
+  background: #dedede;
+  color: #080808;
+}
+.other-event-public-page .sp-button-secondary {
+  border-color: var(--sp-border);
+  background: transparent;
+  color: var(--sp-text);
+}
+.other-event-public-page .sp-button-secondary:hover { border-color: #fff; background: #1c1c1c; }
+.other-event-public-page .sp-facts {
+  background: #101010;
+  border: 1px solid var(--sp-border);
+  border-radius: 14px;
+}
+.other-event-public-page .sp-facts small,
+.other-event-public-page .sp-instructor small,
+.other-event-public-page .sp-register-heading small { color: var(--sp-muted); }
+.other-event-public-page .sp-facts em,
+.other-event-public-page .sp-register-meta p,
+.other-event-public-page .sp-description,
+.other-event-public-page .sp-prerequisites p { color: var(--sp-muted); }
+.other-event-public-page .sp-outcome {
+  border-color: var(--sp-border);
+  background: #131313;
+  color: var(--sp-text);
+}
+.other-event-public-page .sp-outcome svg:last-child { color: var(--sp-muted); }
+.other-event-public-page .sp-register-card {
+  border-color: var(--sp-border);
+  background: #111;
+  box-shadow: 0 18px 55px rgba(0,0,0,.2);
+}
+.other-event-public-page .sp-form-field { color: var(--sp-text); }
+.other-event-public-page .sp-form-field input:not([type=checkbox]):not([type=radio]),
+.other-event-public-page .sp-form-field textarea,
+.other-event-public-page .sp-form-field select {
+  border-color: #414141;
+  background: #090909;
+  color: #fff;
+}
+.other-event-public-page .sp-form-field input:focus,
+.other-event-public-page .sp-form-field textarea:focus,
+.other-event-public-page .sp-form-field select:focus {
+  border-color: #fff;
+  box-shadow: 0 0 0 3px rgba(255,255,255,.1);
+}
+.other-event-public-page .sp-form-field input::placeholder,
+.other-event-public-page .sp-form-field textarea::placeholder,
+.other-event-public-page .sp-privacy-note { color: #929292; }
+.other-event-public-page .sp-choice,
+.other-event-public-page .sp-consent,
+.other-event-public-page .sp-consent-copy { color: var(--sp-muted); }
+.other-event-public-page .sp-choice input,
+.other-event-public-page .sp-consent input { accent-color: #fff; }
+.other-event-public-page .sp-form-alert {
+  border-color: var(--sp-border);
+  background: #1b1b1b;
+  color: #eee;
+}
+.other-event-public-page .sp-alert-success { border-color: #4c7658; background: #142019; color: #b8e8c4; }
+.other-event-public-page .sp-alert-closed,
+.other-event-public-page .sp-alert-duplicate { border-color: #754343; background: #241515; color: #ffb8b8; }
+.other-event-public-page .sp-instructor { border-color: var(--sp-border); }
+.other-event-public-page .sp-footer > p { color: var(--sp-muted); }
+
+/* Dedicated registration view, matching the other public event pages. */
+.other-event-public-page.sp-registration-page { overflow: hidden; }
+.sp-registration-topbar {
+  width: min(1240px,calc(100% - 64px));
+  min-height: 82px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  border-bottom: 1px solid var(--sp-border);
+}
+.sp-registration-topbar .sp-brand { justify-self: center; }
+.sp-registration-step {
+  justify-self: end;
+  color: var(--sp-muted);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.7px;
+}
+.sp-registration-shell {
+  width: min(1120px,calc(100% - 64px));
+  min-height: calc(100vh - 83px);
+  margin: auto;
+  padding: 70px 0 90px;
+  display: grid;
+  grid-template-columns: minmax(0,.9fr) minmax(420px,1.1fr);
+  align-items: start;
+  gap: clamp(40px,7vw,100px);
+}
+.sp-registration-intro { position: sticky; top: 48px; padding-top: 28px; }
+.sp-registration-intro h1 {
+  margin: 24px 0 20px;
+  font-family: 'Space Grotesk',sans-serif;
+  font-size: clamp(48px,6vw,76px);
+  line-height: .98;
+  letter-spacing: -4px;
+}
+.sp-registration-intro h1 span { color: #929292; }
+.sp-registration-intro > p:not(.sp-eyebrow) {
+  max-width: 430px;
+  color: var(--sp-muted);
+  font-size: 14px;
+  line-height: 1.9;
+}
+.sp-registration-intro > p strong { color: var(--sp-text); }
+.sp-registration-event-facts {
+  display: grid;
+  gap: 13px;
+  margin-top: 34px;
+}
+.sp-registration-event-facts span {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  color: var(--sp-muted);
+  font-size: 12px;
+}
+.sp-registration-event-facts svg { color: var(--sp-text); }
+.sp-registration-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 36px;
+  padding: 17px;
+  border: 1px solid var(--sp-border);
+  border-radius: 12px;
+  background: var(--sp-surface);
+}
+.sp-registration-note svg { flex: 0 0 auto; color: var(--sp-text); }
+.sp-registration-note span { display: grid; gap: 5px; }
+.sp-registration-note strong { font-size: 11px; }
+.sp-registration-note small { color: var(--sp-muted); font-size: 10px; }
+.sp-registration-form-panel {
+  padding: clamp(24px,4vw,38px);
+  border: 1px solid var(--sp-border);
+  border-radius: 18px;
+  background: var(--sp-surface);
+  box-shadow: 0 24px 70px rgba(0,0,0,.18);
+}
+.sp-registration-form-heading { margin-bottom: 27px; }
+.sp-registration-form-heading h2 {
+  margin: 12px 0 7px;
+  font-family: 'Space Grotesk',sans-serif;
+  font-size: clamp(26px,3vw,34px);
+  letter-spacing: -1.3px;
+}
+.sp-registration-form-heading > p:last-child { margin: 0; color: var(--sp-muted); font-size: 11px; }
+.sp-registration-form { display: grid; gap: 17px; }
+.sp-registration-form .sp-form-field { gap: 8px; font-size: 12px; }
+.sp-registration-form .sp-form-field input:not([type=checkbox]):not([type=radio]),
+.sp-registration-form .sp-form-field textarea,
+.sp-registration-form .sp-form-field select { min-height: 46px; border-radius: 9px; }
+.sp-registration-form .sp-form-field textarea { min-height: 105px; }
+.sp-registration-form .sp-full-button { min-height: 48px; }
+.sp-registration-form-panel .sp-contact-link { margin-top: 22px; }
+.sp-registration-form-panel .sp-privacy-note { display: block; text-align: center; }
+[data-theme="light"] .other-event-public-page {
+  --sp-bg: #fff;
+  --sp-surface: #fff;
+  --sp-surface-soft: #f4f4f4;
+  --sp-border: #dedede;
+  --sp-text: #111;
+  --sp-muted: #666;
+  --sp-accent: #111;
+  --sp-accent-dark: #f2f2f2;
+  background: #fff !important;
+  color: #111 !important;
+}
+[data-theme="light"] .other-event-public-page .sp-hero {
+  background: linear-gradient(135deg,#fafafa,#f1f1f1 58%,#fff) !important;
+  border-color: #dedede;
+}
+[data-theme="light"] .other-event-public-page .sp-art-card,
+[data-theme="light"] .other-event-public-page .sp-art-placeholder { background: linear-gradient(145deg,#f7f7f7,#eaeaea) !important; color: #111; }
+[data-theme="light"] .other-event-public-page .sp-art-grid { opacity: .3; }
+[data-theme="light"] .other-event-public-page .sp-float-chip,
+[data-theme="light"] .other-event-public-page .sp-tags > span,
+[data-theme="light"] .other-event-public-page .sp-outcome,
+[data-theme="light"] .other-event-public-page .sp-facts,
+[data-theme="light"] .other-event-public-page .sp-register-card,
+[data-theme="light"] .other-event-public-page .sp-registration-form-panel,
+[data-theme="light"] .other-event-public-page .sp-registration-note { background: #fff; color: #111; }
+[data-theme="light"] .other-event-public-page .sp-button-primary { background: #111; color: #fff; border-color: #111; }
+[data-theme="light"] .other-event-public-page .sp-button-primary:hover { background: #333; color: #fff; }
+[data-theme="light"] .other-event-public-page .sp-button-secondary { background: #fff; color: #111; border-color: #ccc; }
+[data-theme="light"] .other-event-public-page .sp-form-field input:not([type=checkbox]):not([type=radio]),
+[data-theme="light"] .other-event-public-page .sp-form-field textarea,
+[data-theme="light"] .other-event-public-page .sp-form-field select { background: #fafafa; color: #111; border-color: #d2d2d2; }
+[data-theme="light"] .other-event-public-page .sp-form-alert { background: #f5f5f5; color: #333; border-color: #ddd; }
+[data-theme="light"] .other-event-public-page .sp-alert-success { background: #eff8f0; color: #246333; border-color: #c6e4cb; }
+[data-theme="light"] .other-event-public-page .sp-alert-closed,
+[data-theme="light"] .other-event-public-page .sp-alert-duplicate { background: #fff1f1; color: #a3212a; border-color: #f0c7c7; }
+[data-theme="light"] .other-event-public-page .sp-registration-intro h1 span { color: #888; }
+
+@media(max-width:850px) {
+  .sp-registration-shell { grid-template-columns: 1fr; gap: 34px; padding-top: 42px; }
+  .sp-registration-intro { position: static; padding-top: 0; }
+  .sp-registration-intro h1 { font-size: clamp(44px,10vw,64px); }
+}
+@media(max-width:720px) {
+  .other-event-public-page .sp-nav,
+  .other-event-public-page .sp-hero,
+  .other-event-public-page .sp-facts,
+  .other-event-public-page .sp-content,
+  .other-event-public-page .sp-footer,
+  .sp-registration-topbar,
+  .sp-registration-shell { width: calc(100% - 36px); }
+  .other-event-public-page .sp-hero { padding: 42px 22px; }
+  .sp-registration-topbar { min-height: 68px; }
+  .sp-registration-topbar .sp-nav-back { font-size: 10px; }
+  .sp-registration-step { font-size: 7px; letter-spacing: 1px; }
+  .sp-registration-shell { padding: 38px 0 60px; }
+  .sp-registration-form-panel { padding: 22px; }
+}
+@media(max-width:390px) {
+  .sp-registration-topbar .sp-nav-back { font-size: 0; }
+  .sp-registration-topbar .sp-nav-back svg { width: 19px; height: 19px; }
+  .sp-registration-step { font-size: 6px; }
+}
+
+
+/* Final monochrome success experience — used on both event and registration views */
+.other-event-public-page .sp-success-overlay {
+  background: rgba(0,0,0,.88) !important;
+  backdrop-filter: blur(13px) saturate(.65) !important;
+}
+.other-event-public-page .sp-success-card {
+  border: 1px solid rgba(255,255,255,.22) !important;
+  border-radius: 22px !important;
+  background: radial-gradient(circle at 50% 0%,rgba(255,255,255,.09),transparent 46%),#111 !important;
+  box-shadow: 0 32px 100px rgba(0,0,0,.65),0 0 0 1px rgba(255,255,255,.035) !important;
+  animation: sp-mono-modal-enter .72s cubic-bezier(.16,1,.3,1) both !important;
+}
+.other-event-public-page .sp-success-check {
+  border: 1px solid rgba(255,255,255,.62) !important;
+  background: rgba(255,255,255,.08) !important;
+  color: #fff !important;
+  box-shadow: 0 0 0 13px rgba(255,255,255,.035),0 0 36px rgba(255,255,255,.08) !important;
+  animation: sp-mono-check-pop .8s cubic-bezier(.16,1,.3,1) .18s both;
+}
+.other-event-public-page .sp-success-card .sp-eyebrow { color: #d6d6d6 !important; }
+.other-event-public-page .sp-success-card h2 {
+  color: #fff !important;
+  animation: sp-mono-title-in .65s ease .2s both;
+}
+.other-event-public-page .sp-success-copy { color: #b8b8b8 !important; }
+.other-event-public-page .sp-success-points {
+  border-color: rgba(255,255,255,.2) !important;
+  background: rgba(255,255,255,.07) !important;
+  color: #fff !important;
+  animation: sp-mono-title-in .6s ease .32s both;
+}
+.other-event-public-page .sp-success-points svg { color: #fff !important; }
+.other-event-public-page .sp-success-timer { color: #a5a5a5 !important; }
+.other-event-public-page .sp-success-progress { background: #303030 !important; }
+.other-event-public-page .sp-success-progress span {
+  background: linear-gradient(90deg,#fff,#a8a8a8) !important;
+}
+.other-event-public-page .sp-success-action {
+  border: 1px solid #fff !important;
+  background: #fff !important;
+  color: #080808 !important;
+  transition: transform .2s ease,background .2s ease !important;
+}
+.other-event-public-page .sp-success-action:hover {
+  background: #dedede !important;
+  transform: translateY(-2px);
+}
+.other-event-public-page .sp-success-close {
+  border-color: rgba(255,255,255,.2) !important;
+  color: #fff !important;
+}
+.other-event-public-page .sp-success-confetti i {
+  background: #fff !important;
+  box-shadow: 0 0 8px rgba(255,255,255,.16);
+}
+.other-event-public-page .sp-success-confetti i:nth-child(3n) { background: #bdbdbd !important; }
+.other-event-public-page .sp-success-confetti i:nth-child(3n+1) { background: #fff !important; }
+.other-event-public-page .sp-success-confetti i:nth-child(3n+2) { background: #777 !important; }
+@keyframes sp-mono-modal-enter {
+  0% { opacity:0; transform:translateY(34px) scale(.91); filter:blur(8px); }
+  65% { opacity:1; filter:blur(0); }
+  100% { opacity:1; transform:translateY(0) scale(1); filter:blur(0); }
+}
+@keyframes sp-mono-check-pop {
+  0% { opacity:0; transform:scale(.45) rotate(-18deg); }
+  70% { opacity:1; transform:scale(1.12) rotate(4deg); }
+  100% { opacity:1; transform:scale(1) rotate(0); }
+}
+@keyframes sp-mono-title-in {
+  from { opacity:0; transform:translateY(12px); }
+  to { opacity:1; transform:translateY(0); }
+}
+[data-theme="light"] .other-event-public-page .sp-success-overlay {
+  background: rgba(255,255,255,.82) !important;
+}
+[data-theme="light"] .other-event-public-page .sp-success-card {
+  border-color: rgba(0,0,0,.18) !important;
+  background: radial-gradient(circle at 50% 0%,rgba(0,0,0,.055),transparent 46%),#fff !important;
+  box-shadow: 0 32px 90px rgba(0,0,0,.18) !important;
+}
+[data-theme="light"] .other-event-public-page .sp-success-check {
+  border-color: rgba(0,0,0,.55) !important;
+  background: rgba(0,0,0,.055) !important;
+  color: #111 !important;
+  box-shadow: 0 0 0 13px rgba(0,0,0,.035) !important;
+}
+[data-theme="light"] .other-event-public-page .sp-success-card .sp-eyebrow,
+[data-theme="light"] .other-event-public-page .sp-success-card h2,
+[data-theme="light"] .other-event-public-page .sp-success-points,
+[data-theme="light"] .other-event-public-page .sp-success-points svg,
+[data-theme="light"] .other-event-public-page .sp-success-close { color: #111 !important; }
+[data-theme="light"] .other-event-public-page .sp-success-copy,
+[data-theme="light"] .other-event-public-page .sp-success-timer { color: #666 !important; }
+[data-theme="light"] .other-event-public-page .sp-success-points {
+  border-color: #ddd !important;
+  background: #f5f5f5 !important;
+}
+[data-theme="light"] .other-event-public-page .sp-success-action {
+  border-color: #111 !important;
+  background: #111 !important;
+  color: #fff !important;
+}
+[data-theme="light"] .other-event-public-page .sp-success-confetti i {
+  background: #111 !important;
+  box-shadow: none;
+}
+[data-theme="light"] .other-event-public-page .sp-success-confetti i:nth-child(3n) { background: #777 !important; }
+@media(prefers-reduced-motion:reduce) {
+  .other-event-public-page .sp-success-card,
+  .other-event-public-page .sp-success-check,
+  .other-event-public-page .sp-success-card h2,
+  .other-event-public-page .sp-success-points { animation:none !important; }
+}
+
+
+/* Rotating registration headline: six distinct entrance motions */
+.sp-registration-animated-title { overflow: visible; }
+.sp-registration-animated-title .sp-rotating-phrase {
+  display: inline-block;
+  transform-origin: left center;
+  will-change: transform, opacity, filter;
+}
+.sp-registration-animated-title .sp-phrase-motion-0 { animation: sp-phrase-slide-up .78s cubic-bezier(.16,1,.3,1) both; }
+.sp-registration-animated-title .sp-phrase-motion-1 { animation: sp-phrase-blur-focus .82s cubic-bezier(.16,1,.3,1) both; }
+.sp-registration-animated-title .sp-phrase-motion-2 { animation: sp-phrase-flip-in .82s cubic-bezier(.2,.8,.2,1) both; }
+.sp-registration-animated-title .sp-phrase-motion-3 { animation: sp-phrase-slide-right .78s cubic-bezier(.16,1,.3,1) both; }
+.sp-registration-animated-title .sp-phrase-motion-4 { animation: sp-phrase-scale-in .78s cubic-bezier(.16,1,.3,1) both; }
+.sp-registration-animated-title .sp-phrase-motion-5 { animation: sp-phrase-mask-rise .82s cubic-bezier(.16,1,.3,1) both; }
+@keyframes sp-phrase-slide-up {
+  from { opacity:0; transform:translateY(42px); clip-path:inset(0 0 100% 0); }
+  to { opacity:1; transform:translateY(0); clip-path:inset(0 0 0 0); }
+}
+@keyframes sp-phrase-blur-focus {
+  0% { opacity:0; filter:blur(18px); transform:translateX(-22px); }
+  100% { opacity:1; filter:blur(0); transform:translateX(0); }
+}
+@keyframes sp-phrase-flip-in {
+  0% { opacity:0; transform:perspective(700px) rotateX(-70deg) translateY(22px); }
+  100% { opacity:1; transform:perspective(700px) rotateX(0) translateY(0); }
+}
+@keyframes sp-phrase-slide-right {
+  0% { opacity:0; transform:translateX(-70px); }
+  70% { opacity:1; transform:translateX(8px); }
+  100% { opacity:1; transform:translateX(0); }
+}
+@keyframes sp-phrase-scale-in {
+  0% { opacity:0; transform:scale(.72); letter-spacing:-.09em; }
+  100% { opacity:1; transform:scale(1); letter-spacing:inherit; }
+}
+@keyframes sp-phrase-mask-rise {
+  0% { opacity:0; transform:translateY(65%); clip-path:inset(0 0 100% 0); }
+  100% { opacity:1; transform:translateY(0); clip-path:inset(0 0 0 0); }
+}
+@media(prefers-reduced-motion:reduce) {
+  .sp-registration-animated-title .sp-rotating-phrase { animation:none !important; }
+}
+
+
+/* Light-mode registration page contrast fix.
+   Theme attribute may be attached to html, body, or the app root. */
+html[data-theme="light"] .other-event-public-page,
+body[data-theme="light"] .other-event-public-page,
+[data-theme="light"] .other-event-public-page,
+.light .other-event-public-page,
+.other-event-public-page[data-theme="light"],
+.other-event-public-page.theme-light {
+  --sp-bg: #ffffff !important;
+  --sp-surface: #ffffff !important;
+  --sp-surface-soft: #f4f4f4 !important;
+  --sp-border: #dedede !important;
+  --sp-text: #111111 !important;
+  --sp-muted: #626262 !important;
+  background: #ffffff !important;
+  color: #111111 !important;
+}
+html[data-theme="light"] .other-event-public-page .sp-registration-intro h1,
+body[data-theme="light"] .other-event-public-page .sp-registration-intro h1,
+[data-theme="light"] .other-event-public-page .sp-registration-intro h1,
+.light .other-event-public-page .sp-registration-intro h1,
+.other-event-public-page[data-theme="light"] .sp-registration-intro h1,
+.other-event-public-page.theme-light .sp-registration-intro h1 {
+  color: #111111 !important;
+}
+html[data-theme="light"] .other-event-public-page .sp-registration-intro h1 span,
+body[data-theme="light"] .other-event-public-page .sp-registration-intro h1 span,
+[data-theme="light"] .other-event-public-page .sp-registration-intro h1 span,
+.light .other-event-public-page .sp-registration-intro h1 span,
+.other-event-public-page[data-theme="light"] .sp-registration-intro h1 span,
+.other-event-public-page.theme-light .sp-registration-intro h1 span {
+  color: #777777 !important;
+}
+html[data-theme="light"] .other-event-public-page .sp-registration-form-panel,
+body[data-theme="light"] .other-event-public-page .sp-registration-form-panel,
+[data-theme="light"] .other-event-public-page .sp-registration-form-panel,
+.light .other-event-public-page .sp-registration-form-panel {
+  background: #ffffff !important;
+  border-color: #dedede !important;
+  color: #111111 !important;
+}
+html[data-theme="light"] .other-event-public-page .sp-registration-form-heading h2,
+body[data-theme="light"] .other-event-public-page .sp-registration-form-heading h2,
+[data-theme="light"] .other-event-public-page .sp-registration-form-heading h2,
+.light .other-event-public-page .sp-registration-form-heading h2 {
+  color: #111111 !important;
+}
+html[data-theme="light"] .other-event-public-page .sp-registration-event-facts span,
+body[data-theme="light"] .other-event-public-page .sp-registration-event-facts span,
+[data-theme="light"] .other-event-public-page .sp-registration-event-facts span,
+.light .other-event-public-page .sp-registration-event-facts span,
+html[data-theme="light"] .other-event-public-page .sp-registration-note,
+body[data-theme="light"] .other-event-public-page .sp-registration-note,
+[data-theme="light"] .other-event-public-page .sp-registration-note,
+.light .other-event-public-page .sp-registration-note {
+  color: #444444 !important;
+}
+html[data-theme="light"] .other-event-public-page .sp-registration-note strong,
+body[data-theme="light"] .other-event-public-page .sp-registration-note strong,
+[data-theme="light"] .other-event-public-page .sp-registration-note strong,
+.light .other-event-public-page .sp-registration-note strong {
+  color: #111111 !important;
+}
+html[data-theme="light"] .other-event-public-page .sp-registration-note small,
+body[data-theme="light"] .other-event-public-page .sp-registration-note small,
+[data-theme="light"] .other-event-public-page .sp-registration-note small {
+  color: #666666 !important;
+}
+
+
+/* PRISM Points — event reward showcase */
+.other-event-public-page .sp-prism-reward-banner,
+.other-event-public-page .sp-register-reward,
+.other-event-public-page .sp-registration-reward {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid var(--sp-border);
+  background: linear-gradient(110deg,var(--sp-surface-soft),var(--sp-surface));
+  color: var(--sp-text);
+}
+.other-event-public-page .sp-prism-reward-banner {
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 23px;
+  padding: 13px 17px;
+  border-radius: 13px;
+}
+.sp-prism-reward-icon,
+.sp-registration-reward-icon {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--sp-border);
+  border-radius: 12px;
+  background: var(--sp-surface);
+  color: var(--sp-text);
+}
+.sp-prism-reward-banner > span:nth-child(2),
+.sp-register-reward > span,
+.sp-registration-reward > span:last-child {
+  display: grid;
+  gap: 3px;
+}
+.sp-prism-reward-banner small,
+.sp-register-reward small,
+.sp-registration-reward small,
+.sp-success-points-earned small {
+  color: var(--sp-muted);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 1.7px;
+}
+.sp-prism-reward-banner strong,
+.sp-register-reward strong,
+.sp-registration-reward strong {
+  color: var(--sp-text);
+  font-family: 'Space Grotesk',sans-serif;
+  font-size: 16px;
+  letter-spacing: -.3px;
+}
+.sp-prism-reward-banner em,
+.sp-registration-reward em {
+  color: var(--sp-muted);
+  font-size: 9px;
+  font-style: normal;
+}
+.sp-prism-reward-banner > b {
+  margin-left: 8px;
+  color: var(--sp-muted);
+  font-size: 17px;
+}
+.other-event-public-page .sp-register-reward {
+  margin: 20px 0 17px;
+  padding: 13px;
+  border-radius: 12px;
+}
+.other-event-public-page .sp-register-reward > svg { color: var(--sp-text); flex: 0 0 auto; }
+.other-event-public-page .sp-registration-reward {
+  margin-top: 25px;
+  padding: 15px;
+  border-radius: 13px;
+}
+.other-event-public-page .sp-success-points-earned {
+  min-width: min(100%,330px);
+  justify-content: center;
+  gap: 14px;
+  padding: 16px 20px !important;
+  text-align: left;
+}
+.other-event-public-page .sp-success-points-earned > span {
+  display: grid;
+  gap: 4px;
+}
+.other-event-public-page .sp-success-points-earned strong {
+  color: inherit;
+  font-family: 'Space Grotesk',sans-serif;
+  font-size: 22px;
+  letter-spacing: -.6px;
+}
+.other-event-public-page .sp-success-points-earned em {
+  color: var(--sp-muted);
+  font-size: 9px;
+  font-style: normal;
+}
+[data-theme="light"] .other-event-public-page .sp-prism-reward-banner,
+[data-theme="light"] .other-event-public-page .sp-register-reward,
+[data-theme="light"] .other-event-public-page .sp-registration-reward {
+  background: linear-gradient(110deg,#f7f7f7,#fff);
+  border-color: #dedede;
+  color: #111;
+}
+[data-theme="light"] .other-event-public-page .sp-prism-reward-icon,
+[data-theme="light"] .other-event-public-page .sp-registration-reward-icon {
+  background: #fff;
+  border-color: #ddd;
+  color: #111;
+}
+[data-theme="light"] .other-event-public-page .sp-prism-reward-banner strong,
+[data-theme="light"] .other-event-public-page .sp-register-reward strong,
+[data-theme="light"] .other-event-public-page .sp-registration-reward strong {
+  color: #111;
+}

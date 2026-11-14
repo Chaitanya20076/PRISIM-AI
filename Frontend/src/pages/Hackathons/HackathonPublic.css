@@ -56,3 +56,764 @@
 .hp-dark .hp-closing,.hp-dark .hp-footer{background:linear-gradient(120deg,#241a28,#302137 60%,#241a28);color:#e4d4e1}
 .hp-dark .hp-closing .hp-kicker,.hp-dark .hp-closing p,.hp-dark .hp-footer{color:#c2b1c0}.hp-dark .hp-footer>a{color:#fff7fb}
 .hp-dark .hp-button.light{background:#f3a6ca;color:#342333;border-color:#f3a6ca}.hp-dark .hp-status.closed{color:#e3a0b6}.hp-dark .hp-status.closed i{background:#e3a0b6}.hp-dark .hp-orbits i{border-color:#f3a6ca}
+
+
+/* Hackathon registration form — uses the existing pink/white palette. */
+.hp-registration-form{display:grid;gap:13px;margin-top:17px;padding-top:16px;border-top:1px solid var(--line)}
+.hp-form-heading{display:grid;gap:5px;margin-bottom:2px}
+.hp-form-heading>b{font-size:16px;letter-spacing:-.03em;color:var(--ink)}
+.hp-form-heading>small,.hp-form-footnote{font-size:9px;color:var(--muted);line-height:1.6}
+.hp-registration-form>label{display:grid;gap:7px}
+.hp-registration-form>label>span{font-size:10px;font-weight:750;color:var(--ink)}
+.hp-registration-form>label>small{font-size:9px;color:var(--muted);line-height:1.5}
+.hp-registration-form input,.hp-registration-form select,.hp-registration-form textarea{width:100%;min-width:0;padding:11px 12px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink);font-size:11px;outline:none;transition:border-color .2s,box-shadow .2s}
+.hp-registration-form input:focus,.hp-registration-form select:focus,.hp-registration-form textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 17%,transparent)}
+.hp-registration-form textarea{resize:vertical;min-height:68px}
+.hp-form-submit{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;min-height:45px;padding:11px 14px;border:1px solid #f4b7d2;border-radius:8px;background:#f4b7d2;color:#432b3b;font-size:11px;font-weight:850}
+.hp-form-submit:hover{background:#f8cce0}
+.hp-form-submit:disabled{opacity:.65;cursor:wait}
+.hp-form-message{margin:0;padding:10px;border-radius:7px;font-size:10px;line-height:1.6}
+.hp-form-message.error{background:#fff0f0;color:#a33f4d;border:1px solid #f0caca}
+.hp-form-success{display:grid;justify-items:start;gap:9px;margin-top:16px;padding:17px;border:1px solid #b8dfcb;border-radius:9px;background:#effaf3;color:#276b48}
+.hp-form-success>b{font-size:14px}.hp-form-success>p{margin:0;color:#47785d;font-size:10px;line-height:1.7}
+.hp-form-success>button{padding:9px 11px;border:1px solid #b8dfcb;border-radius:7px;background:#fff;color:#276b48;font-size:10px;font-weight:750}
+.hp-dark .hp-registration-form input,.hp-dark .hp-registration-form select,.hp-dark .hp-registration-form textarea{background:#241c28}
+.hp-dark .hp-form-submit{background:#f3a6ca;border-color:#f3a6ca;color:#342333}
+.hp-dark .hp-form-success{background:#20372b;border-color:#416b52;color:#bce8c9}
+.hp-dark .hp-form-success>p{color:#b4d8bf}
+.hp-dark .hp-form-success>button{background:#293d30;border-color:#416b52;color:#d2f0dc}
+@media(max-width:760px){.hp-registration-form{gap:12px}.hp-registration-form input,.hp-registration-form select,.hp-registration-form textarea{font-size:16px}}
+
+
+/* Registration success celebration — retains the existing Hackathon palette */
+.hp-success-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  overflow: hidden;
+  background: rgba(16, 12, 20, .72);
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+  animation: hp-success-overlay-in .28s ease both;
+}
+.hp-success-card {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 440px);
+  padding: 42px 34px 36px;
+  text-align: center;
+  color: #241a25;
+  background: #fff;
+  border: 1px solid rgba(255,255,255,.7);
+  border-radius: 22px;
+  box-shadow: 0 24px 90px rgba(0,0,0,.28);
+  animation: hp-success-card-in .55s cubic-bezier(.2,.85,.25,1.15) both;
+}
+.hp-success-icon {
+  display: grid;
+  place-items: center;
+  width: 68px;
+  height: 68px;
+  margin: 0 auto 20px;
+  color: #fff;
+  background: #d94f91;
+  border-radius: 50%;
+  box-shadow: 0 9px 26px rgba(217,79,145,.28);
+}
+.hp-success-card > small {
+  display: block;
+  margin-bottom: 12px;
+  color: #bd4b82;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .16em;
+}
+.hp-success-card h2 {
+  margin: 0 0 12px;
+  font-size: clamp(28px, 6vw, 38px);
+  line-height: 1.08;
+  letter-spacing: -.045em;
+}
+.hp-success-card p {
+  max-width: 320px;
+  margin: 0 auto 25px;
+  color: #756b76;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.hp-success-card button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 0 24px;
+  color: #fff;
+  background: #d94f91;
+  border: 0;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: transform .2s ease, background .2s ease;
+}
+.hp-success-card button:hover { transform: translateY(-2px); background: #bd3e7b; }
+.hp-confetti {
+  position: absolute;
+  inset: -12% 0 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.hp-confetti i {
+  position: absolute;
+  top: -12%;
+  left: var(--x);
+  width: 8px;
+  height: 13px;
+  opacity: 0;
+  background: hsl(calc(var(--i) * 31), 72%, 66%);
+  border-radius: 2px;
+  transform: rotate(var(--spin));
+  animation: hp-confetti-fall var(--duration) var(--delay) ease-in infinite;
+}
+.hp-confetti i:nth-child(3n) { width: 6px; height: 6px; border-radius: 50%; }
+.hp-confetti i:nth-child(4n) { width: 5px; height: 17px; }
+.hp-confetti i:nth-child(5n) { background: #fff; }
+@keyframes hp-confetti-fall {
+  0% { opacity: 0; transform: translate3d(0,-8vh,0) rotate(0deg); }
+  8% { opacity: 1; }
+  100% { opacity: .9; transform: translate3d(var(--drift),112vh,0) rotate(760deg); }
+}
+@keyframes hp-success-overlay-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes hp-success-card-in {
+  from { opacity: 0; transform: translateY(22px) scale(.94); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hp-success-overlay, .hp-success-card, .hp-confetti i { animation: none !important; }
+}
+
+
+/* Separate registration tab — patterned after the Webinar registration flow */
+.hp-registration-page { min-height: 100vh; }
+.hp-registration-shell { width: min(1180px, calc(100% - 48px)); margin: 0 auto; padding: 34px 0 80px; }
+.hp-registration-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(360px, 480px); gap: clamp(36px, 7vw, 100px); align-items: start; padding-top: 52px; }
+.hp-registration-intro { position: sticky; top: 40px; padding-top: 28px; }
+.hp-registration-intro h1 { margin: 22px 0; font-size: clamp(48px, 7vw, 88px); line-height: .98; letter-spacing: -.065em; }
+.hp-registration-intro h1 em { color: #e68ab6; font-style: normal; }
+.hp-registration-intro > p { max-width: 490px; color: var(--hp-muted, #b9aeba); font-size: 16px; line-height: 1.8; }
+.hp-registration-summary { display: grid; gap: 0; max-width: 470px; margin-top: 42px; border-top: 1px solid var(--hp-border, rgba(255,255,255,.14)); }
+.hp-registration-summary > div { display: grid; gap: 8px; padding: 18px 0; border-bottom: 1px solid var(--hp-border, rgba(255,255,255,.14)); }
+.hp-registration-summary small { font-size: 10px; font-weight: 800; letter-spacing: .16em; color: #e68ab6; }
+.hp-registration-summary b { font-size: 14px; }
+.hp-registration-card { padding: clamp(24px, 4vw, 38px); border: 1px solid var(--hp-border, rgba(255,255,255,.14)); border-radius: 18px; background: var(--hp-card, rgba(255,255,255,.045)); }
+.hp-registration-card .hp-form-heading { display: grid; gap: 8px; margin-bottom: 25px; }
+.hp-registration-card .hp-form-heading b { font-size: 24px; letter-spacing: -.035em; }
+.hp-registration-card .hp-form-heading small { color: var(--hp-muted, #b9aeba); font-size: 12px; }
+.hp-registration-card .hp-registration-form { display: grid; gap: 18px; }
+.hp-registration-card .hp-registration-form label { display: grid; gap: 8px; }
+.hp-registration-card .hp-registration-form label > span { font-size: 12px; font-weight: 750; }
+.hp-registration-card .hp-registration-form input,
+.hp-registration-card .hp-registration-form textarea,
+.hp-registration-card .hp-registration-form select { width: 100%; min-height: 48px; padding: 12px 14px; color: inherit; background: rgba(255,255,255,.035); border: 1px solid var(--hp-border, rgba(255,255,255,.16)); border-radius: 9px; font: inherit; outline: none; }
+.hp-registration-card .hp-registration-form textarea { min-height: 90px; resize: vertical; }
+.hp-registration-card .hp-registration-form input:focus,
+.hp-registration-card .hp-registration-form textarea:focus,
+.hp-registration-card .hp-registration-form select:focus { border-color: #e68ab6; box-shadow: 0 0 0 3px rgba(230,138,182,.12); }
+.hp-registration-card .hp-form-submit { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; min-height: 50px; border: 0; border-radius: 9px; color: #21151e; background: #e68ab6; font: inherit; font-weight: 800; cursor: pointer; }
+.hp-registration-card .hp-form-submit:disabled { opacity: .65; cursor: wait; }
+.hp-registration-card .hp-form-footnote { color: var(--hp-muted, #b9aeba); font-size: 11px; text-align: center; }
+.hp-register button { display: inline-flex; align-items: center; gap: 9px; border: 0; padding: 0; color: inherit; background: transparent; font: inherit; font-weight: 800; cursor: pointer; }
+@media (max-width: 820px) {
+  .hp-registration-layout { grid-template-columns: 1fr; gap: 30px; padding-top: 24px; }
+  .hp-registration-intro { position: static; }
+  .hp-registration-intro h1 { font-size: clamp(46px, 13vw, 72px); }
+  .hp-registration-shell { width: min(100% - 32px, 600px); }
+}
+
+
+/* =========================================================
+   HACKATHON REGISTRATION — POLISHED, HIGH-CONTRAST FORM
+   Explicit values + strong selectors prevent global form resets
+   from stripping input borders/backgrounds.
+   ========================================================= */
+.hp-registration-page {
+  --hp-reg-bg: #fff8fc;
+  --hp-reg-card: #ffffff;
+  --hp-reg-ink: #302431;
+  --hp-reg-muted: #827180;
+  --hp-reg-line: #eadce6;
+  --hp-reg-accent: #e77eac;
+  min-height: 100vh !important;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 8% 12%, rgba(245, 190, 216, .30), transparent 34%),
+    radial-gradient(ellipse at 92% 88%, rgba(224, 204, 245, .28), transparent 35%),
+    var(--hp-reg-bg) !important;
+  color: var(--hp-reg-ink) !important;
+}
+.hp-registration-page.hp-dark {
+  --hp-reg-bg: #17131a;
+  --hp-reg-card: #241d28;
+  --hp-reg-ink: #fff7fb;
+  --hp-reg-muted: #c1afbe;
+  --hp-reg-line: #493747;
+  --hp-reg-accent: #f3a6ca;
+  background:
+    radial-gradient(ellipse at 8% 12%, rgba(125, 61, 94, .22), transparent 34%),
+    radial-gradient(ellipse at 92% 88%, rgba(83, 59, 108, .22), transparent 35%),
+    var(--hp-reg-bg) !important;
+}
+.hp-registration-shell {
+  width: min(1160px, calc(100% - 64px)) !important;
+  margin: 0 auto !important;
+  padding: 30px 0 76px !important;
+}
+.hp-registration-page .hp-back {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 9px !important;
+  min-height: 40px;
+  padding: 0 14px !important;
+  border: 1px solid var(--hp-reg-line) !important;
+  border-radius: 999px !important;
+  background: var(--hp-reg-card) !important;
+  color: var(--hp-reg-muted) !important;
+  font-size: 10px !important;
+  letter-spacing: .12em !important;
+  cursor: pointer;
+  transition: .2s ease;
+}
+.hp-registration-page .hp-back:hover {
+  border-color: var(--hp-reg-accent) !important;
+  color: var(--hp-reg-ink) !important;
+  transform: translateX(-2px);
+}
+.hp-registration-layout {
+  grid-template-columns: minmax(0, 1fr) minmax(390px, 490px) !important;
+  gap: clamp(44px, 7vw, 104px) !important;
+  align-items: start !important;
+  padding-top: clamp(42px, 7vh, 76px) !important;
+}
+.hp-registration-intro {
+  position: sticky !important;
+  top: 42px !important;
+  padding: 20px 0 0 !important;
+}
+.hp-registration-intro .hp-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #bd668f !important;
+  font-size: 10px !important;
+  font-weight: 850 !important;
+  letter-spacing: .18em !important;
+}
+.hp-registration-intro .hp-kicker:before {
+  content: "";
+  width: 25px;
+  height: 2px;
+  background: var(--hp-reg-accent);
+}
+.hp-registration-intro h1 {
+  max-width: 650px;
+  margin: 28px 0 22px !important;
+  color: var(--hp-reg-ink) !important;
+  font-size: clamp(54px, 6.4vw, 82px) !important;
+  line-height: .98 !important;
+  letter-spacing: -.075em !important;
+  font-weight: 850 !important;
+}
+.hp-registration-intro h1 em {
+  color: var(--hp-reg-accent) !important;
+  font-style: normal !important;
+}
+.hp-registration-intro > p {
+  max-width: 470px !important;
+  margin: 0 !important;
+  color: var(--hp-reg-muted) !important;
+  font-size: 15px !important;
+  line-height: 1.85 !important;
+}
+.hp-registration-intro > p strong {
+  color: var(--hp-reg-ink);
+  font-weight: 800;
+}
+.hp-registration-summary {
+  max-width: 470px !important;
+  margin-top: 42px !important;
+  border-top: 1px solid var(--hp-reg-line) !important;
+}
+.hp-registration-summary > div {
+  grid-template-columns: 145px minmax(0, 1fr) !important;
+  align-items: center;
+  gap: 14px !important;
+  padding: 17px 0 !important;
+  border-bottom: 1px solid var(--hp-reg-line) !important;
+}
+.hp-registration-summary small {
+  color: #bd668f !important;
+  font-size: 9px !important;
+  letter-spacing: .16em !important;
+}
+.hp-registration-summary b {
+  color: var(--hp-reg-ink) !important;
+  font-size: 12px !important;
+  line-height: 1.5;
+}
+.hp-registration-card {
+  position: relative;
+  padding: 34px !important;
+  border: 1px solid var(--hp-reg-line) !important;
+  border-radius: 18px !important;
+  background: var(--hp-reg-card) !important;
+  box-shadow: 0 22px 70px rgba(81, 43, 67, .09) !important;
+}
+.hp-dark .hp-registration-card {
+  box-shadow: 0 24px 70px rgba(0,0,0,.24) !important;
+}
+.hp-registration-card .hp-form-heading {
+  display: grid !important;
+  gap: 9px !important;
+  margin: 0 0 25px !important;
+  padding: 0 0 22px;
+  border-bottom: 1px solid var(--hp-reg-line);
+}
+.hp-registration-card .hp-form-heading:before {
+  content: "STEP 01  /  YOUR DETAILS";
+  color: #bd668f;
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: .17em;
+}
+.hp-registration-card .hp-form-heading b {
+  color: var(--hp-reg-ink) !important;
+  font-size: 25px !important;
+  line-height: 1.2;
+  letter-spacing: -.045em !important;
+}
+.hp-registration-card .hp-form-heading small {
+  color: var(--hp-reg-muted) !important;
+  font-size: 11px !important;
+}
+.hp-registration-card form.hp-registration-form {
+  display: grid !important;
+  gap: 19px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+}
+.hp-registration-card form.hp-registration-form > label {
+  display: grid !important;
+  gap: 8px !important;
+  min-width: 0;
+}
+.hp-registration-card form.hp-registration-form > label > span {
+  color: var(--hp-reg-ink) !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+}
+.hp-registration-card form.hp-registration-form > label > small {
+  color: var(--hp-reg-muted) !important;
+  font-size: 10px !important;
+}
+.hp-registration-card form.hp-registration-form input:not([type="checkbox"]),
+.hp-registration-card form.hp-registration-form select,
+.hp-registration-card form.hp-registration-form textarea {
+  display: block !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: 49px !important;
+  padding: 13px 15px !important;
+  border: 1px solid var(--hp-reg-line) !important;
+  border-radius: 9px !important;
+  outline: none !important;
+  background: #fffafd !important;
+  color: #302431 !important;
+  box-shadow: inset 0 1px 2px rgba(48,36,49,.025) !important;
+  font-family: inherit !important;
+  font-size: 13px !important;
+  line-height: 1.45 !important;
+  transition: border-color .18s ease, box-shadow .18s ease, background .18s ease !important;
+}
+.hp-registration-card form.hp-registration-form textarea {
+  min-height: 104px !important;
+  resize: vertical !important;
+}
+.hp-registration-card form.hp-registration-form input::placeholder,
+.hp-registration-card form.hp-registration-form textarea::placeholder {
+  color: #a99ba8 !important;
+  opacity: 1 !important;
+}
+.hp-registration-card form.hp-registration-form input:focus,
+.hp-registration-card form.hp-registration-form select:focus,
+.hp-registration-card form.hp-registration-form textarea:focus {
+  border-color: #df8eb3 !important;
+  background: #fff !important;
+  box-shadow: 0 0 0 4px rgba(231,126,172,.13) !important;
+}
+.hp-dark .hp-registration-card form.hp-registration-form input:not([type="checkbox"]),
+.hp-dark .hp-registration-card form.hp-registration-form select,
+.hp-dark .hp-registration-card form.hp-registration-form textarea {
+  background: #1c1720 !important;
+  color: #fff7fb !important;
+  border-color: #514052 !important;
+}
+.hp-dark .hp-registration-card form.hp-registration-form input::placeholder,
+.hp-dark .hp-registration-card form.hp-registration-form textarea::placeholder {
+  color: #a998a9 !important;
+}
+.hp-registration-card .hp-form-submit {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 11px !important;
+  width: 100% !important;
+  min-height: 52px !important;
+  margin-top: 4px !important;
+  padding: 13px 18px !important;
+  border: 1px solid #e88fb8 !important;
+  border-radius: 9px !important;
+  background: #e88fb8 !important;
+  color: #352333 !important;
+  font-size: 12px !important;
+  font-weight: 850 !important;
+  letter-spacing: .02em;
+  cursor: pointer !important;
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease !important;
+}
+.hp-registration-card .hp-form-submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: #f0a6c7 !important;
+  box-shadow: 0 9px 22px rgba(220,112,161,.2);
+}
+.hp-registration-card .hp-form-submit:disabled {
+  opacity: .65 !important;
+  cursor: wait !important;
+}
+.hp-registration-card .hp-form-footnote {
+  display: block;
+  margin-top: -7px;
+  color: var(--hp-reg-muted) !important;
+  font-size: 10px !important;
+  text-align: center;
+}
+.hp-registration-card .hp-form-message {
+  padding: 12px 14px !important;
+  border-radius: 9px !important;
+  font-size: 12px !important;
+}
+.hp-registration-card .hp-notice {
+  padding: 16px !important;
+  border: 1px solid var(--hp-reg-line);
+  border-radius: 10px !important;
+  background: #fff3f8 !important;
+  color: #76566a !important;
+  font-size: 12px !important;
+}
+.hp-dark .hp-registration-card .hp-notice {
+  background: #342433 !important;
+  color: #e6cadb !important;
+}
+.hp-registration-card .hp-registration-form .hp-form-check {
+  display: flex !important;
+  align-items: flex-start;
+  gap: 10px !important;
+}
+.hp-registration-card .hp-registration-form .hp-form-check input {
+  width: 17px !important;
+  min-width: 17px !important;
+  height: 17px !important;
+  min-height: 17px !important;
+  margin-top: 2px;
+}
+@media (max-width: 900px) {
+  .hp-registration-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(340px, 440px) !important;
+    gap: 32px !important;
+  }
+  .hp-registration-card { padding: 27px !important; }
+  .hp-registration-intro h1 { font-size: clamp(48px, 7vw, 65px) !important; }
+}
+@media (max-width: 760px) {
+  .hp-registration-shell { width: calc(100% - 34px) !important; padding-top: 18px !important; }
+  .hp-registration-layout { display: flex !important; flex-direction: column !important; gap: 28px !important; padding-top: 25px !important; }
+  .hp-registration-intro { position: static !important; padding-top: 10px !important; }
+  .hp-registration-intro h1 { margin: 20px 0 14px !important; font-size: clamp(46px, 12vw, 64px) !important; }
+  .hp-registration-intro > p { font-size: 13px !important; }
+  .hp-registration-summary { margin-top: 24px !important; }
+  .hp-registration-summary > div { grid-template-columns: 115px minmax(0,1fr) !important; padding: 13px 0 !important; }
+  .hp-registration-card { width: 100%; padding: 23px 19px !important; border-radius: 14px !important; }
+  .hp-registration-card .hp-form-heading b { font-size: 22px !important; }
+  .hp-registration-card form.hp-registration-form input:not([type="checkbox"]),
+  .hp-registration-card form.hp-registration-form select,
+  .hp-registration-card form.hp-registration-form textarea { font-size: 16px !important; }
+}
+
+
+/* Hackathon detail: visible registration CTA in the existing pink / plum palette. */
+.hp-page .hp-detail-intro .hp-register > button.hp-register-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 49px;
+  padding: 13px 22px;
+  border: 1px solid #f4b7d2;
+  border-radius: 9px;
+  background: #f4b7d2;
+  color: #432b3b;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: 0;
+  box-shadow: 0 8px 24px rgba(238,145,186,.16);
+  transition: background .2s ease, border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+}
+.hp-page .hp-detail-intro .hp-register > button.hp-register-cta:hover {
+  background: #f8cce0;
+  border-color: #f8cce0;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(238,145,186,.24);
+}
+.hp-page .hp-detail-intro .hp-register > button.hp-register-cta:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+.hp-dark .hp-detail-intro .hp-register > button.hp-register-cta {
+  background: #f3a6ca;
+  border-color: #f3a6ca;
+  color: #342333;
+}
+.hp-dark .hp-detail-intro .hp-register > button.hp-register-cta:hover {
+  background: #f8c6dd;
+  border-color: #f8c6dd;
+}
+@media (max-width: 480px) {
+  .hp-page .hp-detail-intro .hp-register > button.hp-register-cta {
+    width: 100%;
+  }
+}
+
+
+/* =========================================================
+   HACKATHON REGISTRATION — CINEMATIC SPLIT ENTRANCE
+   Different from the Seminar type-on effect:
+   left editorial panel sweeps in, form settles from the right,
+   then fields enter in a calm stagger.
+   ========================================================= */
+.hp-registration-page .hp-registration-intro {
+  animation: hp-reg-intro-arrive 850ms cubic-bezier(.2,.75,.25,1) both;
+  will-change: opacity, transform;
+}
+
+.hp-registration-page .hp-registration-intro .hp-kicker {
+  animation: hp-reg-kicker-arrive 650ms cubic-bezier(.2,.75,.25,1) 100ms both;
+}
+
+.hp-registration-page .hp-registration-intro h1 {
+  animation: hp-reg-title-arrive 950ms cubic-bezier(.16,1,.3,1) 180ms both;
+  transform-origin: left center;
+  will-change: opacity, transform;
+}
+
+.hp-registration-page .hp-registration-intro > p {
+  animation: hp-reg-copy-arrive 720ms ease-out 380ms both;
+}
+
+.hp-registration-page .hp-registration-summary {
+  animation: hp-reg-summary-arrive 750ms ease-out 520ms both;
+}
+
+.hp-registration-page .hp-registration-summary > div {
+  animation: hp-reg-row-arrive 650ms cubic-bezier(.2,.75,.25,1) both;
+}
+.hp-registration-page .hp-registration-summary > div:nth-child(1) { animation-delay: 580ms; }
+.hp-registration-page .hp-registration-summary > div:nth-child(2) { animation-delay: 690ms; }
+.hp-registration-page .hp-registration-summary > div:nth-child(3) { animation-delay: 800ms; }
+
+.hp-registration-page .hp-registration-card {
+  animation: hp-reg-card-arrive 900ms cubic-bezier(.16,1,.3,1) 160ms both;
+  transform-origin: center right;
+  will-change: opacity, transform;
+  overflow: hidden;
+}
+
+.hp-registration-page .hp-registration-card:after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: -35%;
+  bottom: -35%;
+  left: -65%;
+  width: 38%;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.13), transparent);
+  transform: skewX(-18deg);
+  animation: hp-reg-card-sheen 1.25s ease-out 850ms both;
+}
+
+.hp-registration-page .hp-registration-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hp-registration-page .hp-registration-card .hp-form-heading {
+  animation: hp-reg-form-heading 650ms ease-out 430ms both;
+}
+
+.hp-registration-page .hp-registration-card form.hp-registration-form > label {
+  animation: hp-reg-field-arrive 620ms cubic-bezier(.2,.75,.25,1) both;
+}
+.hp-registration-page .hp-registration-card form.hp-registration-form > label:nth-child(1) { animation-delay: 500ms; }
+.hp-registration-page .hp-registration-card form.hp-registration-form > label:nth-child(2) { animation-delay: 570ms; }
+.hp-registration-page .hp-registration-card form.hp-registration-form > label:nth-child(3) { animation-delay: 640ms; }
+.hp-registration-page .hp-registration-card form.hp-registration-form > label:nth-child(4) { animation-delay: 710ms; }
+.hp-registration-page .hp-registration-card form.hp-registration-form > label:nth-child(5) { animation-delay: 780ms; }
+.hp-registration-page .hp-registration-card form.hp-registration-form > label:nth-child(6) { animation-delay: 850ms; }
+.hp-registration-page .hp-registration-card form.hp-registration-form > label:nth-child(7) { animation-delay: 920ms; }
+.hp-registration-page .hp-registration-card form.hp-registration-form > label:nth-child(n+8) { animation-delay: 990ms; }
+
+.hp-registration-page .hp-registration-card .hp-form-submit {
+  animation: hp-reg-submit-arrive 650ms ease-out 980ms both;
+}
+
+@keyframes hp-reg-intro-arrive {
+  from { opacity: 0; transform: translate3d(-28px, 0, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes hp-reg-kicker-arrive {
+  from { opacity: 0; transform: translate3d(-14px, 0, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes hp-reg-title-arrive {
+  0% { opacity: 0; transform: translate3d(-24px, 12px, 0) scale(.975); filter: blur(5px); }
+  65% { opacity: 1; filter: blur(0); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); filter: blur(0); }
+}
+@keyframes hp-reg-copy-arrive {
+  from { opacity: 0; transform: translate3d(0, 13px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes hp-reg-summary-arrive {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes hp-reg-row-arrive {
+  from { opacity: 0; transform: translate3d(12px, 0, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes hp-reg-card-arrive {
+  0% { opacity: 0; transform: translate3d(34px, 14px, 0) scale(.985); }
+  70% { opacity: 1; }
+  100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+@keyframes hp-reg-card-sheen {
+  0% { left: -65%; opacity: 0; }
+  15% { opacity: 1; }
+  100% { left: 135%; opacity: 0; }
+}
+@keyframes hp-reg-form-heading {
+  from { opacity: 0; transform: translate3d(0, 10px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes hp-reg-field-arrive {
+  from { opacity: 0; transform: translate3d(0, 11px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes hp-reg-submit-arrive {
+  from { opacity: 0; transform: translate3d(0, 8px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@media (max-width: 760px) {
+  .hp-registration-page .hp-registration-intro { animation-duration: 650ms; }
+  .hp-registration-page .hp-registration-card { animation-duration: 700ms; }
+  .hp-registration-page .hp-registration-card:after { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hp-registration-page .hp-registration-intro,
+  .hp-registration-page .hp-registration-intro .hp-kicker,
+  .hp-registration-page .hp-registration-intro h1,
+  .hp-registration-page .hp-registration-intro > p,
+  .hp-registration-page .hp-registration-summary,
+  .hp-registration-page .hp-registration-summary > div,
+  .hp-registration-page .hp-registration-card,
+  .hp-registration-page .hp-registration-card .hp-form-heading,
+  .hp-registration-page .hp-registration-card form.hp-registration-form > label,
+  .hp-registration-page .hp-registration-card .hp-form-submit {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    will-change: auto !important;
+  }
+  .hp-registration-page .hp-registration-card:after { display: none !important; }
+}
+
+
+
+
+/* Rotating registration headline — 3D editorial flip reveal.
+   Deliberately different from the Seminar wipe and the previous rise/fade effect. */
+.hp-registration-page .hp-registration-intro h1.hp-registration-loop-heading {
+  display: block;
+  min-height: 2.12em;
+  overflow: visible;
+  perspective: 900px;
+  perspective-origin: left center;
+}
+.hp-registration-page .hp-registration-phrase {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transform-style: preserve-3d;
+}
+.hp-registration-page .hp-registration-phrase > span,
+.hp-registration-page .hp-registration-phrase > em {
+  display: block;
+  backface-visibility: hidden;
+  transform-origin: left bottom;
+  animation: hp-registration-flip-in 1450ms cubic-bezier(.2,.72,.25,1) both;
+}
+.hp-registration-page .hp-registration-phrase > em {
+  color: #e77eac;
+  font-style: normal;
+  animation-delay: 260ms;
+}
+.hp-dark.hp-registration-page .hp-registration-phrase > em {
+  color: #f3a6ca;
+}
+@keyframes hp-registration-flip-in {
+  0% {
+    opacity: 0;
+    transform: rotateX(-78deg);
+  }
+  70% {
+    opacity: 1;
+    transform: rotateX(8deg);
+  }
+  100% {
+    opacity: 1;
+    transform: rotateX(0deg);
+  }
+}
+@media (max-width: 760px) {
+  .hp-registration-page .hp-registration-intro h1.hp-registration-loop-heading {
+    min-height: 2.2em;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hp-registration-page .hp-registration-phrase > span,
+  .hp-registration-page .hp-registration-phrase > em {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
