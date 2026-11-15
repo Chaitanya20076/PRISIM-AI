@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import {
   BrowserRouter,
@@ -6,6 +5,8 @@ import {
   Route,
   Routes,
   Link,
+  useLocation,
+  useParams,
 } from "react-router-dom";
 
 // Existing pages
@@ -38,6 +39,16 @@ import Support from "./pages/Support/Support";
 import Onboarding from "./pages/Onboarding/Onboarding";
 import Help from "./pages/Help/Help";
 import PublicEvents from "./pages/PublicEvents/PublicEvents.jsx";
+
+// New public Seminar registration page
+import SeminarRegistration from "./pages/Public Registration/Seminar/Seminar.jsx";
+import WebinarRegistration from "./pages/Public Registration/Webinar/Webinar.jsx";
+import WorkshopRegistration from "./pages/Public Registration/Workshop/Workshop.jsx";
+import BootcampRegistration from "./pages/Public Registration/Bootcamp/Bootcamp.jsx";
+import CompetitionRegistration from "./pages/Public Registration/Competition/Competition.jsx";
+
+import OtherEventRegistration from "./pages/Public Registration/OtherEvent/OtherEvent.jsx";
+
 /* --------------------------------------------------
    COMING SOON PAGE
 -------------------------------------------------- */
@@ -150,6 +161,30 @@ function HomePage() {
 }
 
 /* --------------------------------------------------
+   WORKSHOP PUBLIC ROUTE
+   Keep the public detail page, but send legacy Register Now
+   links (?register=1) to the standalone pre-login form.
+-------------------------------------------------- */
+
+function WorkshopPublicRoute() {
+  const location = useLocation();
+  const { slug } = useParams();
+  const params = new URLSearchParams(location.search);
+  const isRegistering = params.get("register") === "1";
+
+  if (isRegistering) {
+    return (
+      <Navigate
+        to={`/public/workshop/forms?eventId=${encodeURIComponent(slug || "")}`}
+        replace
+      />
+    );
+  }
+
+  return <Workshopspublic />;
+}
+
+/* --------------------------------------------------
    MAIN APPLICATION
 -------------------------------------------------- */
 
@@ -157,7 +192,6 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-
         {/* Homepage */}
         <Route path="/" element={<HomePage />} />
 
@@ -206,14 +240,16 @@ function App() {
 
         <Route
           path="/events/workshops/:slug"
-          element={<Workshopspublic />}
+          element={<WorkshopPublicRoute />}
         />
 
+        {/* Existing seminar detail page */}
         <Route
           path="/events/seminars/:slug"
           element={<SeminarPublic />}
         />
 
+        {/* Existing event detail pages */}
         <Route
           path="/events/webinars/:slug"
           element={<Webinarpublic />}
@@ -232,6 +268,49 @@ function App() {
         <Route
           path="/events/other/:slug"
           element={<OtherEventpublic />}
+        />
+
+        {/* Public Events listing */}
+        <Route
+          path="/public/events"
+          element={<PublicEvents />}
+        />
+
+        {/* Public registration forms — category-specific routes */}
+        <Route
+          path="/public/seminar/forms"
+          element={<SeminarRegistration />}
+        />
+
+        <Route
+          path="/public/webinar/forms"
+          element={<WebinarRegistration />}
+        />
+
+        <Route
+          path="/public/workshop/forms"
+          element={<WorkshopRegistration />}
+        />
+
+        <Route
+          path="/public/bootcamp/forms"
+          element={<BootcampRegistration />}
+        />
+
+        <Route
+          path="/public/competition/forms"
+          element={<CompetitionRegistration />}
+        />
+
+        <Route
+          path="/public/other-event/forms"
+          element={<OtherEventRegistration />}
+        />
+
+        {/* Generic event registration fallback — reuse the Other Event form. */}
+        <Route
+          path="/public/events/forms"
+          element={<Navigate to="/public/other-event/forms" replace />}
         />
 
         {/* Recruitment */}
@@ -292,8 +371,6 @@ function App() {
           path="*"
           element={<Navigate to="/" replace />}
         />
-        <Route path="/public/events" element={<PublicEvents />} />
-
       </Routes>
     </BrowserRouter>
   );

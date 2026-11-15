@@ -1,3 +1,4 @@
+
 const express = require("express");
 const crypto = require("crypto");
 const { FieldValue } = require("firebase-admin/firestore");
@@ -37,11 +38,7 @@ const getEventTypes = (event = {}) =>
     .map((value) => {
       const normalized = normalizeText(value);
 
-      return [
-        "others",
-        "other event",
-        "other events",
-      ].includes(normalized)
+      return ["others", "other event", "other events"].includes(normalized)
         ? "other"
         : normalized;
     });
@@ -51,9 +48,7 @@ const matchesEventType = (event, requestedType) => {
     return true;
   }
 
-  return getEventTypes(event).includes(
-    normalizeText(requestedType)
-  );
+  return getEventTypes(event).includes(normalizeText(requestedType));
 };
 
 function publicEventData(doc) {
@@ -277,11 +272,18 @@ router.get("/slug/:slug", async (req, res) => {
 // ==================================================
 // 3. REGISTER FOR AN EVENT
 // POST /api/events/:eventId/registrations
+//
+// SIGN-IN IS OPTIONAL
+// Guests are labelled Pre-Signin.
+// Signed-in members retain their Firebase UID.
 // ==================================================
 
 router.post("/:eventId/registrations", async (req, res) => {
   try {
-    // Verify Firebase identity.
+    // ----------------------------------------------
+    // OPTIONAL FIREBASE AUTHENTICATION
+    // ----------------------------------------------
+
     const authorization = String(
       req.headers.authorization || ""
     );
@@ -290,25 +292,26 @@ router.post("/:eventId/registrations", async (req, res) => {
       /^Bearer\s+(.+)$/i
     );
 
-    if (!tokenMatch) {
-      return res.status(401).json({
-        success: false,
-        message: "Please sign in before registering.",
-      });
+    let member = null;
+    let memberUid = null;
+
+    if (tokenMatch) {
+      try {
+        member = await auth.verifyIdToken(tokenMatch[1]);
+        memberUid = member.uid;
+      } catch (error) {
+        return res.status(401).json({
+          success: false,
+          message: "Your session has expired. Please sign in again.",
+        });
+      }
     }
 
-    let member;
+    const isPreSignin = !memberUid;
 
-    try {
-      member = await auth.verifyIdToken(tokenMatch[1]);
-    } catch {
-      return res.status(401).json({
-        success: false,
-        message: "Your session has expired. Please sign in again.",
-      });
-    }
-
-    const memberUid = member.uid;
+    // ----------------------------------------------
+    // EVENT ID
+    // ----------------------------------------------
 
     const eventId = String(
       req.params.eventId || ""
@@ -336,7 +339,10 @@ router.post("/:eventId/registrations", async (req, res) => {
         ? payload.answers
         : {};
 
-    // Extract identity fields from registration answers.
+    // ----------------------------------------------
+    // EXTRACT PARTICIPANT DETAILS
+    // ----------------------------------------------
+
     const emailAnswer =
       answers.email ||
       answers["email-address"] ||
@@ -376,7 +382,10 @@ router.post("/:eventId/registrations", async (req, res) => {
       ""
     ).trim();
 
-    // Basic validation.
+    // ----------------------------------------------
+    // BASIC VALIDATION
+    // ----------------------------------------------
+
     if (!participantName) {
       return res.status(400).json({
         success: false,
@@ -401,7 +410,10 @@ router.post("/:eventId/registrations", async (req, res) => {
       });
     }
 
-    // Firestore transaction.
+    // ----------------------------------------------
+    // FIRESTORE TRANSACTION
+    // ----------------------------------------------
+
     const result = await db.runTransaction(
       async (transaction) => {
         const eventSnapshot = await transaction.get(
@@ -463,7 +475,10 @@ router.post("/:eventId/registrations", async (req, res) => {
           );
         }
 
-        // Read existing registrations.
+        // ------------------------------------------
+        // EXISTING REGISTRATIONS
+        // ------------------------------------------
+
         const registrationsRef =
           eventRef.collection("registrations");
 
@@ -480,7 +495,10 @@ router.post("/:eventId/registrations", async (req, res) => {
             normalizeText(registration.status) !== "rejected"
         ).length;
 
-        // Capacity and waitlist.
+        // ------------------------------------------
+        // CAPACITY AND WAITLIST
+        // ------------------------------------------
+
         const capacity = Number(
           event.capacity ||
           event.participantCapacity ||
@@ -498,7 +516,10 @@ router.post("/:eventId/registrations", async (req, res) => {
           );
         }
 
-        // Duplicate email check.
+        // ------------------------------------------
+        // DUPLICATE EMAIL CHECK
+        // ------------------------------------------
+
         const duplicateEmail = existing.some(
           (registration) =>
             normalizeEmail(
@@ -514,7 +535,10 @@ router.post("/:eventId/registrations", async (req, res) => {
           );
         }
 
-        // Duplicate phone check.
+        // ------------------------------------------
+        // DUPLICATE PHONE CHECK
+        // ------------------------------------------
+
         if (phone) {
           const duplicatePhone = existing.some(
             (registration) =>
@@ -533,7 +557,10 @@ router.post("/:eventId/registrations", async (req, res) => {
           }
         }
 
-        // Dynamic registration field validation.
+        // ------------------------------------------
+        // DYNAMIC REGISTRATION FIELD VALIDATION
+        // ------------------------------------------
+
         const configuredFields = Array.isArray(
           event.registrationFields
         )
@@ -599,7 +626,10 @@ router.post("/:eventId/registrations", async (req, res) => {
           }
         }
 
-        // Create registration document.
+        // ------------------------------------------
+        // CREATE REGISTRATION DOCUMENT
+        // ------------------------------------------
+
         const registrationStatus =
           getRegistrationStatus(event, isFull);
 
@@ -612,12 +642,23 @@ router.post("/:eventId/registrations", async (req, res) => {
           phone,
           mobile: phone,
 
-          // UID comes only from the verified Firebase token.
-          uid: memberUid,
-          memberUid,
-          memberEmail: normalizeEmail(member.email || ""),
+          // Only verified members receive UID fields.
+          ...(memberUid
+            ? {
+                uid: memberUid,
+                memberUid,
+                memberEmail: normalizeEmail(member.email || ""),
+              }
+            : {}),
 
           answers,
+
+          // Registration classification.
+          source: isPreSignin ? "Pre-Signin" : "Signed-In",
+          registrationLabel: isPreSignin ? "Pre-Signin" : "Signed-In",
+          registrationType: isPreSignin ? "Pre-Signin" : "Signed-In",
+          userType: isPreSignin ? "Pre-Signin" : "Member",
+          isPreSignin,
 
           status: registrationStatus,
 
@@ -645,16 +686,22 @@ router.post("/:eventId/registrations", async (req, res) => {
       "REGISTRATION SAVED:",
       result.id,
       "EVENT:",
-      eventId
+      eventId,
+      "TYPE:",
+      isPreSignin ? "Pre-Signin" : "Signed-In"
     );
 
-    // Award points only to approved/registered members.
+    // ----------------------------------------------
+    // AWARD PRISM POINTS TO SIGNED-IN MEMBERS ONLY
+    // ----------------------------------------------
+
     let pointsAward = {
       awarded: false,
       points: 0,
     };
 
     if (
+      memberUid &&
       ["approved", "registered"].includes(
         normalizeText(result.status)
       )
@@ -671,8 +718,8 @@ router.post("/:eventId/registrations", async (req, res) => {
           eventTitle: eventData.title || eventData.name,
         });
       } catch (pointsError) {
-        // Registration is already saved. Do not lose the registration
-        // if the wallet credit encounters an error.
+        // Registration is already saved.
+        // Do not lose registration if points credit fails.
         console.error(
           "INITIAL PRISM POINTS CREDIT FAILED:",
           pointsError
@@ -686,6 +733,7 @@ router.post("/:eventId/registrations", async (req, res) => {
       registration: result,
       pointsAward,
     });
+
   } catch (error) {
     console.error(
       "EVENT REGISTRATION ERROR:",

@@ -106,8 +106,32 @@ function getEventName(event) {
   return event.name || event.title || "Untitled event";
 }
 
+// Supports common ID shapes returned by Firestore-backed event APIs.
+function getEventId(event) {
+  const value =
+    event?.id ??
+    event?.eventId ??
+    event?._id ??
+    event?.documentId ??
+    event?.docId ??
+    event?.firestoreId ??
+    event?.event_id ??
+    "";
+
+  return value == null ? "" : String(value).trim();
+}
+
 function getEventCategory(event) {
   return event.customCategory || event.category || event.type || "PRISM AI Event";
+}
+
+function isHackathonEvent(event) {
+  const typeText = [
+    event?.eventType, event?.type, event?.category, event?.customCategory,
+    event?.slug, event?.name, event?.title,
+  ].filter(Boolean).join(" ").toLowerCase().replace(/[^a-z0-9]+/g, " ");
+
+  return /\bhack ?athons?\b/.test(typeText);
 }
 
 function getEventDescription(event) {
@@ -219,6 +243,7 @@ export default function Events() {
   const [searchQuery, setSearchQuery] = useState("");
   const [heroIndex, setHeroIndex] = useState(0);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [showHackathonSignIn, setShowHackathonSignIn] = useState(false);
   const [lastUpdated, setLastUpdated] = useState(null);
 
   const fetchEvents = useCallback(async ({ silent = false } = {}) => {
@@ -375,10 +400,13 @@ export default function Events() {
 
   /* Close the modal with Escape and lock page scroll while it is open */
   useEffect(() => {
-    if (!selectedEvent) return undefined;
+    if (!selectedEvent && !showHackathonSignIn) return undefined;
 
     const onKeyDown = (event) => {
-      if (event.key === "Escape") setSelectedEvent(null);
+      if (event.key === "Escape") {
+        setSelectedEvent(null);
+        setShowHackathonSignIn(false);
+      }
     };
 
     const previousOverflow = document.body.style.overflow;
@@ -389,7 +417,7 @@ export default function Events() {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [selectedEvent]);
+  }, [selectedEvent, showHackathonSignIn]);
 
   const heroEvent = heroEvents[heroIndex] || null;
   const heroStatus = heroEvent?._displayStatus || "upcoming";
@@ -401,13 +429,53 @@ export default function Events() {
     : null;
   const selectedImage = selectedEvent ? getEventImage(selectedEvent) : "";
 
-  const openLogin = (event) => {
-    navigate("/login", {
+  // Send visitors directly to the registration form for the event type.
+  // Keep the event ID in the URL so it survives refreshes and copied links.
+  const getRegistrationPath = (event) => {
+    const typeText = [
+      event.eventType,
+      event.type,
+      event.category,
+      event.customCategory,
+      event.slug,
+      event.name,
+      event.title,
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, " ");
+
+    if (/\bseminar\b/.test(typeText)) return "/public/seminar/forms";
+    if (/\bwebinar\b/.test(typeText)) return "/public/webinar/forms";
+    if (/\bworkshop\b/.test(typeText)) return "/public/workshop/forms";
+    if (/\bboot ?camp\b/.test(typeText)) return "/public/bootcamp/forms";
+    if (/\bcompetition\b/.test(typeText)) return "/public/competition/forms";
+    if (/\bhack ?athon(s)?\b/.test(typeText)) return "/public/hackathon/forms";
+    if (/\bother event(s)?\b/.test(typeText)) return "/public/other-event/forms";
+
+    return "/public/events/forms";
+  };
+
+  const openRegistration = (event) => {
+    // Hackathon registrations are gated behind compulsory sign-in.
+    // All other event categories keep their existing registration routes.
+    if (isHackathonEvent(event)) {
+      setShowHackathonSignIn(true);
+      return;
+    }
+
+    const eventId = getEventId(event);
+    const registrationPath = getRegistrationPath(event);
+    const destination = eventId
+      ? `${registrationPath}?eventId=${encodeURIComponent(eventId)}`
+      : registrationPath;
+
+    navigate(destination, {
       state: {
-        from: "/public/events",
-        intent: "event-registration",
-        eventId: event.id,
+        eventId,
         eventName: getEventName(event),
+        eventType: event.eventType || event.type || event.category || "",
       },
     });
   };
@@ -431,7 +499,7 @@ export default function Events() {
           <div className="events-wrap">
             <div
               className="events-hero__content"
-              key={heroEvent?.id || "events-intro"}
+              key={getEventId(heroEvent || {}) || "events-intro"}
             >
               <div className="events-hero__copy">
                 <div className="events-eyebrow">
@@ -485,7 +553,7 @@ export default function Events() {
 
                 <div className="events-hero__actions">
                   {heroEvent && heroStatus !== "past" ? (
-                    <Button arrow="ne" onClick={() => openLogin(heroEvent)}>
+                    <Button arrow="ne" onClick={() => openRegistration(heroEvent)}>
                       Register now
                     </Button>
                   ) : (
@@ -707,7 +775,7 @@ export default function Events() {
                       className={`event-card${
                         isPast ? " event-card--past" : ""
                       }`}
-                      key={event.id || event.slug || `${name}-${index}`}
+                      key={getEventId(event) || event.slug || `${name}-${index}`}
                       style={{ "--event-card-index": index }}
                     >
                       <button
@@ -777,7 +845,7 @@ export default function Events() {
                             <Button
                               size="sm"
                               arrow="ne"
-                              onClick={() => openLogin(event)}
+                              onClick={() => openRegistration(event)}
                             >
                               Register
                             </Button>
@@ -998,11 +1066,82 @@ export default function Events() {
                   <Button
                     arrow="ne"
                     className="event-modal__register"
-                    onClick={() => openLogin(selectedEvent)}
+                    onClick={() => openRegistration(selectedEvent)}
                   >
                     Register now
                   </Button>
                 )}
+              </div>
+            </section>
+          </div>
+        )}
+
+        {/* ============== HACKATHON COMPULSORY SIGN-IN NOTICE ============== */}
+        {showHackathonSignIn && (
+          <div
+            className="event-modal-backdrop hackathon-signin-backdrop"
+            role="presentation"
+            onMouseDown={(event) => {
+              if (event.target === event.currentTarget) {
+                setShowHackathonSignIn(false);
+              }
+            }}
+          >
+            <section
+              className="hackathon-signin-modal"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="hackathon-signin-title"
+            >
+              <button
+                className="event-modal__close hackathon-signin__close"
+                type="button"
+                onClick={() => setShowHackathonSignIn(false)}
+                aria-label="Close sign-in notice"
+              >
+                <X size={18} />
+              </button>
+
+              <div className="hackathon-signin__icon">
+                <CheckCircle2 size={30} />
+              </div>
+
+              <span className="events-eyebrow">
+                <span className="events-eyebrow__line" aria-hidden="true" />
+                PRISM AI · HACKATHON
+              </span>
+
+              <h2 id="hackathon-signin-title">
+                Sign-in is <em>required.</em>
+              </h2>
+
+              <p>
+                Hackathon registration requires compulsory sign-in. Please
+                sign in to your PRISM AI account before continuing.
+              </p>
+
+              <div className="hackathon-signin__actions">
+                <Button
+                  arrow="ne"
+                  onClick={() => {
+                    setShowHackathonSignIn(false);
+                    navigate("/login", {
+                      state: {
+                        from: "/public/events",
+                        intent: "hackathon-registration",
+                      },
+                    });
+                  }}
+                >
+                  Sign in to continue
+                </Button>
+
+                <Button
+                  variant="ghost"
+                  onClick={() => setShowHackathonSignIn(false)}
+                >
+                  Maybe later
+                </Button>
               </div>
             </section>
           </div>
