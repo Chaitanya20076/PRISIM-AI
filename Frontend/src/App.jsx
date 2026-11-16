@@ -16,6 +16,7 @@ import Navbar from "./components/Navbar/Navbar.jsx";
 import Home from "./pages/Home/Home.jsx";
 import Admin from "./pages/Admin/Admin.jsx";
 import Projects from "./pages/Projects/Projects.jsx";
+import PublicProjects from "./pages/PublicProjects/Projects.jsx";
 import NewsAndUpdates from "./pages/News/NewsAndUpdates.jsx";
 import AIToolOfWeek from "./pages/AIToolOfWeek/AIToolOfWeek.jsx";
 import Login from "./pages/login/login.jsx";
@@ -215,6 +216,13 @@ function App() {
 
         {/* Other dashboard sections */}
         <Route path="/projects" element={<Projects />} />
+
+        <Route path="/public/Projects" element={<PublicProjects />} />
+
+        <Route
+          path="/public/AItooloftheweek"
+          element={<AIToolOfWeek />}
+        />
 
         <Route
           path="/ai-tool-of-the-week"

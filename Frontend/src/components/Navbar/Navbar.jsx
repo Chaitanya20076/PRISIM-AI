@@ -25,6 +25,8 @@ const moreLinks = [
   { label: "News & Updates", to: "/news-and-updates" },
   { label: "Support", to: "/support" },
   { label: "Team", href: "http://localhost:5173/team", external: true },
+  { label: "Projects", to: "/public/Projects" },
+  { label: "AI Tool of the Week", to: "/public/AItooloftheweek" },
 ];
 
 function readInitialTheme() {

@@ -10,6 +10,7 @@ const eventsRoutes = require("./routes/eventsRoutes");
 const adminAuthRoutes = require("./routes/adminAuthRoutes");
 const announcementRoutes = require("./routes/announcementRoutes");
 const pointsRoutes = require("./routes/pointsRoutes");
+const projectsRoutes = require("./routes/projectsRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -162,6 +163,12 @@ app.use(
 );
 
 // --------------------------------------------------
+// PROJECTS ROUTES - PUBLIC SHOWCASE + ADMIN MANAGEMENT
+// --------------------------------------------------
+
+app.use("/api/projects", projectsRoutes);
+
+// --------------------------------------------------
 // 404 HANDLER
 // --------------------------------------------------
 
@@ -213,6 +220,7 @@ app.listen(PORT, () => {
   console.log("Public Events: Enabled");
   console.log("PRISM Points: Enabled");
   console.log("Firestore Announcements: Enabled");
+  console.log("Projects: Enabled");
 
   console.log("-----------------------------------");
 });

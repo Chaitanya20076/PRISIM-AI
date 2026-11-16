@@ -170,8 +170,15 @@ export default function ProjectsAdmin() {
       return;
     }
     try {
-      const response = await fetch(PROJECTS_API, {
-        method: "POST",
+      // A saved draft already has a Firestore document. Update that document
+      // when editing it; only brand-new projects should use POST.
+      const isExistingProject = Boolean(existing || (editing && editing === form.id));
+      const requestUrl = isExistingProject
+        ? `${PROJECTS_API}/${encodeURIComponent(saved.id)}`
+        : PROJECTS_API;
+
+      const response = await fetch(requestUrl, {
+        method: isExistingProject ? "PUT" : "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify(saved),
       });

@@ -151,26 +151,167 @@ function getEventCapacity(event) {
 }
 
 function getHeroCopy(event, status) {
-  if (status === "ongoing") {
+  if (!event) {
     return {
-      eyebrow: "Happening now",
-      headline: "Ideas in motion.",
-      subline: "Step into the energy of what’s happening at PRISM AI.",
+      eyebrow: "The PRISM experience",
+      headline: "Where curiosity",
+      subline: "A space for builders, thinkers and curious minds. Discover workshops, hackathons, talks and experiences curated by PRISM AI.",
     };
   }
 
-  if (status === "past") {
-    return {
-      eyebrow: "From the archive",
-      headline: "Moments that move us.",
-      subline: "A look back at the ideas, people and experiences we brought to life.",
-    };
-  }
+  const typeText = [
+    event.eventType,
+    event.type,
+    event.category,
+    event.customCategory,
+    event.slug,
+    event.name,
+    event.title,
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ");
+
+  const categoryCopy = [
+    {
+      match: /\bhack ?athons?\b/,
+      upcoming: [
+        ["Build beyond the ordinary.", "Bring your boldest ideas. Build with a team. Make something that matters."],
+        ["Big ideas. Bigger challenges.", "Step into the challenge, collaborate with creators and turn your solution into reality."],
+        ["Think fast. Build fearless.", "A hands-on challenge for curious minds ready to experiment, create and compete."],
+      ],
+      ongoing: [
+        ["The build is happening now.", "Teams are creating, testing and pushing ideas further. Be part of the action."],
+        ["Innovation is in full swing.", "The challenge is live. Explore the energy and see what teams are building."],
+      ],
+      past: [
+        ["Ideas became real here.", "Revisit the teams, breakthroughs and moments that made this challenge memorable."],
+        ["A challenge worth remembering.", "Look back at the creativity, collaboration and solutions brought to life."],
+      ],
+    },
+    {
+      match: /\bworkshops?\b/,
+      upcoming: [
+        ["Learn it. Try it. Build it.", "Get hands-on, explore new tools and leave with skills you can put to work."],
+        ["Make room for new skills.", "A practical learning experience designed to turn curiosity into confidence."],
+        ["Your next skill starts here.", "Explore, experiment and learn by doing alongside a community of creators."],
+      ],
+      ongoing: [
+        ["Learning is happening live.", "Join the experience and discover ideas through hands-on exploration."],
+        ["Curiosity in action.", "The workshop is underway. Step in, learn something new and get involved."],
+      ],
+      past: [
+        ["A session full of discovery.", "Take a look back at the skills explored, ideas shared and things created."],
+        ["Learning that leaves a mark.", "Revisit the moments and takeaways from this hands-on experience."],
+      ],
+    },
+    {
+      match: /\bseminars?\b/,
+      upcoming: [
+        ["A fresh perspective awaits.", "Make time for thoughtful conversations, new insights and ideas worth exploring."],
+        ["Listen. Question. Discover.", "Join a focused exchange of knowledge and perspectives with the PRISM community."],
+        ["Ideas are better shared.", "Explore a session built to spark questions, deepen understanding and inspire action."],
+      ],
+      ongoing: [
+        ["The conversation is live.", "Tune in to fresh perspectives and ideas being shared right now."],
+        ["Knowledge is being shared.", "Be part of the discussion and discover a new point of view."],
+      ],
+      past: [
+        ["Conversations that stay with us.", "Revisit the insights, perspectives and moments shared at this session."],
+        ["A closer look at what we learned.", "Explore the highlights from a gathering of ideas and thoughtful discussion."],
+      ],
+    },
+    {
+      match: /\bwebinars?\b/,
+      upcoming: [
+        ["A world of insight, one session away.", "Connect, learn and explore ideas with experts and curious minds."],
+        ["Tune in to something new.", "Make space for fresh knowledge and conversations from wherever you are."],
+        ["Your next insight is calling.", "Join an online experience made for learning, sharing and discovery."],
+      ],
+      ongoing: [
+        ["The session is live.", "Join the conversation and catch the ideas being shared right now."],
+        ["Insight is just a click away.", "The webinar is underway. Tune in and be part of it."],
+      ],
+      past: [
+        ["Worth another look.", "Revisit the ideas, takeaways and conversations from this online session."],
+        ["Knowledge travels further.", "Look back at the insights shared with our online community."],
+      ],
+    },
+    {
+      match: /\bboot ?camps?\b/,
+      upcoming: [
+        ["Go deeper. Grow faster.", "Commit to learning, put ideas into practice and level up through an immersive experience."],
+        ["A focused journey starts here.", "Build momentum through practical learning, collaboration and real challenges."],
+        ["Ready for an intensive learning sprint?", "Step into a focused experience designed to stretch your skills and thinking."],
+      ],
+      ongoing: [
+        ["The learning sprint is underway.", "Keep building, keep experimenting and make every moment count."],
+        ["Progress happens by doing.", "The bootcamp is live. Join the journey and take your skills further."],
+      ],
+      past: [
+        ["Progress made. Skills gained.", "Look back at the learning journey, practical work and milestones achieved."],
+        ["A journey worth celebrating.", "Revisit the effort, growth and ideas that shaped this bootcamp."],
+      ],
+    },
+    {
+      match: /\bcompetitions?\b/,
+      upcoming: [
+        ["Bring your best to the table.", "Put your skills to the test, take on a challenge and show what you can do."],
+        ["A chance to prove your ideas.", "Compete, create and challenge yourself alongside ambitious minds."],
+        ["Your moment to make a mark.", "Step up, think differently and turn your preparation into performance."],
+      ],
+      ongoing: [
+        ["The challenge is on.", "The action is live. See what's unfolding and be part of the excitement."],
+        ["Talent meets the test.", "Participants are putting their skills into action right now."],
+      ],
+      past: [
+        ["The results tell a story.", "Celebrate the effort, creativity and standout moments from this competition."],
+        ["Challenge accepted. Memories made.", "Look back at the performances and ideas that made this event special."],
+      ],
+    },
+  ];
+
+  const selectedCategory = categoryCopy.find((item) => item.match.test(typeText));
+  const genericCopy = {
+    upcoming: [
+      ["Something exciting is taking shape.", "Discover a new opportunity to connect, explore ideas and make your next move."],
+      ["Your next experience starts here.", "Find new perspectives, meet curious minds and make the most of what’s ahead."],
+      ["Make your next move count.", "Explore this PRISM AI experience and find a place to learn, create and connect."],
+      ["A new idea is waiting.", "Step into an experience designed to bring people, curiosity and creativity together."],
+    ],
+    ongoing: [
+      ["The experience is unfolding.", "Discover what’s happening and join the energy of the PRISM AI community."],
+      ["The moment is happening now.", "Take a closer look at this event and be part of the experience."],
+      ["Ideas are turning into action.", "See what the community is creating, sharing and exploring right now."],
+    ],
+    past: [
+      ["Every experience leaves a story.", "Revisit the people, ideas and moments that brought this event to life."],
+      ["A moment worth looking back on.", "Explore the highlights and memories created by the PRISM AI community."],
+      ["The experience lives on.", "Take a look back at the moments, connections and ideas from this event."],
+    ],
+  };
+
+  // Pick a repeatable line per event, so the copy changes with the hero event
+  // but does not randomly flicker on every render.
+  const hashInput = `${getEventId(event)}-${getEventName(event)}-${getEventCategory(event)}`;
+  const hash = [...hashInput].reduce((value, char) => (value * 31 + char.charCodeAt(0)) >>> 0, 7);
+  const choices = selectedCategory?.[status] || genericCopy[status] || genericCopy.upcoming;
+  const [headline, subline] = choices[hash % choices.length];
+
+  const customHeadline = event.heroHeadline || event.tagline || event.shortHeadline;
+  const customSubline = event.heroSubline || event.heroDescription || event.shortDescription;
+
+  const statusEyebrow = {
+    upcoming: "Coming up at PRISM",
+    ongoing: "Happening now",
+    past: "From the archive",
+  };
 
   return {
-    eyebrow: "Up next at PRISM",
-    headline: "Your next big idea starts here.",
-    subline: "Discover what’s coming up and find your place in the experience.",
+    eyebrow: event.heroEyebrow || statusEyebrow[status] || "At PRISM AI",
+    headline: customHeadline || headline,
+    subline: customSubline || getEventDescription(event) || subline,
   };
 }
 
@@ -507,7 +648,19 @@ export default function Events() {
                   {heroEvent ? heroCopy.eyebrow : "The PRISM experience"}
                 </div>
 
-                <h1>
+                <h1
+                  className={
+                    !heroEvent
+                      ? "events-hero__title"
+                      : `events-hero__title ${
+                          `${heroCopy.headline} ${getEventName(heroEvent)}`.length > 72
+                            ? "events-hero__title--long"
+                            : `${heroCopy.headline} ${getEventName(heroEvent)}`.length > 44
+                              ? "events-hero__title--medium"
+                              : ""
+                        }`
+                  }
+                >
                   {heroEvent ? (
                     <>
                       <span className="events-hero__lead">
@@ -531,7 +684,7 @@ export default function Events() {
 
                 <p className="events-hero__text">
                   {heroEvent
-                    ? getEventDescription(heroEvent) || heroCopy.subline
+                    ? heroCopy.subline
                     : "A space for builders, thinkers and curious minds. Discover workshops, hackathons, talks and experiences curated by PRISM AI."}
                 </p>
 

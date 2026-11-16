@@ -25,6 +25,30 @@ const PUBLIC_PROJECTS_API = `${API_BASE_URL}/api/projects/public`;
 const THEME_KEY = "prism-theme";
 const LEGACY_THEME_KEYS = ["prism-dashboard-theme", "prism-projects-theme"];
 
+// Keep these keys and colours in sync with the Admin Projects theme selector.
+const projectThemes = {
+  coral: { accent: "#fc7782", deep: "#6e3562", surface: "#fff3f3", ink: "#2d2030" },
+  berry: { accent: "#d66b91", deep: "#62345f", surface: "#fff3f8", ink: "#302033" },
+  sunset: { accent: "#f59e72", deep: "#78436a", surface: "#fff5ee", ink: "#302332" },
+  orchid: { accent: "#c58ad7", deep: "#583b72", surface: "#faf4ff", ink: "#282033" },
+  monochrome: { accent: "#a8a8b8", deep: "#353548", surface: "#f5f5f8", ink: "#252535" },
+};
+
+function getProjectThemeStyle(project) {
+  const palette = projectThemes[project?.theme] || projectThemes.coral;
+  return {
+    "--projects-accent": palette.accent,
+    "--projects-deep": palette.deep,
+    "--projects-surface": palette.surface,
+    "--projects-surface-solid": palette.surface,
+    "--projects-text": palette.ink,
+    "--projects-muted": `color-mix(in srgb, ${palette.ink} 66%, ${palette.surface})`,
+    "--projects-border": `color-mix(in srgb, ${palette.deep} 22%, transparent)`,
+    "--projects-soft": `color-mix(in srgb, ${palette.accent} 13%, ${palette.surface})`,
+    "--projects-shadow": `0 18px 48px color-mix(in srgb, ${palette.deep} 16%, transparent)`,
+  };
+}
+
 function splitList(value) {
   if (Array.isArray(value)) return value.map((item) => String(item).trim()).filter(Boolean);
   if (typeof value !== "string") return [];
@@ -91,7 +115,7 @@ function ProjectDetails({ project, onClose }) {
 
   return (
     <div className="projects-modal-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
-      <section className="projects-modal" role="dialog" aria-modal="true" aria-labelledby="projects-modal-title">
+      <section className="projects-modal" style={getProjectThemeStyle(project)} role="dialog" aria-modal="true" aria-labelledby="projects-modal-title">
         <div className="projects-modal-top">
           <span className="projects-eyebrow"><Sparkles size={14} /> PRISM AI PROJECT</span>
           <button className="projects-icon-button" type="button" onClick={onClose} aria-label="Close project details"><X size={20} /></button>
@@ -278,7 +302,7 @@ export default function Projects() {
               const demoUrl = safeUrl(project.demoUrl);
               const linkedinUrl = safeUrl(project.linkedinUrl);
               const documentationUrl = safeUrl(project.documentationUrl);
-              return <article className="projects-card" key={project.id || `${project.name}-${index}`} style={{ "--card-index": index }}>
+              return <article className="projects-card" key={project.id || `${project.name}-${index}`} style={{ "--card-index": index, ...getProjectThemeStyle(project) }}>
                 <button className="projects-card-open" type="button" onClick={() => setSelectedProject(project)} aria-label={`View details for ${project.name}`}>
                   <div className="projects-card-cover">
                     {safeUrl(project.coverImageUrl) ? <img src={safeUrl(project.coverImageUrl)} alt="" loading="lazy" onError={(event) => { event.currentTarget.style.display = "none"; }} /> : <div className="projects-card-cover-art"><span className="projects-cover-orbit projects-cover-orbit--one"/><span className="projects-cover-orbit projects-cover-orbit--two"/><Code2 size={37} strokeWidth={1.5} /></div>}

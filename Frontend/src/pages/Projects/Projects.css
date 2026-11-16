@@ -638,3 +638,75 @@
     animation: none !important;
   }
 }
+
+
+/* Per-project palette: driven by the theme selected in Admin Projects. */
+.projects-card {
+  background: var(--projects-surface);
+  border-color: var(--projects-border);
+  color: var(--projects-text);
+  box-shadow: var(--projects-shadow);
+}
+.projects-card:hover {
+  border-color: color-mix(in srgb, var(--projects-accent) 68%, transparent);
+}
+.projects-card-cover {
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--projects-accent) 22%, var(--projects-surface)),
+    color-mix(in srgb, var(--projects-deep) 24%, var(--projects-surface))
+  );
+}
+.projects-card-cover-art {
+  color: var(--projects-deep);
+  background:
+    radial-gradient(circle at 50% 45%, color-mix(in srgb, var(--projects-accent) 30%, transparent), transparent 37%),
+    linear-gradient(135deg, color-mix(in srgb, var(--projects-accent) 15%, var(--projects-surface)), color-mix(in srgb, var(--projects-deep) 20%, var(--projects-surface)));
+}
+.projects-page--dark .projects-card-cover-art {
+  color: var(--projects-accent);
+  background:
+    radial-gradient(circle at 50% 45%, color-mix(in srgb, var(--projects-accent) 25%, transparent), transparent 37%),
+    linear-gradient(135deg, var(--projects-surface), color-mix(in srgb, var(--projects-deep) 24%, var(--projects-surface)));
+}
+.projects-card .projects-cover-orbit { border-color: color-mix(in srgb, var(--projects-deep) 32%, transparent); }
+.projects-card .projects-cover-orbit--two { border-color: color-mix(in srgb, var(--projects-accent) 65%, transparent); }
+.projects-card .projects-card-meta span { background: var(--projects-accent); }
+.projects-card .projects-tech-list span {
+  border-color: var(--projects-border);
+  background: var(--projects-soft);
+  color: var(--projects-deep);
+}
+.projects-page--dark .projects-card .projects-tech-list span { color: var(--projects-deep); }
+.projects-card .projects-card-read-more,
+.projects-page--dark .projects-card .projects-card-read-more { color: var(--projects-deep); }
+.projects-card .projects-card-read-more svg { color: var(--projects-accent); }
+.projects-card .projects-link {
+  border-color: var(--projects-border);
+  background: var(--projects-surface-solid);
+  color: var(--projects-text);
+}
+.projects-card .projects-link--primary {
+  border-color: transparent;
+  background: var(--projects-deep);
+  color: #fff;
+}
+.projects-card .projects-link--primary:hover {
+  background: color-mix(in srgb, var(--projects-deep) 82%, black);
+}
+.projects-modal {
+  --projects-accent: #fc7782;
+  --projects-deep: #6e3562;
+}
+.projects-modal .projects-modal-tagline { color: var(--projects-accent); }
+.projects-modal .projects-detail-section h3 svg,
+.projects-modal .projects-modal-date svg { color: var(--projects-accent); }
+.projects-modal .projects-tech-list span {
+  border-color: var(--projects-border);
+  background: var(--projects-soft);
+  color: var(--projects-deep);
+}
+.projects-modal .projects-link--primary {
+  background: var(--projects-deep);
+  color: #fff;
+}
