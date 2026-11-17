@@ -19,6 +19,7 @@ import Projects from "./pages/Projects/Projects.jsx";
 import PublicProjects from "./pages/PublicProjects/Projects.jsx";
 import NewsAndUpdates from "./pages/News/NewsAndUpdates.jsx";
 import AIToolOfWeek from "./pages/AIToolOfWeek/AIToolOfWeek.jsx";
+import PublicAItooloftheweek from "./pages/PublicAItooloftheweek/AItooloftheweek.jsx";
 import Login from "./pages/login/login.jsx";
 import Dashboard from "./pages/Dashboard/Dashboard.jsx";
 import Community from "./pages/Community/Community.jsx";
@@ -221,7 +222,7 @@ function App() {
 
         <Route
           path="/public/AItooloftheweek"
-          element={<AIToolOfWeek />}
+          element={<PublicAItooloftheweek />}
         />
 
         <Route

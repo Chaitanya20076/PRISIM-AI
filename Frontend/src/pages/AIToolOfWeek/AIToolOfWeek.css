@@ -332,3 +332,103 @@
     animation: none !important;
   }
 }
+
+
+/* =========================================================
+   ADMIN-SELECTED TOOL PALETTE
+   The spotlight card uses the exact accent/surface/text colours
+   saved by the admin. The surrounding page remains theme-aware.
+   ========================================================= */
+.aotw-public {
+  --aotw-accent: #E43D12;
+  --aotw-tool-surface: #EBE9E1;
+  --aotw-tool-ink: #262321;
+  --aotw-accent-soft: color-mix(in srgb, var(--aotw-accent) 12%, transparent);
+}
+.aotw-public-eyebrow,
+.aotw-public-nav a:hover,
+.aotw-public-dashboard-link:hover,
+.aotw-public-theme-toggle svg,
+.aotw-show-details,
+.aotw-resource-pricing > span,
+.aotw-resource-panel-heading > span,
+.aotw-content-section-title > span,
+.aotw-feature-list li > span,
+.aotw-prompt-item > span {
+  color: var(--aotw-accent);
+}
+.aotw-art-orbit { border-color: color-mix(in srgb, var(--aotw-accent) 38%, transparent); }
+.aotw-art-orbit-b { border-color: color-mix(in srgb, var(--aotw-accent) 28%, transparent); }
+.aotw-art-core,
+.aotw-public-primary,
+.aotw-footer-mark { background: var(--aotw-accent); }
+.chip-bottom { color: var(--aotw-accent); }
+.aotw-art-core { box-shadow: 0 20px 55px color-mix(in srgb, var(--aotw-accent) 30%, transparent); }
+.aotw-featured-shell {
+  background: var(--aotw-tool-surface);
+  color: var(--aotw-tool-ink);
+  border-color: color-mix(in srgb, var(--aotw-accent) 75%, transparent);
+}
+.aotw-featured-badge,
+.aotw-meta-icon,
+.aotw-featured-logo-placeholder { background: var(--aotw-accent); }
+.aotw-featured-actions .aotw-resource-link:first-child {
+  background: var(--aotw-accent);
+  border-color: var(--aotw-accent);
+}
+.aotw-featured-actions .aotw-resource-link:nth-child(2) {
+  color: var(--aotw-tool-ink);
+  border-color: color-mix(in srgb, var(--aotw-tool-ink) 28%, transparent);
+}
+.aotw-featured-meta {
+  background: color-mix(in srgb, var(--aotw-tool-ink) 5%, var(--aotw-tool-surface));
+  border-color: color-mix(in srgb, var(--aotw-tool-ink) 18%, transparent);
+}
+.aotw-meta-divider { background: color-mix(in srgb, var(--aotw-tool-ink) 18%, transparent); }
+.aotw-public-tags span {
+  border-color: color-mix(in srgb, var(--aotw-tool-ink) 22%, transparent);
+}
+.aotw-public-primary:hover { filter: brightness(.92); background: var(--aotw-accent); }
+.aotw-resource-link:hover { border-color: var(--aotw-accent); }
+.aotw-content-section-title > span,
+.aotw-resource-panel-heading > span,
+.aotw-feature-list li > span,
+.aotw-public-state-icon {
+  background: color-mix(in srgb, var(--aotw-accent) 12%, transparent);
+}
+.aotw-public-spin { color: var(--aotw-accent); }
+
+/* Mobile/tablet: prevent the featured card and its actions from overflowing. */
+.aotw-public,
+.aotw-public * { min-width: 0; }
+.aotw-featured-shell,
+.aotw-public-resource-panel,
+.aotw-prompt-item { overflow-wrap: anywhere; }
+.aotw-featured-title-row > div { min-width: 0; }
+.aotw-featured-title-row h2 { overflow-wrap: anywhere; }
+@media (max-width: 850px) {
+  .aotw-featured-main { grid-template-columns: minmax(0, 1fr); }
+  .aotw-featured-meta { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 16px; }
+  .aotw-meta-icon, .aotw-meta-label, .aotw-meta-divider { display: none; }
+  .aotw-date-item { margin: 0; }
+  .aotw-meta-note { grid-column: 1 / -1; margin-top: 4px; }
+  .aotw-public-content-grid { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .aotw-public-resource-panel { position: static; order: -1; }
+}
+@media (max-width: 650px) {
+  .aotw-public-header { grid-template-columns: minmax(0, 1fr) auto; }
+  .aotw-public-header-actions { min-width: 0; }
+  .aotw-public-dashboard-link { min-width: 40px; }
+  .aotw-featured-shell { padding: 20px 16px; border-radius: 18px; }
+  .aotw-featured-main { gap: 20px; }
+  .aotw-featured-title-row { align-items: flex-start; }
+  .aotw-featured-title-row h2 { font-size: clamp(24px, 7vw, 32px); }
+  .aotw-featured-overview { font-size: 13px; }
+  .aotw-featured-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .aotw-public-content-grid { margin-top: 32px; }
+  .aotw-resource-list { grid-template-columns: minmax(0, 1fr); }
+  .aotw-public-footer { flex-wrap: wrap; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .aotw-public * { animation: none !important; transition: none !important; }
+}

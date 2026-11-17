@@ -1,3 +1,4 @@
+
 require("dotenv").config();
 
 const express = require("express");
@@ -11,6 +12,7 @@ const adminAuthRoutes = require("./routes/adminAuthRoutes");
 const announcementRoutes = require("./routes/announcementRoutes");
 const pointsRoutes = require("./routes/pointsRoutes");
 const projectsRoutes = require("./routes/projectsRoutes");
+const aiToolOfWeekRoutes = require("./routes/aiToolOfWeekRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -169,6 +171,15 @@ app.use(
 app.use("/api/projects", projectsRoutes);
 
 // --------------------------------------------------
+// AI TOOL OF THE WEEK
+// --------------------------------------------------
+
+app.use(
+  "/api/ai-tool-of-week",
+  aiToolOfWeekRoutes
+);
+
+// --------------------------------------------------
 // 404 HANDLER
 // --------------------------------------------------
 
@@ -221,6 +232,7 @@ app.listen(PORT, () => {
   console.log("PRISM Points: Enabled");
   console.log("Firestore Announcements: Enabled");
   console.log("Projects: Enabled");
+  console.log("AI Tool of the Week: Enabled");
 
   console.log("-----------------------------------");
 });

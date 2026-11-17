@@ -265,16 +265,17 @@ export default function AIToolOfWeek() {
     return () => controller.abort();
   }, [loadTool]);
 
-  const themeStyle = useMemo(
-    () => ({
-       // The featured spotlight keeps the reference card's purple/orange identity
-      // in both global themes; only the surrounding page follows the global mode.
-      "--aotw-accent": "#E87900",
-      "--aotw-tool-surface": "#1B1429",
-      "--aotw-tool-ink": "#F7F2FF",
-    }),
-    []
-  );
+  // Use the exact palette selected by the admin. The spotlight card keeps
+  // this editorial palette in both site modes; the surrounding page follows
+  // the user's light/dark preference.
+  const themeStyle = useMemo(() => {
+    const isHex = (value) => /^#[0-9a-fA-F]{6}$/.test(String(value || ""));
+    return {
+      "--aotw-accent": isHex(tool?.accentColor) ? tool.accentColor : "#E43D12",
+      "--aotw-tool-surface": isHex(tool?.surfaceColor) ? tool.surfaceColor : "#EBE9E1",
+      "--aotw-tool-ink": isHex(tool?.textColor) ? tool.textColor : "#262321",
+    };
+  }, [tool?.accentColor, tool?.surfaceColor, tool?.textColor]);
 
   const features = listify(tool?.keyFeatures);
   const tags = listify(tool?.tags);
@@ -295,6 +296,7 @@ export default function AIToolOfWeek() {
       className={`aotw-public ${
         dark ? "aotw-public-dark" : "aotw-public-light"
       }`}
+      style={themeStyle}
     >
       <div className="aotw-public-glow aotw-public-glow-one" />
       <div className="aotw-public-glow aotw-public-glow-two" />
